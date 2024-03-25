@@ -10,7 +10,7 @@ This version will be functionaly the same but include the following upgrades:
 The Emergency Stop Button has a hard limit on the response time. To achieve this I will be using FreeRTOS tasks with varying priorities.
 
 
-This Project using the following workflow:
+This Project uses the following workflow:
 - CubeMX (Initialization Code Generation)
 - VsCode
 - STM32-for-VsCode (Building, Flashing, Debugging)
