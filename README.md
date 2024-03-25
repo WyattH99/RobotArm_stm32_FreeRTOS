@@ -8,3 +8,13 @@ This version will be functionaly the same but include the following upgrades:
 - LCD Screen to Display the Output
 
 The Emergency Stop Button has a hard limit on the response time. To achieve this I will be using FreeRTOS tasks with varying priorities.
+
+
+This Project using the following workflow:
+- CubeMX (Initialization Code Generation)
+- VsCode
+- STM32-for-VsCode (Building, Flashing, Debugging)
+- Makefile, Make, and CMake
+- arm-none-eabi-gcc
+- OpenOCD (Flashing)
+- Cortex-Debug (Debugging)
