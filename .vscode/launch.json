@@ -12,7 +12,11 @@
             "device": "stm32f446",
             "configFiles": [
                 "openocd.cfg"
-            ]
+            ],
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 20
+            }
         },
         {
             "showDevDebugOutput": "parsed",

@@ -36,8 +36,8 @@
  */
 typedef struct{
 	uint8_t  PotNum;
-	uint16_t PotMin;
-	uint16_t PotMax;
+	uint32_t PotMin;
+	uint32_t PotMax;
 	uint8_t  PotInvertRange;
 } MiniBot_Joint_Config_t;
 
@@ -62,6 +62,8 @@ typedef struct{
 	uint8_t  GripperValue;
 } MiniBot_Qdata;
 
+volatile MiniBot_Qdata Qdata;
+uint32_t value[4];
 
 
 /*
@@ -103,6 +105,7 @@ typedef struct{
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
 
 I2C_HandleTypeDef hi2c1;
 
@@ -148,6 +151,7 @@ const osMessageQueueAttr_t MiniBotInputQueue_attributes = {
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART2_UART_Init(void);
@@ -225,6 +229,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_I2C1_Init();
   MX_USART2_UART_Init();
@@ -363,14 +368,13 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = ENABLE;
-  hadc1.Init.ContinuousConvMode = DISABLE;
-  hadc1.Init.DiscontinuousConvMode = ENABLE;
-  hadc1.Init.NbrOfDiscConversion = 1;
+  hadc1.Init.ContinuousConvMode = ENABLE;
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 4;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
@@ -487,6 +491,22 @@ static void MX_USART2_UART_Init(void)
 }
 
 /**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA2_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA2_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -587,11 +607,61 @@ void MiniBotInputsEntry(void *argument)
 	MiniBot_Config_t MiniBot;
 	MiniBotInit(&MiniBot);
 
+  // volatile MiniBot_Qdata Qdata;
+
+  
+  HAL_ADC_Start_DMA(&hadc1, value, 4);
+
 	/* Infinite loop */
 	for(;;)
 	{
-		HAL_ADC_Start(&hadc1);
-		HAL_ADC_PollForConversion(&hadc1, 1);
+    // TODO: Turn this into a function
+    if(value[0] > MiniBot.Base.PotMax){
+      Qdata.BasePotValue = MiniBot.Base.PotMax;
+    }else if(value[0] < MiniBot.Base.PotMin){
+      Qdata.BasePotValue = MiniBot.Base.PotMin;
+    }else{
+      Qdata.BasePotValue = value[0];
+    }
+    if(MiniBot.Base.PotInvertRange){
+      Qdata.BasePotValue = MiniBot.Base.PotMax - Qdata.BasePotValue + MiniBot.Base.PotMin;
+    }
+
+    if(value[1] > MiniBot.Shoulder.PotMax){
+      Qdata.ShoulderPotValue = MiniBot.Shoulder.PotMax;
+    }else if(value[1] < MiniBot.Shoulder.PotMin){
+      Qdata.ShoulderPotValue = MiniBot.Shoulder.PotMin;
+    }else{
+      Qdata.ShoulderPotValue = value[1];
+    }
+    if(MiniBot.Shoulder.PotInvertRange){
+      Qdata.ShoulderPotValue = MiniBot.Shoulder.PotMax - Qdata.ShoulderPotValue + MiniBot.Shoulder.PotMin;
+    }
+
+    if(value[2] > MiniBot.Elbow.PotMax){
+      Qdata.ElbowPotValue = MiniBot.Elbow.PotMax;
+    }else if(value[2] < MiniBot.Elbow.PotMin){
+      Qdata.ElbowPotValue = MiniBot.Elbow.PotMin;
+    }else{
+      Qdata.ElbowPotValue = value[2];
+    }
+    if(MiniBot.Elbow.PotInvertRange){
+      Qdata.ElbowPotValue = MiniBot.Elbow.PotMax - Qdata.ElbowPotValue + MiniBot.Elbow.PotMin;
+    }
+
+    if(value[3] > MiniBot.Wrist.PotMax){
+      Qdata.WristPotValue = MiniBot.Wrist.PotMax;
+    }else if(value[3] < MiniBot.Wrist.PotMin){
+      Qdata.WristPotValue = MiniBot.Wrist.PotMin;
+    }else{
+      Qdata.WristPotValue = value[3];
+    }
+    if(MiniBot.Wrist.PotInvertRange){
+      Qdata.WristPotValue = MiniBot.Wrist.PotMax - Qdata.WristPotValue + MiniBot.Wrist.PotMin;
+    }
+
+    Qdata.GripperValue = (uint8_t)HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9);
+    
 
 		osDelay(1);
 	}
