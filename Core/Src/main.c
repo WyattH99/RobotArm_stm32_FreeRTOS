@@ -148,7 +148,7 @@ void ApplicationFSMEntry(void const * argument);
 void MiniBotInit(MiniBot_Config_t* MiniBot);
 void MegaBotInit(MiniBot_Config_t* MegaBot);
 
-void QPotDataUpdate(uint32_t PotRawValue, MiniBot_Joint_Config_t *Joint, uint32_t *QPotData);
+void QPotDataUpdate(uint32_t PotRawValue, volatile MiniBot_Joint_Config_t *Joint, volatile uint32_t *QPotData);
 
 /* USER CODE END PFP */
 
@@ -540,7 +540,7 @@ void MegaBotInit(MiniBot_Config_t* MegaBot){
 }
 
 
-void QPotDataUpdate(uint32_t PotRawValue, MiniBot_Joint_Config_t *Joint, uint32_t *QPotData){
+void QPotDataUpdate(uint32_t PotRawValue, volatile MiniBot_Joint_Config_t *Joint, volatile uint32_t *QPotData){
   if(PotRawValue > *QPotData + 10 || PotRawValue < *QPotData - 10){
     if(PotRawValue > Joint->PotMax){
       *QPotData = Joint->PotMax;
@@ -654,9 +654,12 @@ void ApplicationFSMEntry(void const * argument)
       state = Ready;
 
     }else if(state == Ready){
-      xQueueReceive(MiniBotInputQueueHandle, &minibot_data, 10);
-      if(minibot_data.GripperValue == '\000'){
-        state == Running;
+      xQueueReceive(MiniBotInputQueueHandle, (void*)&minibot_data, 10);
+      if(minibot_data.GripperValue == 0){
+        xQueueReceive(MiniBotInputQueueHandle, (void*)&minibot_data, 10);
+        if(minibot_data.GripperValue == 1){
+          state++;
+        }
       }
 
     }else if(state == Running){
@@ -664,7 +667,13 @@ void ApplicationFSMEntry(void const * argument)
       //  if so change the state to Emergency Stop and break out of ifelse
 
       // Send Minibot_data to the Motor Queue for the Motor Task to handle
-
+      xQueueReceive(MiniBotInputQueueHandle, (void*)&minibot_data, 10);
+      if(minibot_data.GripperValue == 0){
+        xQueueReceive(MiniBotInputQueueHandle, (void*)&minibot_data, 10);
+        if(minibot_data.GripperValue == 1){
+          state--;
+        }
+      }
     }
     
     if(state == EmergencyStop){
