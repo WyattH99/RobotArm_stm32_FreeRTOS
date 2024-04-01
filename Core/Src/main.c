@@ -63,7 +63,7 @@ typedef struct{
 } MiniBot_Qdata;
 
 volatile MiniBot_Qdata Qdata;
-uint32_t value[4];
+uint32_t PotRawValue[4];
 
 
 /*
@@ -162,41 +162,16 @@ void ApplicationFSMEntry(void *argument);
 
 /* USER CODE BEGIN PFP */
 
+void MiniBotInit(MiniBot_Config_t* MiniBot);
+void MegaBotInit(MiniBot_Config_t* MegaBot);
+
+void QPotDataUpdate(uint32_t PotRawValue, MiniBot_Joint_Config_t *Joint, uint32_t *QPotData);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-void MiniBotInit(MiniBot_Config_t* MiniBot){
-	// Configure Each of the joints
-
-	  MiniBot->Base.PotNum = 0;
-	  MiniBot->Base.PotMin = 800;
-	  MiniBot->Base.PotMax = 3400;
-	  MiniBot->Base.PotInvertRange = 0;
-
-	  MiniBot->Shoulder.PotNum = 1;
-	  MiniBot->Shoulder.PotMin = 600;
-	  MiniBot->Shoulder.PotMax = 3400;
-	  MiniBot->Shoulder.PotInvertRange = 0;
-
-	  MiniBot->Elbow.PotNum = 2;
-	  MiniBot->Elbow.PotMin = 600;
-	  MiniBot->Elbow.PotMax = 3400;
-	  MiniBot->Elbow.PotInvertRange = 0;
-
-	  MiniBot->Wrist.PotNum = 3;
-	  MiniBot->Wrist.PotMin = 600;
-	  MiniBot->Wrist.PotMax = 3200;
-	  MiniBot->Wrist.PotInvertRange = 1;
-
-	  MiniBot->Gripper.GPIOx = GPIOA;
-	  MiniBot->Gripper.GPIO_Pin = GPIO_PIN_9;
-}
-
-void MegaBotInit(MiniBot_Config_t* MegaBot){
-
-}
 
 /* USER CODE END 0 */
 
@@ -551,6 +526,56 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+
+void MiniBotInit(MiniBot_Config_t* MiniBot){
+	// Configure Each of the joints
+
+	  MiniBot->Base.PotNum = 0;
+	  MiniBot->Base.PotMin = 800;
+	  MiniBot->Base.PotMax = 3400;
+	  MiniBot->Base.PotInvertRange = 0;
+
+	  MiniBot->Shoulder.PotNum = 1;
+	  MiniBot->Shoulder.PotMin = 600;
+	  MiniBot->Shoulder.PotMax = 3400;
+	  MiniBot->Shoulder.PotInvertRange = 0;
+
+	  MiniBot->Elbow.PotNum = 2;
+	  MiniBot->Elbow.PotMin = 600;
+	  MiniBot->Elbow.PotMax = 3400;
+	  MiniBot->Elbow.PotInvertRange = 0;
+
+	  MiniBot->Wrist.PotNum = 3;
+	  MiniBot->Wrist.PotMin = 600;
+	  MiniBot->Wrist.PotMax = 3200;
+	  MiniBot->Wrist.PotInvertRange = 1;
+
+	  MiniBot->Gripper.GPIOx = GPIOA;
+	  MiniBot->Gripper.GPIO_Pin = GPIO_PIN_9;
+}
+
+void MegaBotInit(MiniBot_Config_t* MegaBot){
+
+}
+
+
+void QPotDataUpdate(uint32_t PotRawValue, MiniBot_Joint_Config_t *Joint, uint32_t *QPotData){
+  if(PotRawValue + 10 > *QPotData || PotRawValue - 10 < *QPotData){
+    if(PotRawValue > Joint->PotMax){
+      *QPotData = Joint->PotMax;
+    }else if(PotRawValue < Joint->PotMin){
+      *QPotData = Joint->PotMin;
+    }else{
+      *QPotData = PotRawValue;
+    }
+    if(Joint->PotInvertRange){
+      *QPotData = Joint->PotMax - *QPotData + Joint->PotMin;
+    }
+  }
+}
+
+
+
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -606,59 +631,18 @@ void MiniBotInputsEntry(void *argument)
 
 	MiniBot_Config_t MiniBot;
 	MiniBotInit(&MiniBot);
-
-  // volatile MiniBot_Qdata Qdata;
+  
 
   
-  HAL_ADC_Start_DMA(&hadc1, value, 4);
+  HAL_ADC_Start_DMA(&hadc1, PotRawValue, 4);
 
 	/* Infinite loop */
 	for(;;)
 	{
-    // TODO: Turn this into a function
-    if(value[0] > MiniBot.Base.PotMax){
-      Qdata.BasePotValue = MiniBot.Base.PotMax;
-    }else if(value[0] < MiniBot.Base.PotMin){
-      Qdata.BasePotValue = MiniBot.Base.PotMin;
-    }else{
-      Qdata.BasePotValue = value[0];
-    }
-    if(MiniBot.Base.PotInvertRange){
-      Qdata.BasePotValue = MiniBot.Base.PotMax - Qdata.BasePotValue + MiniBot.Base.PotMin;
-    }
-
-    if(value[1] > MiniBot.Shoulder.PotMax){
-      Qdata.ShoulderPotValue = MiniBot.Shoulder.PotMax;
-    }else if(value[1] < MiniBot.Shoulder.PotMin){
-      Qdata.ShoulderPotValue = MiniBot.Shoulder.PotMin;
-    }else{
-      Qdata.ShoulderPotValue = value[1];
-    }
-    if(MiniBot.Shoulder.PotInvertRange){
-      Qdata.ShoulderPotValue = MiniBot.Shoulder.PotMax - Qdata.ShoulderPotValue + MiniBot.Shoulder.PotMin;
-    }
-
-    if(value[2] > MiniBot.Elbow.PotMax){
-      Qdata.ElbowPotValue = MiniBot.Elbow.PotMax;
-    }else if(value[2] < MiniBot.Elbow.PotMin){
-      Qdata.ElbowPotValue = MiniBot.Elbow.PotMin;
-    }else{
-      Qdata.ElbowPotValue = value[2];
-    }
-    if(MiniBot.Elbow.PotInvertRange){
-      Qdata.ElbowPotValue = MiniBot.Elbow.PotMax - Qdata.ElbowPotValue + MiniBot.Elbow.PotMin;
-    }
-
-    if(value[3] > MiniBot.Wrist.PotMax){
-      Qdata.WristPotValue = MiniBot.Wrist.PotMax;
-    }else if(value[3] < MiniBot.Wrist.PotMin){
-      Qdata.WristPotValue = MiniBot.Wrist.PotMin;
-    }else{
-      Qdata.WristPotValue = value[3];
-    }
-    if(MiniBot.Wrist.PotInvertRange){
-      Qdata.WristPotValue = MiniBot.Wrist.PotMax - Qdata.WristPotValue + MiniBot.Wrist.PotMin;
-    }
+    QPotDataUpdate(PotRawValue[0], &MiniBot.Base, &Qdata.BasePotValue);
+    QPotDataUpdate(PotRawValue[1], &MiniBot.Shoulder, &Qdata.ShoulderPotValue);
+    QPotDataUpdate(PotRawValue[2], &MiniBot.Elbow, &Qdata.ElbowPotValue);
+    QPotDataUpdate(PotRawValue[3], &MiniBot.Wrist, &Qdata.WristPotValue);
 
     Qdata.GripperValue = (uint8_t)HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9);
     
