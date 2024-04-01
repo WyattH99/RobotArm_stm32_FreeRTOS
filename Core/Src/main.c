@@ -91,6 +91,17 @@ typedef struct{
 	MegaBot_Gripper_Config_t 	Gripper;
 } MegaBot_Config_t;
 
+
+enum State{
+  Init,
+  Ready,
+  Running,
+  EmergencyStop
+};
+
+volatile enum State state = Init;
+volatile MiniBot_Qdata minibot_data;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -111,39 +122,11 @@ I2C_HandleTypeDef hi2c1;
 
 UART_HandleTypeDef huart2;
 
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
-/* Definitions for BlinkLEDTask */
-osThreadId_t BlinkLEDTaskHandle;
-const osThreadAttr_t BlinkLEDTask_attributes = {
-  .name = "BlinkLEDTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow,
-};
-/* Definitions for MiniBotInputs */
-osThreadId_t MiniBotInputsHandle;
-const osThreadAttr_t MiniBotInputs_attributes = {
-  .name = "MiniBotInputs",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
-/* Definitions for ApplicationFSM */
-osThreadId_t ApplicationFSMHandle;
-const osThreadAttr_t ApplicationFSM_attributes = {
-  .name = "ApplicationFSM",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
-/* Definitions for MiniBotInputQueue */
-osMessageQueueId_t MiniBotInputQueueHandle;
-const osMessageQueueAttr_t MiniBotInputQueue_attributes = {
-  .name = "MiniBotInputQueue"
-};
+osThreadId defaultTaskHandle;
+osThreadId BlinkLEDTaskHandle;
+osThreadId MiniBotInputsHandle;
+osThreadId ApplicationFSMHandle;
+osMessageQId MiniBotInputQueueHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -155,10 +138,10 @@ static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART2_UART_Init(void);
-void StartDefaultTask(void *argument);
-void BlinkLEDTaskEntry(void *argument);
-void MiniBotInputsEntry(void *argument);
-void ApplicationFSMEntry(void *argument);
+void StartDefaultTask(void const * argument);
+void BlinkLEDTaskEntry(void const * argument);
+void MiniBotInputsEntry(void const * argument);
+void ApplicationFSMEntry(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -212,9 +195,6 @@ int main(void)
 
   /* USER CODE END 2 */
 
-  /* Init scheduler */
-  osKernelInitialize();
-
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
@@ -228,33 +208,34 @@ int main(void)
   /* USER CODE END RTOS_TIMERS */
 
   /* Create the queue(s) */
-  /* creation of MiniBotInputQueue */
-  MiniBotInputQueueHandle = osMessageQueueNew (16, sizeof(uint32_t), &MiniBotInputQueue_attributes);
+  /* definition and creation of MiniBotInputQueue */
+  osMessageQDef(MiniBotInputQueue, 16, MiniBot_Qdata);
+  MiniBotInputQueueHandle = osMessageCreate(osMessageQ(MiniBotInputQueue), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  /* definition and creation of defaultTask */
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* creation of BlinkLEDTask */
-  BlinkLEDTaskHandle = osThreadNew(BlinkLEDTaskEntry, NULL, &BlinkLEDTask_attributes);
+  /* definition and creation of BlinkLEDTask */
+  osThreadDef(BlinkLEDTask, BlinkLEDTaskEntry, osPriorityLow, 0, 128);
+  BlinkLEDTaskHandle = osThreadCreate(osThread(BlinkLEDTask), NULL);
 
-  /* creation of MiniBotInputs */
-  MiniBotInputsHandle = osThreadNew(MiniBotInputsEntry, NULL, &MiniBotInputs_attributes);
+  /* definition and creation of MiniBotInputs */
+  osThreadDef(MiniBotInputs, MiniBotInputsEntry, osPriorityNormal, 0, 128);
+  MiniBotInputsHandle = osThreadCreate(osThread(MiniBotInputs), NULL);
 
-  /* creation of ApplicationFSM */
-  ApplicationFSMHandle = osThreadNew(ApplicationFSMEntry, NULL, &ApplicationFSM_attributes);
+  /* definition and creation of ApplicationFSM */
+  osThreadDef(ApplicationFSM, ApplicationFSMEntry, osPriorityNormal, 0, 128);
+  ApplicationFSMHandle = osThreadCreate(osThread(ApplicationFSM), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
-
-  /* USER CODE BEGIN RTOS_EVENTS */
-  /* add events, ... */
-  /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
   osKernelStart();
@@ -560,7 +541,7 @@ void MegaBotInit(MiniBot_Config_t* MegaBot){
 
 
 void QPotDataUpdate(uint32_t PotRawValue, MiniBot_Joint_Config_t *Joint, uint32_t *QPotData){
-  if(PotRawValue + 10 > *QPotData || PotRawValue - 10 < *QPotData){
+  if(PotRawValue > *QPotData + 10 || PotRawValue < *QPotData - 10){
     if(PotRawValue > Joint->PotMax){
       *QPotData = Joint->PotMax;
     }else if(PotRawValue < Joint->PotMin){
@@ -585,7 +566,7 @@ void QPotDataUpdate(uint32_t PotRawValue, MiniBot_Joint_Config_t *Joint, uint32_
   * @retval None
   */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument)
+void StartDefaultTask(void const * argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
@@ -604,7 +585,7 @@ void StartDefaultTask(void *argument)
 * @retval None
 */
 /* USER CODE END Header_BlinkLEDTaskEntry */
-void BlinkLEDTaskEntry(void *argument)
+void BlinkLEDTaskEntry(void const * argument)
 {
   /* USER CODE BEGIN BlinkLEDTaskEntry */
   /* Infinite loop */
@@ -625,13 +606,12 @@ void BlinkLEDTaskEntry(void *argument)
 * @retval None
 */
 /* USER CODE END Header_MiniBotInputsEntry */
-void MiniBotInputsEntry(void *argument)
+void MiniBotInputsEntry(void const * argument)
 {
   /* USER CODE BEGIN MiniBotInputsEntry */
 
 	MiniBot_Config_t MiniBot;
 	MiniBotInit(&MiniBot);
-  
 
   
   HAL_ADC_Start_DMA(&hadc1, PotRawValue, 4);
@@ -646,8 +626,9 @@ void MiniBotInputsEntry(void *argument)
 
     Qdata.GripperValue = (uint8_t)HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9);
     
+    xQueueSend(MiniBotInputQueueHandle, (void*)&Qdata, 10);
 
-		osDelay(1);
+    osDelay(1);
 	}
   /* USER CODE END MiniBotInputsEntry */
 }
@@ -659,12 +640,39 @@ void MiniBotInputsEntry(void *argument)
 * @retval None
 */
 /* USER CODE END Header_ApplicationFSMEntry */
-void ApplicationFSMEntry(void *argument)
+void ApplicationFSMEntry(void const * argument)
 {
   /* USER CODE BEGIN ApplicationFSMEntry */
+
+  // enum State state = Init;
+  // MiniBot_Qdata minibot_data;
+
   /* Infinite loop */
   for(;;)
   {
+    if(state == Init){
+      state = Ready;
+
+    }else if(state == Ready){
+      xQueueReceive(MiniBotInputQueueHandle, &minibot_data, 10);
+      if(minibot_data.GripperValue == '\000'){
+        state == Running;
+      }
+
+    }else if(state == Running){
+      // Check if the EmergencyStop is pressed
+      //  if so change the state to Emergency Stop and break out of ifelse
+
+      // Send Minibot_data to the Motor Queue for the Motor Task to handle
+
+    }
+    
+    if(state == EmergencyStop){
+      // If reset btn is pressed change state to Ready
+    }
+
+
+
     osDelay(1);
   }
   /* USER CODE END ApplicationFSMEntry */
