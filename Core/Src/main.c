@@ -133,7 +133,7 @@ osThreadId LCDPrintTaskHandle;
 osMessageQId MiniBotInputQueueHandle;
 osMessageQId MotorControlQueueHandle;
 osMessageQId LCDPrintQueueHandle;
-osMutexId EmergencyMutexHandle;
+osMutexId StateMutexHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -208,9 +208,9 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Create the mutex(es) */
-  /* definition and creation of EmergencyMutex */
-  osMutexDef(EmergencyMutex);
-  EmergencyMutexHandle = osMutexCreate(osMutex(EmergencyMutex));
+  /* definition and creation of StateMutex */
+  osMutexDef(StateMutex);
+  StateMutexHandle = osMutexCreate(osMutex(StateMutex));
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
@@ -566,11 +566,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : EmergencyStopBtn_Pin GripperButton_Pin */
-  GPIO_InitStruct.Pin = EmergencyStopBtn_Pin|GripperButton_Pin;
+  /*Configure GPIO pin : EmergencyStopBtn_Pin */
+  GPIO_InitStruct.Pin = EmergencyStopBtn_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(EmergencyStopBtn_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : GripperButton_Pin */
+  GPIO_InitStruct.Pin = GripperButton_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(GripperButton_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : ResetBtn_Pin */
   GPIO_InitStruct.Pin = ResetBtn_Pin;
@@ -775,7 +781,12 @@ void EmergencyStopTaskEntry(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8)){
+      
+    }
+
+
+    osDelay(100);
   }
   /* USER CODE END EmergencyStopTaskEntry */
 }
