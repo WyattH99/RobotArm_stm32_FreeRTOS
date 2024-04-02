@@ -65,6 +65,8 @@ void Error_Handler(void);
 #define USART_RX_GPIO_Port GPIOA
 #define LD2_Pin GPIO_PIN_5
 #define LD2_GPIO_Port GPIOA
+#define EmergencyStopBtn_Pin GPIO_PIN_8
+#define EmergencyStopBtn_GPIO_Port GPIOA
 #define GripperButton_Pin GPIO_PIN_9
 #define GripperButton_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
@@ -73,6 +75,8 @@ void Error_Handler(void);
 #define TCK_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
+#define ResetBtn_Pin GPIO_PIN_5
+#define ResetBtn_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

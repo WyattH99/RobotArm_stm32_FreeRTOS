@@ -119,6 +119,7 @@ ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
 I2C_HandleTypeDef hi2c1;
+I2C_HandleTypeDef hi2c2;
 
 UART_HandleTypeDef huart2;
 
@@ -126,7 +127,13 @@ osThreadId defaultTaskHandle;
 osThreadId BlinkLEDTaskHandle;
 osThreadId MiniBotInputsHandle;
 osThreadId ApplicationFSMHandle;
+osThreadId EmergencyStopTaHandle;
+osThreadId MotorControlTasHandle;
+osThreadId LCDPrintTaskHandle;
 osMessageQId MiniBotInputQueueHandle;
+osMessageQId MotorControlQueueHandle;
+osMessageQId LCDPrintQueueHandle;
+osMutexId EmergencyMutexHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -138,10 +145,14 @@ static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_I2C2_Init(void);
 void StartDefaultTask(void const * argument);
 void BlinkLEDTaskEntry(void const * argument);
 void MiniBotInputsEntry(void const * argument);
 void ApplicationFSMEntry(void const * argument);
+void EmergencyStopTaskEntry(void const * argument);
+void MotorControlTaskEntry(void const * argument);
+void LCDPrintTaskEntry(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -191,9 +202,15 @@ int main(void)
   MX_ADC1_Init();
   MX_I2C1_Init();
   MX_USART2_UART_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
+
+  /* Create the mutex(es) */
+  /* definition and creation of EmergencyMutex */
+  osMutexDef(EmergencyMutex);
+  EmergencyMutexHandle = osMutexCreate(osMutex(EmergencyMutex));
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
@@ -211,6 +228,14 @@ int main(void)
   /* definition and creation of MiniBotInputQueue */
   osMessageQDef(MiniBotInputQueue, 16, MiniBot_Qdata);
   MiniBotInputQueueHandle = osMessageCreate(osMessageQ(MiniBotInputQueue), NULL);
+
+  /* definition and creation of MotorControlQueue */
+  osMessageQDef(MotorControlQueue, 16, uint16_t);
+  MotorControlQueueHandle = osMessageCreate(osMessageQ(MotorControlQueue), NULL);
+
+  /* definition and creation of LCDPrintQueue */
+  osMessageQDef(LCDPrintQueue, 16, uint16_t);
+  LCDPrintQueueHandle = osMessageCreate(osMessageQ(LCDPrintQueue), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -232,6 +257,18 @@ int main(void)
   /* definition and creation of ApplicationFSM */
   osThreadDef(ApplicationFSM, ApplicationFSMEntry, osPriorityNormal, 0, 128);
   ApplicationFSMHandle = osThreadCreate(osThread(ApplicationFSM), NULL);
+
+  /* definition and creation of EmergencyStopTa */
+  osThreadDef(EmergencyStopTa, EmergencyStopTaskEntry, osPriorityHigh, 0, 128);
+  EmergencyStopTaHandle = osThreadCreate(osThread(EmergencyStopTa), NULL);
+
+  /* definition and creation of MotorControlTas */
+  osThreadDef(MotorControlTas, MotorControlTaskEntry, osPriorityNormal, 0, 128);
+  MotorControlTasHandle = osThreadCreate(osThread(MotorControlTas), NULL);
+
+  /* definition and creation of LCDPrintTask */
+  osThreadDef(LCDPrintTask, LCDPrintTaskEntry, osPriorityNormal, 0, 128);
+  LCDPrintTaskHandle = osThreadCreate(osThread(LCDPrintTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -414,6 +451,40 @@ static void MX_I2C1_Init(void)
 }
 
 /**
+  * @brief I2C2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C2_Init(void)
+{
+
+  /* USER CODE BEGIN I2C2_Init 0 */
+
+  /* USER CODE END I2C2_Init 0 */
+
+  /* USER CODE BEGIN I2C2_Init 1 */
+
+  /* USER CODE END I2C2_Init 1 */
+  hi2c2.Instance = I2C2;
+  hi2c2.Init.ClockSpeed = 100000;
+  hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c2.Init.OwnAddress1 = 0;
+  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c2.Init.OwnAddress2 = 0;
+  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C2_Init 2 */
+
+  /* USER CODE END I2C2_Init 2 */
+
+}
+
+/**
   * @brief USART2 Initialization Function
   * @param None
   * @retval None
@@ -495,11 +566,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : GripperButton_Pin */
-  GPIO_InitStruct.Pin = GripperButton_Pin;
+  /*Configure GPIO pins : EmergencyStopBtn_Pin GripperButton_Pin */
+  GPIO_InitStruct.Pin = EmergencyStopBtn_Pin|GripperButton_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GripperButton_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : ResetBtn_Pin */
+  GPIO_InitStruct.Pin = ResetBtn_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(ResetBtn_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -663,9 +740,6 @@ void ApplicationFSMEntry(void const * argument)
       }
 
     }else if(state == Running){
-      // Check if the EmergencyStop is pressed
-      //  if so change the state to Emergency Stop and break out of ifelse
-
       // Send Minibot_data to the Motor Queue for the Motor Task to handle
       xQueueReceive(MiniBotInputQueueHandle, (void*)&minibot_data, 10);
       if(minibot_data.GripperValue == 0){
@@ -674,10 +748,11 @@ void ApplicationFSMEntry(void const * argument)
           state--;
         }
       }
+
     }
     
     if(state == EmergencyStop){
-      // If reset btn is pressed change state to Ready
+      // If reset btn is pressed change state to Ready1
     }
 
 
@@ -685,6 +760,60 @@ void ApplicationFSMEntry(void const * argument)
     osDelay(1);
   }
   /* USER CODE END ApplicationFSMEntry */
+}
+
+/* USER CODE BEGIN Header_EmergencyStopTaskEntry */
+/**
+* @brief Function implementing the EmergencyStopTa thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_EmergencyStopTaskEntry */
+void EmergencyStopTaskEntry(void const * argument)
+{
+  /* USER CODE BEGIN EmergencyStopTaskEntry */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END EmergencyStopTaskEntry */
+}
+
+/* USER CODE BEGIN Header_MotorControlTaskEntry */
+/**
+* @brief Function implementing the MotorControlTas thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_MotorControlTaskEntry */
+void MotorControlTaskEntry(void const * argument)
+{
+  /* USER CODE BEGIN MotorControlTaskEntry */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END MotorControlTaskEntry */
+}
+
+/* USER CODE BEGIN Header_LCDPrintTaskEntry */
+/**
+* @brief Function implementing the LCDPrintTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_LCDPrintTaskEntry */
+void LCDPrintTaskEntry(void const * argument)
+{
+  /* USER CODE BEGIN LCDPrintTaskEntry */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END LCDPrintTaskEntry */
 }
 
 /**
