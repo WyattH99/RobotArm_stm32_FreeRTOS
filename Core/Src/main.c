@@ -157,7 +157,8 @@ void LCDPrintTaskEntry(void const * argument);
 /* USER CODE BEGIN PFP */
 
 void MiniBotInit(MiniBot_Config_t* MiniBot);
-void MegaBotInit(MiniBot_Config_t* MegaBot);
+void MegaBotInit(MegaBot_Config_t* MegaBot);
+void ServoDriverInit(MegaBot_Config_t* MegaBot);
 
 void QPotDataUpdate(uint32_t PotRawValue, volatile MiniBot_Joint_Config_t *Joint, volatile uint32_t *QPotData);
 
@@ -618,8 +619,43 @@ void MiniBotInit(MiniBot_Config_t* MiniBot){
 	  MiniBot->Gripper.GPIO_Pin = GPIO_PIN_9;
 }
 
-void MegaBotInit(MiniBot_Config_t* MegaBot){
+void MegaBotInit(MegaBot_Config_t* MegaBot){
+  // Configure Each of the joints
+  MegaBot->Base.ServoNum = 0;
+  MegaBot->Base.ServoMin = 0;
+  MegaBot->Base.ServoMax = 180;
+  MegaBot->Base.ServoHomeAngle = 90;
 
+  MegaBot->Shoulder.ServoNum = 1;
+  MegaBot->Shoulder.ServoMin = 0;
+  MegaBot->Shoulder.ServoMax = 180;
+  MegaBot->Shoulder.ServoHomeAngle = 0;
+
+  MegaBot->Elbow.ServoNum = 2;
+  MegaBot->Elbow.ServoMin = 50;
+  MegaBot->Elbow.ServoMax = 180;
+  MegaBot->Elbow.ServoHomeAngle = 180;
+
+  MegaBot->Wrist.ServoNum = 3;
+  MegaBot->Wrist.ServoMin = 0;
+  MegaBot->Wrist.ServoMax = 180;
+  MegaBot->Wrist.ServoHomeAngle = 90;
+
+  MegaBot->Gripper.ServoNum = 4;
+  MegaBot->Gripper.ServoMin = 0;
+  MegaBot->Gripper.ServoMax = 70;
+  MegaBot->Gripper.ServoHomeAngle = MegaBot->Gripper.ServoMin;
+
+  ServoDriverInit(&MegaBot);
+}
+
+void ServoDriverInit(MegaBot_Config_t* MegaBot){
+  PCA9685_Init(&hi2c1);
+  PCA9685_SetServoAngle(MegaBot->Base.ServoNum, MegaBot->Base.ServoHomeAngle);
+  PCA9685_SetServoAngle(MegaBot->Shoulder.ServoNum, MegaBot->Shoulder.ServoHomeAngle);
+  PCA9685_SetServoAngle(MegaBot->Elbow.ServoNum, MegaBot->Elbow.ServoHomeAngle);
+  PCA9685_SetServoAngle(MegaBot->Wrist.ServoNum, MegaBot->Wrist.ServoHomeAngle);
+  PCA9685_SetServoAngle(MegaBot->Gripper.ServoNum, MegaBot->Gripper.ServoHomeAngle);
 }
 
 
@@ -801,9 +837,19 @@ void EmergencyStopTaskEntry(void const * argument)
 void MotorControlTaskEntry(void const * argument)
 {
   /* USER CODE BEGIN MotorControlTaskEntry */
+
+  MegaBot_Config_t MegaBot;
+  MegaBotInit(&MegaBot);
+  ServoDriverInit(&MegaBot);
+
+
   /* Infinite loop */
   for(;;)
   {
+
+    
+
+
     osDelay(1);
   }
   /* USER CODE END MotorControlTaskEntry */
