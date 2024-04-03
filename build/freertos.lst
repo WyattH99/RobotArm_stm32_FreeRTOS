@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccTh5Bbj.s 			page 1
+ARM GAS  /tmp/ccJqD7Yt.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -17,18 +17,17 @@ ARM GAS  /tmp/ccTh5Bbj.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.vApplicationGetIdleTaskMemory,"ax",%progbits
+  17              		.section	.text.configureTimerForRunTimeStats,"ax",%progbits
   18              		.align	1
-  19              		.global	vApplicationGetIdleTaskMemory
+  19              		.weak	configureTimerForRunTimeStats
   20              		.arch armv7e-m
   21              		.syntax unified
   22              		.thumb
   23              		.thumb_func
   24              		.fpu fpv4-sp-d16
-  26              	vApplicationGetIdleTaskMemory:
-  27              	.LVL0:
-  28              	.LFB244:
-  29              		.file 1 "Core/Src/freertos.c"
+  26              	configureTimerForRunTimeStats:
+  27              	.LFB244:
+  28              		.file 1 "Core/Src/freertos.c"
    1:Core/Src/freertos.c **** /* USER CODE BEGIN Header */
    2:Core/Src/freertos.c **** /**
    3:Core/Src/freertos.c ****   ******************************************************************************
@@ -58,10 +57,10 @@ ARM GAS  /tmp/ccTh5Bbj.s 			page 1
   27:Core/Src/freertos.c **** 
   28:Core/Src/freertos.c **** /* USER CODE END Includes */
   29:Core/Src/freertos.c **** 
-ARM GAS  /tmp/ccTh5Bbj.s 			page 2
-
-
   30:Core/Src/freertos.c **** /* Private typedef -----------------------------------------------------------*/
+ARM GAS  /tmp/ccJqD7Yt.s 			page 2
+
+
   31:Core/Src/freertos.c **** /* USER CODE BEGIN PTD */
   32:Core/Src/freertos.c **** 
   33:Core/Src/freertos.c **** /* USER CODE END PTD */
@@ -89,80 +88,143 @@ ARM GAS  /tmp/ccTh5Bbj.s 			page 1
   55:Core/Src/freertos.c **** /* GetIdleTaskMemory prototype (linked to static allocation support) */
   56:Core/Src/freertos.c **** void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskS
   57:Core/Src/freertos.c **** 
-  58:Core/Src/freertos.c **** /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
-  59:Core/Src/freertos.c **** static StaticTask_t xIdleTaskTCBBuffer;
-  60:Core/Src/freertos.c **** static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
+  58:Core/Src/freertos.c **** /* Hook prototypes */
+  59:Core/Src/freertos.c **** void configureTimerForRunTimeStats(void);
+  60:Core/Src/freertos.c **** unsigned long getRunTimeCounterValue(void);
   61:Core/Src/freertos.c **** 
-  62:Core/Src/freertos.c **** void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskS
-  63:Core/Src/freertos.c **** {
-  30              		.loc 1 63 1 view -0
-  31              		.cfi_startproc
-  32              		@ args = 0, pretend = 0, frame = 0
-  33              		@ frame_needed = 0, uses_anonymous_args = 0
-  34              		@ link register save eliminated.
-  64:Core/Src/freertos.c ****   *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
-  35              		.loc 1 64 3 view .LVU1
-  36              		.loc 1 64 25 is_stmt 0 view .LVU2
-  37 0000 034B     		ldr	r3, .L2
-  38 0002 0360     		str	r3, [r0]
-  65:Core/Src/freertos.c ****   *ppxIdleTaskStackBuffer = &xIdleStack[0];
-  39              		.loc 1 65 3 is_stmt 1 view .LVU3
-  40              		.loc 1 65 27 is_stmt 0 view .LVU4
-  41 0004 034B     		ldr	r3, .L2+4
-  42 0006 0B60     		str	r3, [r1]
-  66:Core/Src/freertos.c ****   *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-  43              		.loc 1 66 3 is_stmt 1 view .LVU5
-  44              		.loc 1 66 25 is_stmt 0 view .LVU6
-  45 0008 8023     		movs	r3, #128
-  46 000a 1360     		str	r3, [r2]
-  67:Core/Src/freertos.c ****   /* place for user code */
-  68:Core/Src/freertos.c **** }
-  47              		.loc 1 68 1 view .LVU7
-ARM GAS  /tmp/ccTh5Bbj.s 			page 3
+  62:Core/Src/freertos.c **** /* USER CODE BEGIN 1 */
+  63:Core/Src/freertos.c **** /* Functions needed when configGENERATE_RUN_TIME_STATS is on */
+  64:Core/Src/freertos.c **** __weak void configureTimerForRunTimeStats(void)
+  65:Core/Src/freertos.c **** {
+  29              		.loc 1 65 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  66:Core/Src/freertos.c **** 
+  67:Core/Src/freertos.c **** }
+  34              		.loc 1 67 1 view .LVU1
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE244:
+  39              		.section	.text.getRunTimeCounterValue,"ax",%progbits
+  40              		.align	1
+  41              		.weak	getRunTimeCounterValue
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+  47              	getRunTimeCounterValue:
+  48              	.LFB245:
+  68:Core/Src/freertos.c **** 
+  69:Core/Src/freertos.c **** __weak unsigned long getRunTimeCounterValue(void)
+ARM GAS  /tmp/ccJqD7Yt.s 			page 3
 
 
-  48 000c 7047     		bx	lr
-  49              	.L3:
-  50 000e 00BF     		.align	2
-  51              	.L2:
-  52 0010 00000000 		.word	.LANCHOR0
-  53 0014 00000000 		.word	.LANCHOR1
-  54              		.cfi_endproc
-  55              	.LFE244:
-  57              		.section	.bss.xIdleStack,"aw",%nobits
-  58              		.align	2
-  59              		.set	.LANCHOR1,. + 0
-  62              	xIdleStack:
-  63 0000 00000000 		.space	512
-  63      00000000 
-  63      00000000 
-  63      00000000 
-  63      00000000 
-  64              		.section	.bss.xIdleTaskTCBBuffer,"aw",%nobits
-  65              		.align	2
-  66              		.set	.LANCHOR0,. + 0
-  69              	xIdleTaskTCBBuffer:
-  70 0000 00000000 		.space	84
-  70      00000000 
-  70      00000000 
-  70      00000000 
-  70      00000000 
-  71              		.text
-  72              	.Letext0:
-  73              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
-  74              		.file 3 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
-  75              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h"
-ARM GAS  /tmp/ccTh5Bbj.s 			page 4
+  70:Core/Src/freertos.c **** {
+  49              		.loc 1 70 1 view -0
+  50              		.cfi_startproc
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  53              		@ link register save eliminated.
+  71:Core/Src/freertos.c **** return 0;
+  54              		.loc 1 71 1 view .LVU3
+  72:Core/Src/freertos.c **** }
+  55              		.loc 1 72 1 is_stmt 0 view .LVU4
+  56 0000 0020     		movs	r0, #0
+  57 0002 7047     		bx	lr
+  58              		.cfi_endproc
+  59              	.LFE245:
+  61              		.section	.text.vApplicationGetIdleTaskMemory,"ax",%progbits
+  62              		.align	1
+  63              		.global	vApplicationGetIdleTaskMemory
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  67              		.fpu fpv4-sp-d16
+  69              	vApplicationGetIdleTaskMemory:
+  70              	.LVL0:
+  71              	.LFB246:
+  73:Core/Src/freertos.c **** /* USER CODE END 1 */
+  74:Core/Src/freertos.c **** 
+  75:Core/Src/freertos.c **** /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
+  76:Core/Src/freertos.c **** static StaticTask_t xIdleTaskTCBBuffer;
+  77:Core/Src/freertos.c **** static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
+  78:Core/Src/freertos.c **** 
+  79:Core/Src/freertos.c **** void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskS
+  80:Core/Src/freertos.c **** {
+  72              		.loc 1 80 1 is_stmt 1 view -0
+  73              		.cfi_startproc
+  74              		@ args = 0, pretend = 0, frame = 0
+  75              		@ frame_needed = 0, uses_anonymous_args = 0
+  76              		@ link register save eliminated.
+  81:Core/Src/freertos.c ****   *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
+  77              		.loc 1 81 3 view .LVU6
+  78              		.loc 1 81 25 is_stmt 0 view .LVU7
+  79 0000 034B     		ldr	r3, .L4
+  80 0002 0360     		str	r3, [r0]
+  82:Core/Src/freertos.c ****   *ppxIdleTaskStackBuffer = &xIdleStack[0];
+  81              		.loc 1 82 3 is_stmt 1 view .LVU8
+  82              		.loc 1 82 27 is_stmt 0 view .LVU9
+  83 0004 034B     		ldr	r3, .L4+4
+  84 0006 0B60     		str	r3, [r1]
+  83:Core/Src/freertos.c ****   *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+  85              		.loc 1 83 3 is_stmt 1 view .LVU10
+  86              		.loc 1 83 25 is_stmt 0 view .LVU11
+  87 0008 8023     		movs	r3, #128
+  88 000a 1360     		str	r3, [r2]
+  84:Core/Src/freertos.c ****   /* place for user code */
+  85:Core/Src/freertos.c **** }
+  89              		.loc 1 85 1 view .LVU12
+  90 000c 7047     		bx	lr
+  91              	.L5:
+ARM GAS  /tmp/ccJqD7Yt.s 			page 4
+
+
+  92 000e 00BF     		.align	2
+  93              	.L4:
+  94 0010 00000000 		.word	.LANCHOR0
+  95 0014 00000000 		.word	.LANCHOR1
+  96              		.cfi_endproc
+  97              	.LFE246:
+  99              		.section	.bss.xIdleStack,"aw",%nobits
+ 100              		.align	2
+ 101              		.set	.LANCHOR1,. + 0
+ 104              	xIdleStack:
+ 105 0000 00000000 		.space	512
+ 105      00000000 
+ 105      00000000 
+ 105      00000000 
+ 105      00000000 
+ 106              		.section	.bss.xIdleTaskTCBBuffer,"aw",%nobits
+ 107              		.align	2
+ 108              		.set	.LANCHOR0,. + 0
+ 111              	xIdleTaskTCBBuffer:
+ 112 0000 00000000 		.space	100
+ 112      00000000 
+ 112      00000000 
+ 112      00000000 
+ 112      00000000 
+ 113              		.text
+ 114              	.Letext0:
+ 115              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 116              		.file 3 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
+ 117              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h"
+ARM GAS  /tmp/ccJqD7Yt.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 freertos.c
-     /tmp/ccTh5Bbj.s:18     .text.vApplicationGetIdleTaskMemory:0000000000000000 $t
-     /tmp/ccTh5Bbj.s:26     .text.vApplicationGetIdleTaskMemory:0000000000000000 vApplicationGetIdleTaskMemory
-     /tmp/ccTh5Bbj.s:52     .text.vApplicationGetIdleTaskMemory:0000000000000010 $d
-     /tmp/ccTh5Bbj.s:58     .bss.xIdleStack:0000000000000000 $d
-     /tmp/ccTh5Bbj.s:62     .bss.xIdleStack:0000000000000000 xIdleStack
-     /tmp/ccTh5Bbj.s:65     .bss.xIdleTaskTCBBuffer:0000000000000000 $d
-     /tmp/ccTh5Bbj.s:69     .bss.xIdleTaskTCBBuffer:0000000000000000 xIdleTaskTCBBuffer
+     /tmp/ccJqD7Yt.s:18     .text.configureTimerForRunTimeStats:0000000000000000 $t
+     /tmp/ccJqD7Yt.s:26     .text.configureTimerForRunTimeStats:0000000000000000 configureTimerForRunTimeStats
+     /tmp/ccJqD7Yt.s:40     .text.getRunTimeCounterValue:0000000000000000 $t
+     /tmp/ccJqD7Yt.s:47     .text.getRunTimeCounterValue:0000000000000000 getRunTimeCounterValue
+     /tmp/ccJqD7Yt.s:62     .text.vApplicationGetIdleTaskMemory:0000000000000000 $t
+     /tmp/ccJqD7Yt.s:69     .text.vApplicationGetIdleTaskMemory:0000000000000000 vApplicationGetIdleTaskMemory
+     /tmp/ccJqD7Yt.s:94     .text.vApplicationGetIdleTaskMemory:0000000000000010 $d
+     /tmp/ccJqD7Yt.s:100    .bss.xIdleStack:0000000000000000 $d
+     /tmp/ccJqD7Yt.s:104    .bss.xIdleStack:0000000000000000 xIdleStack
+     /tmp/ccJqD7Yt.s:107    .bss.xIdleTaskTCBBuffer:0000000000000000 $d
+     /tmp/ccJqD7Yt.s:111    .bss.xIdleTaskTCBBuffer:0000000000000000 xIdleTaskTCBBuffer
 
 NO UNDEFINED SYMBOLS

@@ -56,14 +56,23 @@ typedef struct{
 
 typedef struct{
 	uint32_t BasePotValue;
+	uint32_t BasePotMin;
+	uint32_t BasePotMax;
 	uint32_t ShoulderPotValue;
+	uint32_t ShoulderPotMin;
+	uint32_t ShoulderPotMax;
 	uint32_t ElbowPotValue;
+	uint32_t ElbowPotMin;
+	uint32_t ElbowPotMax;
 	uint32_t WristPotValue;
+	uint32_t WristPotMin;
+	uint32_t WristPotMax;
 	uint8_t  GripperValue;
 } MiniBot_Qdata;
 
 volatile MiniBot_Qdata Qdata;
 uint32_t PotRawValue[4];
+volatile MiniBot_Qdata MiniBot_Qdata_Buf;
 
 
 /*
@@ -91,6 +100,11 @@ typedef struct{
 	MegaBot_Gripper_Config_t 	Gripper;
 } MegaBot_Config_t;
 
+volatile MiniBot_Qdata Temp_Qdata_Buf;
+volatile MiniBot_Qdata MotorControl_Qdata_Buf;
+
+uint8_t tempFailedToPostMessage = 0;
+
 
 enum State{
   Init,
@@ -100,7 +114,6 @@ enum State{
 };
 
 volatile enum State state = Init;
-volatile MiniBot_Qdata minibot_data;
 
 /* USER CODE END PTD */
 
@@ -116,7 +129,6 @@ volatile MiniBot_Qdata minibot_data;
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
-DMA_HandleTypeDef hdma_adc1;
 
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
@@ -141,7 +153,6 @@ osMutexId StateMutexHandle;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART2_UART_Init(void);
@@ -161,6 +172,9 @@ void MegaBotInit(MegaBot_Config_t* MegaBot);
 void ServoDriverInit(MegaBot_Config_t* MegaBot);
 
 void QPotDataUpdate(uint32_t PotRawValue, volatile MiniBot_Joint_Config_t *Joint, volatile uint32_t *QPotData);
+
+void MoveServo(MegaBot_Config_t* MegaBot, volatile MiniBot_Qdata* MiniBot);
+uint32_t MAP(uint32_t au32_IN, uint32_t au32_INmin, uint32_t au32_INmax, uint32_t au32_OUTmin, uint32_t au32_OUTmax);
 
 /* USER CODE END PFP */
 
@@ -199,7 +213,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_ADC1_Init();
   MX_I2C1_Init();
   MX_USART2_UART_Init();
@@ -231,7 +244,7 @@ int main(void)
   MiniBotInputQueueHandle = osMessageCreate(osMessageQ(MiniBotInputQueue), NULL);
 
   /* definition and creation of MotorControlQueue */
-  osMessageQDef(MotorControlQueue, 16, uint16_t);
+  osMessageQDef(MotorControlQueue, 16, MiniBot_Qdata);
   MotorControlQueueHandle = osMessageCreate(osMessageQ(MotorControlQueue), NULL);
 
   /* definition and creation of LCDPrintQueue */
@@ -248,23 +261,23 @@ int main(void)
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of BlinkLEDTask */
-  osThreadDef(BlinkLEDTask, BlinkLEDTaskEntry, osPriorityLow, 0, 128);
+  osThreadDef(BlinkLEDTask, BlinkLEDTaskEntry, osPriorityNormal, 0, 128);
   BlinkLEDTaskHandle = osThreadCreate(osThread(BlinkLEDTask), NULL);
 
   /* definition and creation of MiniBotInputs */
-  osThreadDef(MiniBotInputs, MiniBotInputsEntry, osPriorityNormal, 0, 128);
+  osThreadDef(MiniBotInputs, MiniBotInputsEntry, osPriorityNormal, 0, 512);
   MiniBotInputsHandle = osThreadCreate(osThread(MiniBotInputs), NULL);
 
   /* definition and creation of ApplicationFSM */
-  osThreadDef(ApplicationFSM, ApplicationFSMEntry, osPriorityNormal, 0, 128);
+  osThreadDef(ApplicationFSM, ApplicationFSMEntry, osPriorityHigh, 0, 512);
   ApplicationFSMHandle = osThreadCreate(osThread(ApplicationFSM), NULL);
 
   /* definition and creation of EmergencyStopTa */
-  osThreadDef(EmergencyStopTa, EmergencyStopTaskEntry, osPriorityHigh, 0, 128);
+  osThreadDef(EmergencyStopTa, EmergencyStopTaskEntry, osPriorityNormal, 0, 128);
   EmergencyStopTaHandle = osThreadCreate(osThread(EmergencyStopTa), NULL);
 
   /* definition and creation of MotorControlTas */
-  osThreadDef(MotorControlTas, MotorControlTaskEntry, osPriorityNormal, 0, 128);
+  osThreadDef(MotorControlTas, MotorControlTaskEntry, osPriorityNormal, 0, 512);
   MotorControlTasHandle = osThreadCreate(osThread(MotorControlTas), NULL);
 
   /* definition and creation of LCDPrintTask */
@@ -362,14 +375,15 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = ENABLE;
-  hadc1.Init.ContinuousConvMode = ENABLE;
-  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.ContinuousConvMode = DISABLE;
+  hadc1.Init.DiscontinuousConvMode = ENABLE;
+  hadc1.Init.NbrOfDiscConversion = 4;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 4;
-  hadc1.Init.DMAContinuousRequests = ENABLE;
-  hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
+  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
     Error_Handler();
@@ -519,22 +533,6 @@ static void MX_USART2_UART_Init(void)
 }
 
 /**
-  * Enable DMA controller clock
-  */
-static void MX_DMA_Init(void)
-{
-
-  /* DMA controller clock enable */
-  __HAL_RCC_DMA2_CLK_ENABLE();
-
-  /* DMA interrupt init */
-  /* DMA2_Stream0_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
-
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -646,7 +644,7 @@ void MegaBotInit(MegaBot_Config_t* MegaBot){
   MegaBot->Gripper.ServoMax = 70;
   MegaBot->Gripper.ServoHomeAngle = MegaBot->Gripper.ServoMin;
 
-  ServoDriverInit(&MegaBot);
+  ServoDriverInit(MegaBot);
 }
 
 void ServoDriverInit(MegaBot_Config_t* MegaBot){
@@ -674,6 +672,35 @@ void QPotDataUpdate(uint32_t PotRawValue, volatile MiniBot_Joint_Config_t *Joint
   }
 }
 
+void MoveServo(MegaBot_Config_t* MegaBot, volatile MiniBot_Qdata* MiniBot){
+  // MAP each of the angles
+  // Send each of new Joints angle
+  float MappedServoAngle;
+  // Base
+  MappedServoAngle = MAP(MiniBot->BasePotValue, MiniBot->BasePotMin, MiniBot->BasePotMax, MegaBot->Base.ServoMin, MegaBot->Base.ServoMax);
+  PCA9685_SetServoAngle(MegaBot->Base.ServoNum, MappedServoAngle);
+  // Shoulder
+  MappedServoAngle = MAP(MiniBot->ShoulderPotValue, MiniBot->ShoulderPotMin, MiniBot->ShoulderPotMax, MegaBot->Shoulder.ServoMin, MegaBot->Shoulder.ServoMax);
+  PCA9685_SetServoAngle(MegaBot->Shoulder.ServoNum, MappedServoAngle);
+  // Elbow
+  MappedServoAngle = MAP(MiniBot->ElbowPotValue, MiniBot->ElbowPotMin, MiniBot->ElbowPotMax, MegaBot->Elbow.ServoMin, MegaBot->Elbow.ServoMax);
+  PCA9685_SetServoAngle(MegaBot->Elbow.ServoNum, MappedServoAngle);
+  // Wrist
+  MappedServoAngle = MAP(MiniBot->WristPotValue, MiniBot->WristPotMin, MiniBot->WristPotMax, MegaBot->Wrist.ServoMin, MegaBot->Wrist.ServoMax);
+  PCA9685_SetServoAngle(MegaBot->Wrist.ServoNum, MappedServoAngle);
+  // Gripper
+  if(MiniBot->GripperValue){
+    PCA9685_SetServoAngle(MegaBot->Gripper.ServoNum, MegaBot->Gripper.ServoMin);
+  }else{
+    PCA9685_SetServoAngle(MegaBot->Gripper.ServoNum, MegaBot->Gripper.ServoMax);
+  }
+}
+
+// Used to map the Potentiometer Range (0-4096) to the Servo Range (0-180)
+uint32_t MAP(uint32_t au32_IN, uint32_t au32_INmin, uint32_t au32_INmax, uint32_t au32_OUTmin, uint32_t au32_OUTmax)
+{
+    return ((((au32_IN - au32_INmin)*(au32_OUTmax - au32_OUTmin))/(au32_INmax - au32_INmin)) + au32_OUTmin);
+}
 
 
 /* USER CODE END 4 */
@@ -733,11 +760,30 @@ void MiniBotInputsEntry(void const * argument)
 	MiniBotInit(&MiniBot);
 
   
-  HAL_ADC_Start_DMA(&hadc1, PotRawValue, 4);
+  // HAL_ADC_Start_DMA(&hadc1, PotRawValue, 4);
 
 	/* Infinite loop */
 	for(;;)
 	{
+    // for(uint8_t i=0; i<4; i++){
+    //   HAL_ADC_Start(&hadc1);
+    //   HAL_ADC_PollForConversion(&hadc1, 1);
+    //   PotRawValue[i] = HAL_ADC_GetValue(&hadc1);
+    // }
+    HAL_ADC_Start(&hadc1);
+    HAL_ADC_PollForConversion(&hadc1, portMAX_DELAY);
+    PotRawValue[0] = HAL_ADC_GetValue(&hadc1);
+    HAL_ADC_Start(&hadc1);
+    HAL_ADC_PollForConversion(&hadc1, portMAX_DELAY);
+    PotRawValue[1] = HAL_ADC_GetValue(&hadc1);
+    HAL_ADC_Start(&hadc1);
+    HAL_ADC_PollForConversion(&hadc1, portMAX_DELAY);
+    PotRawValue[2] = HAL_ADC_GetValue(&hadc1);
+    HAL_ADC_Start(&hadc1);
+    HAL_ADC_PollForConversion(&hadc1, portMAX_DELAY);
+    PotRawValue[3] = HAL_ADC_GetValue(&hadc1);
+    HAL_ADC_Stop(&hadc1);
+
     QPotDataUpdate(PotRawValue[0], &MiniBot.Base, &Qdata.BasePotValue);
     QPotDataUpdate(PotRawValue[1], &MiniBot.Shoulder, &Qdata.ShoulderPotValue);
     QPotDataUpdate(PotRawValue[2], &MiniBot.Elbow, &Qdata.ElbowPotValue);
@@ -745,7 +791,13 @@ void MiniBotInputsEntry(void const * argument)
 
     Qdata.GripperValue = (uint8_t)HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9);
     
-    xQueueSend(MiniBotInputQueueHandle, (void*)&Qdata, 10);
+    if(MiniBotInputQueueHandle != 0){
+      if(xQueueSend(MiniBotInputQueueHandle, (void*)&Qdata, portMAX_DELAY) != pdPASS){
+        // failed to post message
+        tempFailedToPostMessage = 1;
+      }
+    }
+  
 
     osDelay(1);
 	}
@@ -773,24 +825,23 @@ void ApplicationFSMEntry(void const * argument)
       state = Ready;
 
     }else if(state == Ready){
-      xQueueReceive(MiniBotInputQueueHandle, (void*)&minibot_data, 10);
-      if(minibot_data.GripperValue == 0){
-        xQueueReceive(MiniBotInputQueueHandle, (void*)&minibot_data, 10);
-        if(minibot_data.GripperValue == 1){
-          state++;
+      if(xQueueReceive(MiniBotInputQueueHandle, (void*)&MiniBot_Qdata_Buf, portMAX_DELAY) == pdPASS){
+        if(MiniBot_Qdata_Buf.GripperValue == 0){
+          if(xQueueReceive(MiniBotInputQueueHandle, (void*)&MiniBot_Qdata_Buf, portMAX_DELAY) == pdPASS){
+            if(MiniBot_Qdata_Buf.GripperValue == 1){
+              state++;
+            }
+          }
         }
       }
 
     }else if(state == Running){
       // Send Minibot_data to the Motor Queue for the Motor Task to handle
-      xQueueReceive(MiniBotInputQueueHandle, (void*)&minibot_data, 10);
-      if(minibot_data.GripperValue == 0){
-        xQueueReceive(MiniBotInputQueueHandle, (void*)&minibot_data, 10);
-        if(minibot_data.GripperValue == 1){
-          state--;
-        }
+      if(xQueueReceive(MiniBotInputQueueHandle, (void*)&MiniBot_Qdata_Buf, portMAX_DELAY) == pdPASS){
+        Temp_Qdata_Buf = MiniBot_Qdata_Buf;
+        xQueueSend(MotorControlQueueHandle, (void*)&Temp_Qdata_Buf, portMAX_DELAY);
       }
-
+      
     }
     
     if(state == EmergencyStop){
@@ -822,7 +873,7 @@ void EmergencyStopTaskEntry(void const * argument)
     }
 
 
-    osDelay(100);
+    osDelay(1);
   }
   /* USER CODE END EmergencyStopTaskEntry */
 }
@@ -847,7 +898,10 @@ void MotorControlTaskEntry(void const * argument)
   for(;;)
   {
 
-    
+    if(xQueueReceive(MotorControlQueueHandle, (void*)&MotorControl_Qdata_Buf, portMAX_DELAY) == pdPASS){
+      MoveServo(&MegaBot, &MotorControl_Qdata_Buf);
+    }
+
 
 
     osDelay(1);

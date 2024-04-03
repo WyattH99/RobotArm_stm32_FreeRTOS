@@ -16,7 +16,8 @@
             "liveWatch": {
                 "enabled": true,
                 "samplesPerSecond": 20
-            }
+            },
+            "rtos": "FreeRTOS"
         },
         {
             "showDevDebugOutput": "parsed",
@@ -30,7 +31,8 @@
             "device": "stm32f446",
             "configFiles": [
                 "openocd.cfg"
-            ]
+            ],
+            "rtos": "FreeRTOS"
         }
     ]
 }
