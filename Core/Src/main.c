@@ -377,7 +377,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ScanConvMode = ENABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.DiscontinuousConvMode = ENABLE;
-  hadc1.Init.NbrOfDiscConversion = 4;
+  hadc1.Init.NbrOfDiscConversion = 1;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
@@ -765,23 +765,11 @@ void MiniBotInputsEntry(void const * argument)
 	/* Infinite loop */
 	for(;;)
 	{
-    // for(uint8_t i=0; i<4; i++){
-    //   HAL_ADC_Start(&hadc1);
-    //   HAL_ADC_PollForConversion(&hadc1, 1);
-    //   PotRawValue[i] = HAL_ADC_GetValue(&hadc1);
-    // }
-    HAL_ADC_Start(&hadc1);
-    HAL_ADC_PollForConversion(&hadc1, portMAX_DELAY);
-    PotRawValue[0] = HAL_ADC_GetValue(&hadc1);
-    HAL_ADC_Start(&hadc1);
-    HAL_ADC_PollForConversion(&hadc1, portMAX_DELAY);
-    PotRawValue[1] = HAL_ADC_GetValue(&hadc1);
-    HAL_ADC_Start(&hadc1);
-    HAL_ADC_PollForConversion(&hadc1, portMAX_DELAY);
-    PotRawValue[2] = HAL_ADC_GetValue(&hadc1);
-    HAL_ADC_Start(&hadc1);
-    HAL_ADC_PollForConversion(&hadc1, portMAX_DELAY);
-    PotRawValue[3] = HAL_ADC_GetValue(&hadc1);
+    for(uint8_t i=0; i<4; i++){
+      HAL_ADC_Start(&hadc1);
+      HAL_ADC_PollForConversion(&hadc1, 1);
+      PotRawValue[i] = HAL_ADC_GetValue(&hadc1);
+    }
     HAL_ADC_Stop(&hadc1);
 
     QPotDataUpdate(PotRawValue[0], &MiniBot.Base, &Qdata.BasePotValue);
