@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccuciqxv.s 			page 1
+ARM GAS  /tmp/ccodmE6X.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
   28:Core/Src/syscalls.c **** #include <signal.h>
   29:Core/Src/syscalls.c **** #include <time.h>
   30:Core/Src/syscalls.c **** #include <sys/time.h>
-ARM GAS  /tmp/ccuciqxv.s 			page 2
+ARM GAS  /tmp/ccodmE6X.s 			page 2
 
 
   31:Core/Src/syscalls.c **** #include <sys/times.h>
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
   65              		.thumb
   66              		.thumb_func
   67              		.fpu fpv4-sp-d16
-ARM GAS  /tmp/ccuciqxv.s 			page 3
+ARM GAS  /tmp/ccodmE6X.s 			page 3
 
 
   69              	_kill:
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  114              		.cfi_def_cfa_offset 8
  115              		.cfi_offset 3, -8
  116              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccuciqxv.s 			page 4
+ARM GAS  /tmp/ccodmE6X.s 			page 4
 
 
   63:Core/Src/syscalls.c ****   _kill(status, -1);
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
   73:Core/Src/syscalls.c ****   {
   74:Core/Src/syscalls.c ****     *ptr++ = __io_getchar();
  163              		.loc 1 74 5 is_stmt 1 discriminator 3 view .LVU26
-ARM GAS  /tmp/ccuciqxv.s 			page 5
+ARM GAS  /tmp/ccodmE6X.s 			page 5
 
 
  164              		.loc 1 74 14 is_stmt 0 discriminator 3 view .LVU27
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  209 0000 70B5     		push	{r4, r5, r6, lr}
  210              		.cfi_def_cfa_offset 16
  211              		.cfi_offset 4, -16
-ARM GAS  /tmp/ccuciqxv.s 			page 6
+ARM GAS  /tmp/ccodmE6X.s 			page 6
 
 
  212              		.cfi_offset 5, -12
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  254              		.syntax unified
  255              		.thumb
  256              		.thumb_func
-ARM GAS  /tmp/ccuciqxv.s 			page 7
+ARM GAS  /tmp/ccodmE6X.s 			page 7
 
 
  257              		.fpu fpv4-sp-d16
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  300 0006 0020     		movs	r0, #0
  301              	.LVL21:
  302              		.loc 1 104 1 view .LVU66
-ARM GAS  /tmp/ccuciqxv.s 			page 8
+ARM GAS  /tmp/ccodmE6X.s 			page 8
 
 
  303 0008 7047     		bx	lr
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  350              		.loc 1 115 3 view .LVU74
  116:Core/Src/syscalls.c ****   (void)dir;
  351              		.loc 1 116 3 view .LVU75
-ARM GAS  /tmp/ccuciqxv.s 			page 9
+ARM GAS  /tmp/ccodmE6X.s 			page 9
 
 
  117:Core/Src/syscalls.c ****   return 0;
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  399              		.section	.text._wait,"ax",%progbits
  400              		.align	1
  401              		.global	_wait
-ARM GAS  /tmp/ccuciqxv.s 			page 10
+ARM GAS  /tmp/ccodmE6X.s 			page 10
 
 
  402              		.syntax unified
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  449 0000 08B5     		push	{r3, lr}
  450              		.cfi_def_cfa_offset 8
  451              		.cfi_offset 3, -8
-ARM GAS  /tmp/ccuciqxv.s 			page 11
+ARM GAS  /tmp/ccodmE6X.s 			page 11
 
 
  452              		.cfi_offset 14, -4
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  499              		.fpu fpv4-sp-d16
  501              	_stat:
  502              	.LVL34:
-ARM GAS  /tmp/ccuciqxv.s 			page 12
+ARM GAS  /tmp/ccodmE6X.s 			page 12
 
 
  503              	.LFB39:
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  546 0002 FFF7FEFF 		bl	__errno
  547              	.LVL37:
  548              		.loc 1 159 9 is_stmt 0 view .LVU117
-ARM GAS  /tmp/ccuciqxv.s 			page 13
+ARM GAS  /tmp/ccodmE6X.s 			page 13
 
 
  549 0006 1F23     		movs	r3, #31
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  599              	.LFB42:
  168:Core/Src/syscalls.c **** 
  169:Core/Src/syscalls.c **** int _execve(char *name, char **argv, char **env)
-ARM GAS  /tmp/ccuciqxv.s 			page 14
+ARM GAS  /tmp/ccodmE6X.s 			page 14
 
 
  170:Core/Src/syscalls.c **** {
@@ -834,51 +834,51 @@ ARM GAS  /tmp/ccuciqxv.s 			page 1
  648              		.file 7 "/usr/include/newlib/sys/stat.h"
  649              		.file 8 "/usr/include/newlib/sys/times.h"
  650              		.file 9 "/usr/include/newlib/sys/errno.h"
-ARM GAS  /tmp/ccuciqxv.s 			page 15
+ARM GAS  /tmp/ccodmE6X.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 syscalls.c
-     /tmp/ccuciqxv.s:18     .text.initialise_monitor_handles:0000000000000000 $t
-     /tmp/ccuciqxv.s:26     .text.initialise_monitor_handles:0000000000000000 initialise_monitor_handles
-     /tmp/ccuciqxv.s:40     .text._getpid:0000000000000000 $t
-     /tmp/ccuciqxv.s:47     .text._getpid:0000000000000000 _getpid
-     /tmp/ccuciqxv.s:62     .text._kill:0000000000000000 $t
-     /tmp/ccuciqxv.s:69     .text._kill:0000000000000000 _kill
-     /tmp/ccuciqxv.s:97     .text._exit:0000000000000000 $t
-     /tmp/ccuciqxv.s:104    .text._exit:0000000000000000 _exit
-     /tmp/ccuciqxv.s:130    .text._read:0000000000000000 $t
-     /tmp/ccuciqxv.s:137    .text._read:0000000000000000 _read
-     /tmp/ccuciqxv.s:194    .text._write:0000000000000000 $t
-     /tmp/ccuciqxv.s:201    .text._write:0000000000000000 _write
-     /tmp/ccuciqxv.s:252    .text._close:0000000000000000 $t
-     /tmp/ccuciqxv.s:259    .text._close:0000000000000000 _close
-     /tmp/ccuciqxv.s:278    .text._fstat:0000000000000000 $t
-     /tmp/ccuciqxv.s:285    .text._fstat:0000000000000000 _fstat
-     /tmp/ccuciqxv.s:308    .text._isatty:0000000000000000 $t
-     /tmp/ccuciqxv.s:315    .text._isatty:0000000000000000 _isatty
-     /tmp/ccuciqxv.s:334    .text._lseek:0000000000000000 $t
-     /tmp/ccuciqxv.s:341    .text._lseek:0000000000000000 _lseek
-     /tmp/ccuciqxv.s:362    .text._open:0000000000000000 $t
-     /tmp/ccuciqxv.s:369    .text._open:0000000000000000 _open
-     /tmp/ccuciqxv.s:400    .text._wait:0000000000000000 $t
-     /tmp/ccuciqxv.s:407    .text._wait:0000000000000000 _wait
-     /tmp/ccuciqxv.s:434    .text._unlink:0000000000000000 $t
-     /tmp/ccuciqxv.s:441    .text._unlink:0000000000000000 _unlink
-     /tmp/ccuciqxv.s:468    .text._times:0000000000000000 $t
-     /tmp/ccuciqxv.s:475    .text._times:0000000000000000 _times
-     /tmp/ccuciqxv.s:494    .text._stat:0000000000000000 $t
-     /tmp/ccuciqxv.s:501    .text._stat:0000000000000000 _stat
-     /tmp/ccuciqxv.s:524    .text._link:0000000000000000 $t
-     /tmp/ccuciqxv.s:531    .text._link:0000000000000000 _link
-     /tmp/ccuciqxv.s:559    .text._fork:0000000000000000 $t
-     /tmp/ccuciqxv.s:566    .text._fork:0000000000000000 _fork
-     /tmp/ccuciqxv.s:590    .text._execve:0000000000000000 $t
-     /tmp/ccuciqxv.s:597    .text._execve:0000000000000000 _execve
-     /tmp/ccuciqxv.s:637    .data.environ:0000000000000000 environ
-     /tmp/ccuciqxv.s:631    .bss.__env:0000000000000000 __env
-     /tmp/ccuciqxv.s:628    .bss.__env:0000000000000000 $d
-     /tmp/ccuciqxv.s:634    .data.environ:0000000000000000 $d
+     /tmp/ccodmE6X.s:18     .text.initialise_monitor_handles:0000000000000000 $t
+     /tmp/ccodmE6X.s:26     .text.initialise_monitor_handles:0000000000000000 initialise_monitor_handles
+     /tmp/ccodmE6X.s:40     .text._getpid:0000000000000000 $t
+     /tmp/ccodmE6X.s:47     .text._getpid:0000000000000000 _getpid
+     /tmp/ccodmE6X.s:62     .text._kill:0000000000000000 $t
+     /tmp/ccodmE6X.s:69     .text._kill:0000000000000000 _kill
+     /tmp/ccodmE6X.s:97     .text._exit:0000000000000000 $t
+     /tmp/ccodmE6X.s:104    .text._exit:0000000000000000 _exit
+     /tmp/ccodmE6X.s:130    .text._read:0000000000000000 $t
+     /tmp/ccodmE6X.s:137    .text._read:0000000000000000 _read
+     /tmp/ccodmE6X.s:194    .text._write:0000000000000000 $t
+     /tmp/ccodmE6X.s:201    .text._write:0000000000000000 _write
+     /tmp/ccodmE6X.s:252    .text._close:0000000000000000 $t
+     /tmp/ccodmE6X.s:259    .text._close:0000000000000000 _close
+     /tmp/ccodmE6X.s:278    .text._fstat:0000000000000000 $t
+     /tmp/ccodmE6X.s:285    .text._fstat:0000000000000000 _fstat
+     /tmp/ccodmE6X.s:308    .text._isatty:0000000000000000 $t
+     /tmp/ccodmE6X.s:315    .text._isatty:0000000000000000 _isatty
+     /tmp/ccodmE6X.s:334    .text._lseek:0000000000000000 $t
+     /tmp/ccodmE6X.s:341    .text._lseek:0000000000000000 _lseek
+     /tmp/ccodmE6X.s:362    .text._open:0000000000000000 $t
+     /tmp/ccodmE6X.s:369    .text._open:0000000000000000 _open
+     /tmp/ccodmE6X.s:400    .text._wait:0000000000000000 $t
+     /tmp/ccodmE6X.s:407    .text._wait:0000000000000000 _wait
+     /tmp/ccodmE6X.s:434    .text._unlink:0000000000000000 $t
+     /tmp/ccodmE6X.s:441    .text._unlink:0000000000000000 _unlink
+     /tmp/ccodmE6X.s:468    .text._times:0000000000000000 $t
+     /tmp/ccodmE6X.s:475    .text._times:0000000000000000 _times
+     /tmp/ccodmE6X.s:494    .text._stat:0000000000000000 $t
+     /tmp/ccodmE6X.s:501    .text._stat:0000000000000000 _stat
+     /tmp/ccodmE6X.s:524    .text._link:0000000000000000 $t
+     /tmp/ccodmE6X.s:531    .text._link:0000000000000000 _link
+     /tmp/ccodmE6X.s:559    .text._fork:0000000000000000 $t
+     /tmp/ccodmE6X.s:566    .text._fork:0000000000000000 _fork
+     /tmp/ccodmE6X.s:590    .text._execve:0000000000000000 $t
+     /tmp/ccodmE6X.s:597    .text._execve:0000000000000000 _execve
+     /tmp/ccodmE6X.s:637    .data.environ:0000000000000000 environ
+     /tmp/ccodmE6X.s:631    .bss.__env:0000000000000000 __env
+     /tmp/ccodmE6X.s:628    .bss.__env:0000000000000000 $d
+     /tmp/ccodmE6X.s:634    .data.environ:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 __errno

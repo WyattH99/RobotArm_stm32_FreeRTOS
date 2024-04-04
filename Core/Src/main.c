@@ -104,6 +104,7 @@ volatile MiniBot_Qdata Temp_Qdata_Buf;
 volatile MiniBot_Qdata MotorControl_Qdata_Buf;
 
 uint8_t tempFailedToPostMessage = 0;
+uint16_t MappedServoAngle[4];
 
 
 enum State{
@@ -675,19 +676,19 @@ void QPotDataUpdate(uint32_t PotRawValue, volatile MiniBot_Joint_Config_t *Joint
 void MoveServo(MegaBot_Config_t* MegaBot, volatile MiniBot_Qdata* MiniBot){
   // MAP each of the angles
   // Send each of new Joints angle
-  float MappedServoAngle;
+  // uint16_t MappedServoAngle;
   // Base
-  MappedServoAngle = MAP(MiniBot->BasePotValue, MiniBot->BasePotMin, MiniBot->BasePotMax, MegaBot->Base.ServoMin, MegaBot->Base.ServoMax);
-  PCA9685_SetServoAngle(MegaBot->Base.ServoNum, MappedServoAngle);
+  MappedServoAngle[0] = MAP(MiniBot->BasePotValue, MiniBot->BasePotMin, MiniBot->BasePotMax, MegaBot->Base.ServoMin, MegaBot->Base.ServoMax);
+  PCA9685_SetServoAngle(MegaBot->Base.ServoNum, MappedServoAngle[0]);
   // Shoulder
-  MappedServoAngle = MAP(MiniBot->ShoulderPotValue, MiniBot->ShoulderPotMin, MiniBot->ShoulderPotMax, MegaBot->Shoulder.ServoMin, MegaBot->Shoulder.ServoMax);
-  PCA9685_SetServoAngle(MegaBot->Shoulder.ServoNum, MappedServoAngle);
+  MappedServoAngle[1] = MAP(MiniBot->ShoulderPotValue, MiniBot->ShoulderPotMin, MiniBot->ShoulderPotMax, MegaBot->Shoulder.ServoMin, MegaBot->Shoulder.ServoMax);
+  PCA9685_SetServoAngle(MegaBot->Shoulder.ServoNum, MappedServoAngle[1]);
   // Elbow
-  MappedServoAngle = MAP(MiniBot->ElbowPotValue, MiniBot->ElbowPotMin, MiniBot->ElbowPotMax, MegaBot->Elbow.ServoMin, MegaBot->Elbow.ServoMax);
-  PCA9685_SetServoAngle(MegaBot->Elbow.ServoNum, MappedServoAngle);
+  MappedServoAngle[2] = MAP(MiniBot->ElbowPotValue, MiniBot->ElbowPotMin, MiniBot->ElbowPotMax, MegaBot->Elbow.ServoMin, MegaBot->Elbow.ServoMax);
+  PCA9685_SetServoAngle(MegaBot->Elbow.ServoNum, MappedServoAngle[2]);
   // Wrist
-  MappedServoAngle = MAP(MiniBot->WristPotValue, MiniBot->WristPotMin, MiniBot->WristPotMax, MegaBot->Wrist.ServoMin, MegaBot->Wrist.ServoMax);
-  PCA9685_SetServoAngle(MegaBot->Wrist.ServoNum, MappedServoAngle);
+  MappedServoAngle[3] = MAP(MiniBot->WristPotValue, MiniBot->WristPotMin, MiniBot->WristPotMax, MegaBot->Wrist.ServoMin, MegaBot->Wrist.ServoMax);
+  PCA9685_SetServoAngle(MegaBot->Wrist.ServoNum, MappedServoAngle[3]);
   // Gripper
   if(MiniBot->GripperValue){
     PCA9685_SetServoAngle(MegaBot->Gripper.ServoNum, MegaBot->Gripper.ServoMin);
@@ -759,8 +760,15 @@ void MiniBotInputsEntry(void const * argument)
 	MiniBot_Config_t MiniBot;
 	MiniBotInit(&MiniBot);
 
+  Qdata.BasePotMax = MiniBot.Base.PotMax;
+  Qdata.BasePotMin = MiniBot.Base.PotMin;
+  Qdata.ShoulderPotMax = MiniBot.Shoulder.PotMax;
+  Qdata.ShoulderPotMin = MiniBot.Shoulder.PotMin;
+  Qdata.ElbowPotMax = MiniBot.Elbow.PotMax;
+  Qdata.ElbowPotMin = MiniBot.Elbow.PotMin;
+  Qdata.WristPotMax = MiniBot.Wrist.PotMax;
+  Qdata.WristPotMin = MiniBot.Wrist.PotMin;
   
-  // HAL_ADC_Start_DMA(&hadc1, PotRawValue, 4);
 
 	/* Infinite loop */
 	for(;;)
