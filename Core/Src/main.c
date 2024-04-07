@@ -252,7 +252,7 @@ int main(void)
   MotorControlQueueHandle = osMessageCreate(osMessageQ(MotorControlQueue), NULL);
 
   /* definition and creation of LCDPrintQueue */
-  osMessageQDef(LCDPrintQueue, 16, uint16_t);
+  osMessageQDef(LCDPrintQueue, 16, enum State);
   LCDPrintQueueHandle = osMessageCreate(osMessageQ(LCDPrintQueue), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -820,9 +820,13 @@ void ApplicationFSMEntry(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+    if(xQueueSend(LCDPrintQueueHandle, (void*)&state, portMAX_DELAY) != pdPASS){
+      // failed to post message
+      tempFailedToPostMessage = 1;
+    }
     if(state == Init){
       state = Ready;
-
+      
     }else if(state == Ready){
       if(xQueueReceive(MiniBotInputQueueHandle, (void*)&MiniBot_Qdata_Buf, portMAX_DELAY) == pdPASS){
         if(MiniBot_Qdata_Buf.GripperValue == 0){
@@ -925,10 +929,44 @@ void LCDPrintTaskEntry(void const * argument)
   I2C_LCD_SetCursor(I2C_LCD_1, 0, 1);
   I2C_LCD_WriteString(I2C_LCD_1, "I2C LCD");
 
+  enum State CurrentState;
+  enum State LastState;
+
   /* Infinite loop */
   for(;;)
   {
 
+    if(xQueueReceive(LCDPrintQueueHandle, (void*)&CurrentState, portMAX_DELAY) == pdPASS){
+      if(LastState != CurrentState){
+        I2C_LCD_Clear(I2C_LCD_1);
+        if(CurrentState == Init){
+        I2C_LCD_SetCursor(I2C_LCD_1, 0, 0);
+        I2C_LCD_WriteString(I2C_LCD_1, "Initializing");
+        I2C_LCD_SetCursor(I2C_LCD_1, 0, 1);
+        I2C_LCD_WriteString(I2C_LCD_1, "Please Wait");
+
+        }else if(CurrentState == Ready){
+        I2C_LCD_SetCursor(I2C_LCD_1, 0, 0);
+        I2C_LCD_WriteString(I2C_LCD_1, "Ready");
+        I2C_LCD_SetCursor(I2C_LCD_1, 0, 1);
+        I2C_LCD_WriteString(I2C_LCD_1, "Press Gripper");
+
+        }else if(CurrentState == Running){
+        I2C_LCD_SetCursor(I2C_LCD_1, 0, 0);
+        I2C_LCD_WriteString(I2C_LCD_1, "Running");
+        I2C_LCD_SetCursor(I2C_LCD_1, 0, 1);
+        I2C_LCD_WriteString(I2C_LCD_1, "I2C LCD");
+
+        }else if(CurrentState == EmergencyStop){
+        I2C_LCD_SetCursor(I2C_LCD_1, 0, 0);
+        I2C_LCD_WriteString(I2C_LCD_1, "Emergency Stop!");
+        I2C_LCD_SetCursor(I2C_LCD_1, 0, 1);
+        I2C_LCD_WriteString(I2C_LCD_1, "Press Reset Button");
+
+        }
+        LastState = CurrentState;
+      }
+    }
 
     osDelay(1);
   }
