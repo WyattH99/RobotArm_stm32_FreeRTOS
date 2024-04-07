@@ -36,6 +36,9 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
+Core/Src/I2C_LCD.c \
+Core/Src/I2C_LCD_cfg.c \
+Core/Src/Util.c \
 Core/Src/freertos.c \
 Core/Src/main.c \
 Core/Src/pca9685.c \

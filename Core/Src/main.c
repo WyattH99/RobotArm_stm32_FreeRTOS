@@ -25,6 +25,9 @@
 
 #include "pca9685.h"
 #include <stdint.h>
+#include "I2C_LCD.h"
+#include "I2C_LCD_cfg.h"
+#include "Util.h"
 
 /* USER CODE END Includes */
 
@@ -915,9 +918,18 @@ void MotorControlTaskEntry(void const * argument)
 void LCDPrintTaskEntry(void const * argument)
 {
   /* USER CODE BEGIN LCDPrintTaskEntry */
+
+  I2C_LCD_Init(I2C_LCD_1);
+  I2C_LCD_SetCursor(I2C_LCD_1, 0, 0);
+  I2C_LCD_WriteString(I2C_LCD_1, "Test");
+  I2C_LCD_SetCursor(I2C_LCD_1, 0, 1);
+  I2C_LCD_WriteString(I2C_LCD_1, "I2C LCD");
+
   /* Infinite loop */
   for(;;)
   {
+
+
     osDelay(1);
   }
   /* USER CODE END LCDPrintTaskEntry */
