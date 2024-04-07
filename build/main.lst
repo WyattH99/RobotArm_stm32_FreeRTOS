@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc41Moin.s 			page 1
+ARM GAS  /tmp/ccYwoJb7.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -40,27 +40,29 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
   26      534D00
   27 003b 00       		.align	2
   28              	.LC10:
-  29 003c 456D6572 		.ascii	"EmergencyStopTa\000"
+  29 003c 456D6572 		.ascii	"EmergencyStopTask\000"
   29      67656E63 
   29      7953746F 
-  29      70546100 
-  30              		.align	2
+  29      70546173 
+  29      6B00
+  30 004e 0000     		.align	2
   31              	.LC12:
-  32 004c 4D6F746F 		.ascii	"MotorControlTas\000"
+  32 0050 4D6F746F 		.ascii	"MotorControlTask\000"
   32      72436F6E 
   32      74726F6C 
-  32      54617300 
-  33              		.align	2
+  32      5461736B 
+  32      00
+  33 0061 000000   		.align	2
   34              	.LC14:
-  35 005c 4C434450 		.ascii	"LCDPrintTask\000"
+  35 0064 4C434450 		.ascii	"LCDPrintTask\000"
   35      72696E74 
   35      5461736B 
   35      00
+ARM GAS  /tmp/ccYwoJb7.s 			page 2
+
+
   36              		.text
   37              	.Ltext0:
-ARM GAS  /tmp/cc41Moin.s 			page 2
-
-
   38              		.cfi_sections	.debug_frame
   39              		.section	.text.MX_GPIO_Init,"ax",%progbits
   40              		.align	1
@@ -116,11 +118,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
   42:Core/Src/main.c **** } MiniBot_Joint_Config_t;
   43:Core/Src/main.c **** 
   44:Core/Src/main.c **** typedef struct{
+ARM GAS  /tmp/ccYwoJb7.s 			page 3
+
+
   45:Core/Src/main.c **** 	GPIO_TypeDef* 	GPIOx;
   46:Core/Src/main.c **** 	uint16_t 		GPIO_Pin;
-ARM GAS  /tmp/cc41Moin.s 			page 3
-
-
   47:Core/Src/main.c **** } MiniBot_Gripper_Config_t;
   48:Core/Src/main.c **** 
   49:Core/Src/main.c **** typedef struct{
@@ -176,11 +178,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
   99:Core/Src/main.c **** 	MegaBot_Joint_Config_t  	Wrist;
  100:Core/Src/main.c **** 	MegaBot_Gripper_Config_t 	Gripper;
  101:Core/Src/main.c **** } MegaBot_Config_t;
+ARM GAS  /tmp/ccYwoJb7.s 			page 4
+
+
  102:Core/Src/main.c **** 
  103:Core/Src/main.c **** volatile MiniBot_Qdata Temp_Qdata_Buf;
-ARM GAS  /tmp/cc41Moin.s 			page 4
-
-
  104:Core/Src/main.c **** volatile MiniBot_Qdata MotorControl_Qdata_Buf;
  105:Core/Src/main.c **** 
  106:Core/Src/main.c **** uint8_t tempFailedToPostMessage = 0;
@@ -220,8 +222,8 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  140:Core/Src/main.c **** osThreadId BlinkLEDTaskHandle;
  141:Core/Src/main.c **** osThreadId MiniBotInputsHandle;
  142:Core/Src/main.c **** osThreadId ApplicationFSMHandle;
- 143:Core/Src/main.c **** osThreadId EmergencyStopTaHandle;
- 144:Core/Src/main.c **** osThreadId MotorControlTasHandle;
+ 143:Core/Src/main.c **** osThreadId EmergencyStopTaskHandle;
+ 144:Core/Src/main.c **** osThreadId MotorControlTaskHandle;
  145:Core/Src/main.c **** osThreadId LCDPrintTaskHandle;
  146:Core/Src/main.c **** osMessageQId MiniBotInputQueueHandle;
  147:Core/Src/main.c **** osMessageQId MotorControlQueueHandle;
@@ -236,11 +238,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  156:Core/Src/main.c **** static void MX_GPIO_Init(void);
  157:Core/Src/main.c **** static void MX_ADC1_Init(void);
  158:Core/Src/main.c **** static void MX_I2C1_Init(void);
+ARM GAS  /tmp/ccYwoJb7.s 			page 5
+
+
  159:Core/Src/main.c **** static void MX_USART2_UART_Init(void);
  160:Core/Src/main.c **** static void MX_I2C2_Init(void);
-ARM GAS  /tmp/cc41Moin.s 			page 5
-
-
  161:Core/Src/main.c **** void StartDefaultTask(void const * argument);
  162:Core/Src/main.c **** void BlinkLEDTaskEntry(void const * argument);
  163:Core/Src/main.c **** void MiniBotInputsEntry(void const * argument);
@@ -296,11 +298,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  213:Core/Src/main.c ****   /* USER CODE END SysInit */
  214:Core/Src/main.c **** 
  215:Core/Src/main.c ****   /* Initialize all configured peripherals */
+ARM GAS  /tmp/ccYwoJb7.s 			page 6
+
+
  216:Core/Src/main.c ****   MX_GPIO_Init();
  217:Core/Src/main.c ****   MX_ADC1_Init();
-ARM GAS  /tmp/cc41Moin.s 			page 6
-
-
  218:Core/Src/main.c ****   MX_I2C1_Init();
  219:Core/Src/main.c ****   MX_USART2_UART_Init();
  220:Core/Src/main.c ****   MX_I2C2_Init();
@@ -356,19 +358,19 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  270:Core/Src/main.c ****   MiniBotInputsHandle = osThreadCreate(osThread(MiniBotInputs), NULL);
  271:Core/Src/main.c **** 
  272:Core/Src/main.c ****   /* definition and creation of ApplicationFSM */
+ARM GAS  /tmp/ccYwoJb7.s 			page 7
+
+
  273:Core/Src/main.c ****   osThreadDef(ApplicationFSM, ApplicationFSMEntry, osPriorityHigh, 0, 512);
  274:Core/Src/main.c ****   ApplicationFSMHandle = osThreadCreate(osThread(ApplicationFSM), NULL);
-ARM GAS  /tmp/cc41Moin.s 			page 7
-
-
  275:Core/Src/main.c **** 
- 276:Core/Src/main.c ****   /* definition and creation of EmergencyStopTa */
- 277:Core/Src/main.c ****   osThreadDef(EmergencyStopTa, EmergencyStopTaskEntry, osPriorityNormal, 0, 128);
- 278:Core/Src/main.c ****   EmergencyStopTaHandle = osThreadCreate(osThread(EmergencyStopTa), NULL);
+ 276:Core/Src/main.c ****   /* definition and creation of EmergencyStopTask */
+ 277:Core/Src/main.c ****   osThreadDef(EmergencyStopTask, EmergencyStopTaskEntry, osPriorityNormal, 0, 128);
+ 278:Core/Src/main.c ****   EmergencyStopTaskHandle = osThreadCreate(osThread(EmergencyStopTask), NULL);
  279:Core/Src/main.c **** 
- 280:Core/Src/main.c ****   /* definition and creation of MotorControlTas */
- 281:Core/Src/main.c ****   osThreadDef(MotorControlTas, MotorControlTaskEntry, osPriorityNormal, 0, 512);
- 282:Core/Src/main.c ****   MotorControlTasHandle = osThreadCreate(osThread(MotorControlTas), NULL);
+ 280:Core/Src/main.c ****   /* definition and creation of MotorControlTask */
+ 281:Core/Src/main.c ****   osThreadDef(MotorControlTask, MotorControlTaskEntry, osPriorityNormal, 0, 512);
+ 282:Core/Src/main.c ****   MotorControlTaskHandle = osThreadCreate(osThread(MotorControlTask), NULL);
  283:Core/Src/main.c **** 
  284:Core/Src/main.c ****   /* definition and creation of LCDPrintTask */
  285:Core/Src/main.c ****   osThreadDef(LCDPrintTask, LCDPrintTaskEntry, osPriorityNormal, 0, 128);
@@ -416,11 +418,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  327:Core/Src/main.c ****   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
  328:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
  329:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+ARM GAS  /tmp/ccYwoJb7.s 			page 8
+
+
  330:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLM = 16;
  331:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLN = 336;
-ARM GAS  /tmp/cc41Moin.s 			page 8
-
-
  332:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
  333:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLQ = 2;
  334:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLR = 2;
@@ -476,11 +478,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  384:Core/Src/main.c ****   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
  385:Core/Src/main.c ****   hadc1.Init.NbrOfConversion = 4;
  386:Core/Src/main.c ****   hadc1.Init.DMAContinuousRequests = DISABLE;
+ARM GAS  /tmp/ccYwoJb7.s 			page 9
+
+
  387:Core/Src/main.c ****   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
  388:Core/Src/main.c ****   if (HAL_ADC_Init(&hadc1) != HAL_OK)
-ARM GAS  /tmp/cc41Moin.s 			page 9
-
-
  389:Core/Src/main.c ****   {
  390:Core/Src/main.c ****     Error_Handler();
  391:Core/Src/main.c ****   }
@@ -536,11 +538,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  441:Core/Src/main.c **** {
  442:Core/Src/main.c **** 
  443:Core/Src/main.c ****   /* USER CODE BEGIN I2C1_Init 0 */
+ARM GAS  /tmp/ccYwoJb7.s 			page 10
+
+
  444:Core/Src/main.c **** 
  445:Core/Src/main.c ****   /* USER CODE END I2C1_Init 0 */
-ARM GAS  /tmp/cc41Moin.s 			page 10
-
-
  446:Core/Src/main.c **** 
  447:Core/Src/main.c ****   /* USER CODE BEGIN I2C1_Init 1 */
  448:Core/Src/main.c **** 
@@ -596,11 +598,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  498:Core/Src/main.c **** 
  499:Core/Src/main.c ****   /* USER CODE END I2C2_Init 2 */
  500:Core/Src/main.c **** 
+ARM GAS  /tmp/ccYwoJb7.s 			page 11
+
+
  501:Core/Src/main.c **** }
  502:Core/Src/main.c **** 
-ARM GAS  /tmp/cc41Moin.s 			page 11
-
-
  503:Core/Src/main.c **** /**
  504:Core/Src/main.c ****   * @brief USART2 Initialization Function
  505:Core/Src/main.c ****   * @param None
@@ -656,11 +658,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
   62 0004 8AB0     		sub	sp, sp, #40
   63              		.cfi_def_cfa_offset 64
  543:Core/Src/main.c ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
+ARM GAS  /tmp/ccYwoJb7.s 			page 12
+
+
   64              		.loc 1 543 3 view .LVU1
   65              		.loc 1 543 20 is_stmt 0 view .LVU2
-ARM GAS  /tmp/cc41Moin.s 			page 12
-
-
   66 0006 0024     		movs	r4, #0
   67 0008 0594     		str	r4, [sp, #20]
   68 000a 0694     		str	r4, [sp, #24]
@@ -716,11 +718,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  111 0040 42F00102 		orr	r2, r2, #1
  112 0044 1A63     		str	r2, [r3, #48]
  113              		.loc 1 550 3 view .LVU18
+ARM GAS  /tmp/ccYwoJb7.s 			page 13
+
+
  114 0046 1A6B     		ldr	r2, [r3, #48]
  115 0048 02F00102 		and	r2, r2, #1
-ARM GAS  /tmp/cc41Moin.s 			page 13
-
-
  116 004c 0392     		str	r2, [sp, #12]
  117              		.loc 1 550 3 view .LVU19
  118 004e 039A     		ldr	r2, [sp, #12]
@@ -776,11 +778,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  158 0084 FFF7FEFF 		bl	HAL_GPIO_Init
  159              	.LVL1:
  561:Core/Src/main.c **** 
+ARM GAS  /tmp/ccYwoJb7.s 			page 14
+
+
  562:Core/Src/main.c ****   /*Configure GPIO pin : LD2_Pin */
  563:Core/Src/main.c ****   GPIO_InitStruct.Pin = LD2_Pin;
-ARM GAS  /tmp/cc41Moin.s 			page 14
-
-
  160              		.loc 1 563 3 view .LVU35
  161              		.loc 1 563 23 is_stmt 0 view .LVU36
  162 0088 2027     		movs	r7, #32
@@ -836,11 +838,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  198              		.loc 1 577 3 is_stmt 1 view .LVU53
  199              		.loc 1 577 24 is_stmt 0 view .LVU54
  200 00b6 0694     		str	r4, [sp, #24]
+ARM GAS  /tmp/ccYwoJb7.s 			page 15
+
+
  578:Core/Src/main.c ****   GPIO_InitStruct.Pull = GPIO_PULLUP;
  201              		.loc 1 578 3 is_stmt 1 view .LVU55
-ARM GAS  /tmp/cc41Moin.s 			page 15
-
-
  202              		.loc 1 578 24 is_stmt 0 view .LVU56
  203 00b8 0795     		str	r5, [sp, #28]
  579:Core/Src/main.c ****   HAL_GPIO_Init(GripperButton_GPIO_Port, &GPIO_InitStruct);
@@ -896,11 +898,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  244              		.fpu fpv4-sp-d16
  246              	StartDefaultTask:
  247              	.LFB257:
+ARM GAS  /tmp/ccYwoJb7.s 			page 16
+
+
  590:Core/Src/main.c **** 
  591:Core/Src/main.c **** /* USER CODE BEGIN 4 */
-ARM GAS  /tmp/cc41Moin.s 			page 16
-
-
  592:Core/Src/main.c **** 
  593:Core/Src/main.c **** 
  594:Core/Src/main.c **** void MiniBotInit(MiniBot_Config_t* MiniBot){
@@ -956,11 +958,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  644:Core/Src/main.c ****   MegaBot->Gripper.ServoMin = 0;
  645:Core/Src/main.c ****   MegaBot->Gripper.ServoMax = 70;
  646:Core/Src/main.c ****   MegaBot->Gripper.ServoHomeAngle = MegaBot->Gripper.ServoMin;
+ARM GAS  /tmp/ccYwoJb7.s 			page 17
+
+
  647:Core/Src/main.c **** 
  648:Core/Src/main.c ****   ServoDriverInit(MegaBot);
-ARM GAS  /tmp/cc41Moin.s 			page 17
-
-
  649:Core/Src/main.c **** }
  650:Core/Src/main.c **** 
  651:Core/Src/main.c **** void ServoDriverInit(MegaBot_Config_t* MegaBot){
@@ -1016,11 +1018,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  701:Core/Src/main.c **** uint32_t MAP(uint32_t au32_IN, uint32_t au32_INmin, uint32_t au32_INmax, uint32_t au32_OUTmin, uint
  702:Core/Src/main.c **** {
  703:Core/Src/main.c ****     return ((((au32_IN - au32_INmin)*(au32_OUTmax - au32_OUTmin))/(au32_INmax - au32_INmin)) + au32
+ARM GAS  /tmp/ccYwoJb7.s 			page 18
+
+
  704:Core/Src/main.c **** }
  705:Core/Src/main.c **** 
-ARM GAS  /tmp/cc41Moin.s 			page 18
-
-
  706:Core/Src/main.c **** 
  707:Core/Src/main.c **** /* USER CODE END 4 */
  708:Core/Src/main.c **** 
@@ -1076,11 +1078,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  282              		.align	1
  283              		.global	BlinkLEDTaskEntry
  284              		.syntax unified
+ARM GAS  /tmp/ccYwoJb7.s 			page 19
+
+
  285              		.thumb
  286              		.thumb_func
-ARM GAS  /tmp/cc41Moin.s 			page 19
-
-
  287              		.fpu fpv4-sp-d16
  289              	BlinkLEDTaskEntry:
  290              	.LFB258:
@@ -1136,11 +1138,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  739:Core/Src/main.c ****   {
  319              		.loc 1 739 8 discriminator 1 view .LVU78
  320 001c F1E7     		b	.L11
+ARM GAS  /tmp/ccYwoJb7.s 			page 20
+
+
  321              	.L14:
  322 001e 00BF     		.align	2
-ARM GAS  /tmp/cc41Moin.s 			page 20
-
-
  323              	.L13:
  324 0020 00000240 		.word	1073872896
  325              		.cfi_endproc
@@ -1196,11 +1198,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  784:Core/Src/main.c ****     QPotDataUpdate(PotRawValue[1], &MiniBot.Shoulder, &Qdata.ShoulderPotValue);
  785:Core/Src/main.c ****     QPotDataUpdate(PotRawValue[2], &MiniBot.Elbow, &Qdata.ElbowPotValue);
  786:Core/Src/main.c ****     QPotDataUpdate(PotRawValue[3], &MiniBot.Wrist, &Qdata.WristPotValue);
+ARM GAS  /tmp/ccYwoJb7.s 			page 21
+
+
  787:Core/Src/main.c **** 
  788:Core/Src/main.c ****     Qdata.GripperValue = (uint8_t)HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9);
-ARM GAS  /tmp/cc41Moin.s 			page 21
-
-
  789:Core/Src/main.c ****     
  790:Core/Src/main.c ****     if(MiniBotInputQueueHandle != 0){
  791:Core/Src/main.c ****       if(xQueueSend(MiniBotInputQueueHandle, (void*)&Qdata, portMAX_DELAY) != pdPASS){
@@ -1256,11 +1258,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  841:Core/Src/main.c ****     }
  842:Core/Src/main.c ****     
  843:Core/Src/main.c ****     if(state == EmergencyStop){
+ARM GAS  /tmp/ccYwoJb7.s 			page 22
+
+
  844:Core/Src/main.c ****       // If reset btn is pressed change state to Ready1
  845:Core/Src/main.c ****     }
-ARM GAS  /tmp/cc41Moin.s 			page 22
-
-
  846:Core/Src/main.c **** 
  847:Core/Src/main.c **** 
  848:Core/Src/main.c **** 
@@ -1316,11 +1318,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  898:Core/Src/main.c ****       MoveServo(&MegaBot, &MotorControl_Qdata_Buf);
  899:Core/Src/main.c ****     }
  900:Core/Src/main.c **** 
+ARM GAS  /tmp/ccYwoJb7.s 			page 23
+
+
  901:Core/Src/main.c **** 
  902:Core/Src/main.c **** 
-ARM GAS  /tmp/cc41Moin.s 			page 23
-
-
  903:Core/Src/main.c ****     osDelay(1);
  904:Core/Src/main.c ****   }
  905:Core/Src/main.c ****   /* USER CODE END MotorControlTaskEntry */
@@ -1376,11 +1378,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  371              		.loc 1 862 1 view -0
  372              		.cfi_startproc
  373              		@ Volatile: function does not return.
+ARM GAS  /tmp/ccYwoJb7.s 			page 24
+
+
  374              		@ args = 0, pretend = 0, frame = 0
  375              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cc41Moin.s 			page 24
-
-
  376              	.LVL18:
  862:Core/Src/main.c ****   /* USER CODE BEGIN EmergencyStopTaskEntry */
  377              		.loc 1 862 1 is_stmt 0 view .LVU85
@@ -1436,11 +1438,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  421              		.loc 1 811 1 is_stmt 0 view .LVU93
  422 0000 08B5     		push	{r3, lr}
  423              		.cfi_def_cfa_offset 8
+ARM GAS  /tmp/ccYwoJb7.s 			page 25
+
+
  424              		.cfi_offset 3, -8
  425              		.cfi_offset 14, -4
-ARM GAS  /tmp/cc41Moin.s 			page 25
-
-
  426 0002 07E0     		b	.L27
  427              	.LVL23:
  428              	.L29:
@@ -1496,11 +1498,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  834:Core/Src/main.c ****       // Send Minibot_data to the Motor Queue for the Motor Task to handle
  463              		.loc 1 834 20 is_stmt 0 view .LVU109
  464 0026 244B     		ldr	r3, .L31
+ARM GAS  /tmp/ccYwoJb7.s 			page 26
+
+
  465 0028 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  466 002a DBB2     		uxtb	r3, r3
-ARM GAS  /tmp/cc41Moin.s 			page 26
-
-
  834:Core/Src/main.c ****       // Send Minibot_data to the Motor Queue for the Motor Task to handle
  467              		.loc 1 834 13 view .LVU110
  468 002c 022B     		cmp	r3, #2
@@ -1556,11 +1558,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  510 007c FFF7FEFF 		bl	xQueueReceive
  511              	.LVL27:
  824:Core/Src/main.c ****         if(MiniBot_Qdata_Buf.GripperValue == 0){
+ARM GAS  /tmp/ccYwoJb7.s 			page 27
+
+
  512              		.loc 1 824 9 view .LVU119
  513 0080 0128     		cmp	r0, #1
-ARM GAS  /tmp/cc41Moin.s 			page 27
-
-
  514 0082 C2D1     		bne	.L25
  825:Core/Src/main.c ****           if(xQueueReceive(MiniBotInputQueueHandle, (void*)&MiniBot_Qdata_Buf, portMAX_DELAY) == pd
  515              		.loc 1 825 9 is_stmt 1 view .LVU120
@@ -1616,11 +1618,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  555 00c4 00000000 		.word	.LANCHOR3
  556 00c8 00000000 		.word	.LANCHOR4
  557              		.cfi_endproc
+ARM GAS  /tmp/ccYwoJb7.s 			page 28
+
+
  558              	.LFE260:
  560              		.section	.text.MiniBotInit,"ax",%progbits
-ARM GAS  /tmp/cc41Moin.s 			page 28
-
-
  561              		.align	1
  562              		.global	MiniBotInit
  563              		.syntax unified
@@ -1676,11 +1678,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  600 001c 4FF41672 		mov	r2, #600
  601 0020 4261     		str	r2, [r0, #20]
  604:Core/Src/main.c **** 	  MiniBot->Shoulder.PotInvertRange = 0;
+ARM GAS  /tmp/ccYwoJb7.s 			page 29
+
+
  602              		.loc 1 604 4 is_stmt 1 view .LVU145
  604:Core/Src/main.c **** 	  MiniBot->Shoulder.PotInvertRange = 0;
-ARM GAS  /tmp/cc41Moin.s 			page 29
-
-
  603              		.loc 1 604 29 is_stmt 0 view .LVU146
  604 0022 8161     		str	r1, [r0, #24]
  605:Core/Src/main.c **** 
@@ -1736,11 +1738,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  617:Core/Src/main.c **** 	  MiniBot->Gripper.GPIO_Pin = GPIO_PIN_9;
  636              		.loc 1 617 27 is_stmt 0 view .LVU166
  637 0048 034B     		ldr	r3, .L35
+ARM GAS  /tmp/ccYwoJb7.s 			page 30
+
+
  638 004a 0364     		str	r3, [r0, #64]
  618:Core/Src/main.c **** }
-ARM GAS  /tmp/cc41Moin.s 			page 30
-
-
  639              		.loc 1 618 4 is_stmt 1 view .LVU167
  618:Core/Src/main.c **** }
  640              		.loc 1 618 30 is_stmt 0 view .LVU168
@@ -1796,11 +1798,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  684 0010 B8EE400A 		vcvt.f32.u32	s0, s0
  685 0014 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
  686 0016 FFF7FEFF 		bl	PCA9685_SetServoAngle
+ARM GAS  /tmp/ccYwoJb7.s 			page 31
+
+
  687              	.LVL33:
  654:Core/Src/main.c ****   PCA9685_SetServoAngle(MegaBot->Elbow.ServoNum, MegaBot->Elbow.ServoHomeAngle);
-ARM GAS  /tmp/cc41Moin.s 			page 31
-
-
  688              		.loc 1 654 3 is_stmt 1 view .LVU177
  654:Core/Src/main.c ****   PCA9685_SetServoAngle(MegaBot->Elbow.ServoNum, MegaBot->Elbow.ServoHomeAngle);
  689              		.loc 1 654 70 is_stmt 0 view .LVU178
@@ -1856,11 +1858,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  658:Core/Src/main.c **** 
  728              		.loc 1 658 1 view .LVU190
  729 005e 00BF     		.align	2
+ARM GAS  /tmp/ccYwoJb7.s 			page 32
+
+
  730              	.L39:
  731 0060 00000000 		.word	.LANCHOR5
-ARM GAS  /tmp/cc41Moin.s 			page 32
-
-
  732              		.cfi_endproc
  733              	.LFE253:
  735              		.section	.text.MegaBotInit,"ax",%progbits
@@ -1916,11 +1918,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  629:Core/Src/main.c ****   MegaBot->Shoulder.ServoMax = 180;
  774              		.loc 1 629 3 is_stmt 1 view .LVU203
  629:Core/Src/main.c ****   MegaBot->Shoulder.ServoMax = 180;
+ARM GAS  /tmp/ccYwoJb7.s 			page 33
+
+
  775              		.loc 1 629 30 is_stmt 0 view .LVU204
  776 001c 4281     		strh	r2, [r0, #10]	@ movhi
-ARM GAS  /tmp/cc41Moin.s 			page 33
-
-
  630:Core/Src/main.c ****   MegaBot->Shoulder.ServoHomeAngle = 0;
  777              		.loc 1 630 3 is_stmt 1 view .LVU205
  630:Core/Src/main.c ****   MegaBot->Shoulder.ServoHomeAngle = 0;
@@ -1976,11 +1978,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  809 0042 A0F81EC0 		strh	ip, [r0, #30]	@ movhi
  643:Core/Src/main.c ****   MegaBot->Gripper.ServoMin = 0;
  810              		.loc 1 643 3 is_stmt 1 view .LVU225
+ARM GAS  /tmp/ccYwoJb7.s 			page 34
+
+
  643:Core/Src/main.c ****   MegaBot->Gripper.ServoMin = 0;
  811              		.loc 1 643 29 is_stmt 0 view .LVU226
-ARM GAS  /tmp/cc41Moin.s 			page 34
-
-
  812 0046 0421     		movs	r1, #4
  813 0048 80F82010 		strb	r1, [r0, #32]
  644:Core/Src/main.c ****   MegaBot->Gripper.ServoMax = 70;
@@ -2036,11 +2038,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  853              		.loc 1 662 5 view .LVU239
  854 0004 8342     		cmp	r3, r0
  855 0006 03D3     		bcc	.L44
+ARM GAS  /tmp/ccYwoJb7.s 			page 35
+
+
  662:Core/Src/main.c ****     if(PotRawValue > Joint->PotMax){
  856              		.loc 1 662 52 discriminator 1 view .LVU240
-ARM GAS  /tmp/cc41Moin.s 			page 35
-
-
  857 0008 1368     		ldr	r3, [r2]
  662:Core/Src/main.c ****     if(PotRawValue > Joint->PotMax){
  858              		.loc 1 662 62 discriminator 1 view .LVU241
@@ -2096,11 +2098,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  892              		.loc 1 671 45 view .LVU257
  893 0026 0B44     		add	r3, r3, r1
  671:Core/Src/main.c ****     }
+ARM GAS  /tmp/ccYwoJb7.s 			page 36
+
+
  894              		.loc 1 671 17 view .LVU258
  895 0028 1360     		str	r3, [r2]
-ARM GAS  /tmp/cc41Moin.s 			page 36
-
-
  896              	.L43:
  674:Core/Src/main.c **** 
  897              		.loc 1 674 1 view .LVU259
@@ -2156,11 +2158,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  939              		.cfi_offset 4, -12
  940              		.cfi_offset 5, -8
  941              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccYwoJb7.s 			page 37
+
+
  942 0002 93B0     		sub	sp, sp, #76
  943              		.cfi_def_cfa_offset 88
-ARM GAS  /tmp/cc41Moin.s 			page 37
-
-
  760:Core/Src/main.c **** 	MiniBotInit(&MiniBot);
  944              		.loc 1 760 2 is_stmt 1 view .LVU270
  761:Core/Src/main.c **** 
@@ -2216,11 +2218,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  977              		.loc 1 768 36 is_stmt 0 view .LVU288
  978 0020 099A     		ldr	r2, [sp, #36]
  768:Core/Src/main.c ****   Qdata.WristPotMax = MiniBot.Wrist.PotMax;
+ARM GAS  /tmp/ccYwoJb7.s 			page 38
+
+
  979              		.loc 1 768 21 view .LVU289
  980 0022 DA61     		str	r2, [r3, #28]
-ARM GAS  /tmp/cc41Moin.s 			page 38
-
-
  769:Core/Src/main.c ****   Qdata.WristPotMin = MiniBot.Wrist.PotMin;
  981              		.loc 1 769 3 is_stmt 1 view .LVU290
  769:Core/Src/main.c ****   Qdata.WristPotMin = MiniBot.Wrist.PotMin;
@@ -2276,11 +2278,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1019              	.LVL53:
  1020              	.L50:
  776:Core/Src/main.c ****       HAL_ADC_Start(&hadc1);
+ARM GAS  /tmp/ccYwoJb7.s 			page 39
+
+
  1021              		.loc 1 776 22 is_stmt 1 discriminator 1 view .LVU304
  776:Core/Src/main.c ****       HAL_ADC_Start(&hadc1);
-ARM GAS  /tmp/cc41Moin.s 			page 39
-
-
  1022              		.loc 1 776 5 is_stmt 0 discriminator 1 view .LVU305
  1023 004e 032C     		cmp	r4, #3
  1024 0050 EDD9     		bls	.L51
@@ -2336,11 +2338,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1065 0094 84F83000 		strb	r0, [r4, #48]
  790:Core/Src/main.c ****       if(xQueueSend(MiniBotInputQueueHandle, (void*)&Qdata, portMAX_DELAY) != pdPASS){
  1066              		.loc 1 790 5 is_stmt 1 view .LVU315
+ARM GAS  /tmp/ccYwoJb7.s 			page 40
+
+
  790:Core/Src/main.c ****       if(xQueueSend(MiniBotInputQueueHandle, (void*)&Qdata, portMAX_DELAY) != pdPASS){
  1067              		.loc 1 790 32 is_stmt 0 view .LVU316
-ARM GAS  /tmp/cc41Moin.s 			page 40
-
-
  1068 0098 0D4B     		ldr	r3, .L55+16
  1069 009a 1868     		ldr	r0, [r3]
  790:Core/Src/main.c ****       if(xQueueSend(MiniBotInputQueueHandle, (void*)&Qdata, portMAX_DELAY) != pdPASS){
@@ -2396,11 +2398,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1107 00c8 00000000 		.word	.LANCHOR8
  1108 00cc 00000240 		.word	1073872896
  1109 00d0 00000000 		.word	.LANCHOR2
+ARM GAS  /tmp/ccYwoJb7.s 			page 41
+
+
  1110 00d4 00000000 		.word	.LANCHOR9
  1111              	.LBE9:
-ARM GAS  /tmp/cc41Moin.s 			page 41
-
-
  1112              		.cfi_endproc
  1113              	.LFE259:
  1115              		.section	.text.MAP,"ax",%progbits
@@ -2456,11 +2458,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1158              		.fpu fpv4-sp-d16
  1160              	MoveServo:
  1161              	.LVL66:
+ARM GAS  /tmp/ccYwoJb7.s 			page 42
+
+
  1162              	.LFB255:
  676:Core/Src/main.c ****   // MAP each of the angles
-ARM GAS  /tmp/cc41Moin.s 			page 42
-
-
  1163              		.loc 1 676 75 is_stmt 1 view -0
  1164              		.cfi_startproc
  1165              		@ args = 0, pretend = 0, frame = 0
@@ -2516,11 +2518,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  684:Core/Src/main.c ****   PCA9685_SetServoAngle(MegaBot->Shoulder.ServoNum, MappedServoAngle[1]);
  1205              		.loc 1 684 25 is_stmt 0 view .LVU350
  1206 002c E868     		ldr	r0, [r5, #12]
+ARM GAS  /tmp/ccYwoJb7.s 			page 43
+
+
  1207 002e 2969     		ldr	r1, [r5, #16]
  1208 0030 6A69     		ldr	r2, [r5, #20]
-ARM GAS  /tmp/cc41Moin.s 			page 43
-
-
  684:Core/Src/main.c ****   PCA9685_SetServoAngle(MegaBot->Shoulder.ServoNum, MappedServoAngle[1]);
  1209              		.loc 1 684 151 view .LVU351
  1210 0032 A389     		ldrh	r3, [r4, #12]
@@ -2576,11 +2578,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1249 0072 A96A     		ldr	r1, [r5, #40]
  1250 0074 EA6A     		ldr	r2, [r5, #44]
  690:Core/Src/main.c ****   PCA9685_SetServoAngle(MegaBot->Wrist.ServoNum, MappedServoAngle[3]);
+ARM GAS  /tmp/ccYwoJb7.s 			page 44
+
+
  1251              		.loc 1 690 136 view .LVU363
  1252 0076 A38B     		ldrh	r3, [r4, #28]
-ARM GAS  /tmp/cc41Moin.s 			page 44
-
-
  690:Core/Src/main.c ****   PCA9685_SetServoAngle(MegaBot->Wrist.ServoNum, MappedServoAngle[3]);
  1253              		.loc 1 690 25 view .LVU364
  1254 0078 0093     		str	r3, [sp]
@@ -2636,11 +2638,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1293 00ae A38C     		ldrh	r3, [r4, #36]
  1294 00b0 00EE103A 		vmov	s0, r3	@ int
  696:Core/Src/main.c ****   }
+ARM GAS  /tmp/ccYwoJb7.s 			page 45
+
+
  1295              		.loc 1 696 5 view .LVU376
  1296 00b4 B8EE400A 		vcvt.f32.u32	s0, s0
-ARM GAS  /tmp/cc41Moin.s 			page 45
-
-
  1297 00b8 94F82000 		ldrb	r0, [r4, #32]	@ zero_extendqisi2
  1298 00bc FFF7FEFF 		bl	PCA9685_SetServoAngle
  1299              	.LVL79:
@@ -2696,11 +2698,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  898:Core/Src/main.c ****     }
  1344              		.loc 1 898 7 view .LVU384
  1345 0012 0849     		ldr	r1, .L69
+ARM GAS  /tmp/ccYwoJb7.s 			page 46
+
+
  1346 0014 6846     		mov	r0, sp
  1347 0016 FFF7FEFF 		bl	MoveServo
-ARM GAS  /tmp/cc41Moin.s 			page 46
-
-
  1348              	.LVL84:
  1349              	.L65:
  903:Core/Src/main.c ****   }
@@ -2756,11 +2758,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  930:Core/Src/main.c ****   * a global variable "uwTick" used as application time base.
  931:Core/Src/main.c ****   * @param  htim : TIM handle
  932:Core/Src/main.c ****   * @retval None
+ARM GAS  /tmp/ccYwoJb7.s 			page 47
+
+
  933:Core/Src/main.c ****   */
  934:Core/Src/main.c **** void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-ARM GAS  /tmp/cc41Moin.s 			page 47
-
-
  935:Core/Src/main.c **** {
  1388              		.loc 1 935 1 is_stmt 1 view -0
  1389              		.cfi_startproc
@@ -2816,11 +2818,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1430              	Error_Handler:
  1431              	.LFB265:
  946:Core/Src/main.c **** 
+ARM GAS  /tmp/ccYwoJb7.s 			page 48
+
+
  947:Core/Src/main.c **** /**
  948:Core/Src/main.c ****   * @brief  This function is executed in case of error occurrence.
-ARM GAS  /tmp/cc41Moin.s 			page 48
-
-
  949:Core/Src/main.c ****   * @retval None
  950:Core/Src/main.c ****   */
  951:Core/Src/main.c **** void Error_Handler(void)
@@ -2876,11 +2878,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
   36:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __has_builtin(x) (0)
   37:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   38:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /tmp/ccYwoJb7.s 			page 49
+
+
   39:Drivers/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
   40:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
-ARM GAS  /tmp/cc41Moin.s 			page 49
-
-
   41:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                                  __asm
   42:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   43:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __INLINE
@@ -2936,11 +2938,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
   93:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   94:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_WRITE
   95:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+ARM GAS  /tmp/ccYwoJb7.s 			page 50
+
+
   96:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
   97:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
-ARM GAS  /tmp/cc41Moin.s 			page 50
-
-
   98:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
   99:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
  100:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))-
@@ -2996,11 +2998,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  150:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  151:Drivers/CMSIS/Include/cmsis_gcc.h ****   for (__copy_table_t const* pTable = &__copy_table_start__; pTable < &__copy_table_end__; ++pTable
  152:Drivers/CMSIS/Include/cmsis_gcc.h ****     for(uint32_t i=0u; i<pTable->wlen; ++i) {
+ARM GAS  /tmp/ccYwoJb7.s 			page 51
+
+
  153:Drivers/CMSIS/Include/cmsis_gcc.h ****       pTable->dest[i] = pTable->src[i];
  154:Drivers/CMSIS/Include/cmsis_gcc.h ****     }
-ARM GAS  /tmp/cc41Moin.s 			page 51
-
-
  155:Drivers/CMSIS/Include/cmsis_gcc.h ****   }
  156:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  157:Drivers/CMSIS/Include/cmsis_gcc.h ****   for (__zero_table_t const* pTable = &__zero_table_start__; pTable < &__zero_table_end__; ++pTable
@@ -3056,11 +3058,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  207:Drivers/CMSIS/Include/cmsis_gcc.h ****   Access to dedicated instructions
  208:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
  209:Drivers/CMSIS/Include/cmsis_gcc.h **** */
+ARM GAS  /tmp/ccYwoJb7.s 			page 52
+
+
  210:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  211:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Define macros for porting to both thumb1 and thumb2.
-ARM GAS  /tmp/cc41Moin.s 			page 52
-
-
  212:Drivers/CMSIS/Include/cmsis_gcc.h ****  * For thumb1, use low register (r0-r7), specified by constraint "l"
  213:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Otherwise, use general registers, specified by constraint "r" */
  214:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined (__thumb__) && !defined (__thumb2__)
@@ -3116,11 +3118,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  264:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  265:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Data Synchronization Barrier
  266:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Acts as a special kind of Data Memory Barrier.
+ARM GAS  /tmp/ccYwoJb7.s 			page 53
+
+
  267:Drivers/CMSIS/Include/cmsis_gcc.h ****            It completes when all explicit memory accesses before this instruction complete.
  268:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
-ARM GAS  /tmp/cc41Moin.s 			page 53
-
-
  269:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __DSB(void)
  270:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  271:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("dsb 0xF":::"memory");
@@ -3176,11 +3178,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  321:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Reverse byte order (16 bit)
  322:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Reverses the byte order in a 16-bit value and returns the signed 16-bit result. For exam
  323:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    value  Value to reverse
+ARM GAS  /tmp/ccYwoJb7.s 			page 54
+
+
  324:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Reversed value
  325:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
-ARM GAS  /tmp/cc41Moin.s 			page 54
-
-
  326:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE int16_t __REVSH(int16_t value)
  327:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  328:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
@@ -3236,11 +3238,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  378:Drivers/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
  379:Drivers/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
  380:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM ("rbit %0, %1" : "=r" (result) : "r" (value) );
+ARM GAS  /tmp/ccYwoJb7.s 			page 55
+
+
  381:Drivers/CMSIS/Include/cmsis_gcc.h **** #else
  382:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
-ARM GAS  /tmp/cc41Moin.s 			page 55
-
-
  383:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  384:Drivers/CMSIS/Include/cmsis_gcc.h ****   result = value;                      /* r will be reversed bits of v; first get LSB of v */
  385:Drivers/CMSIS/Include/cmsis_gcc.h ****   for (value >>= 1U; value != 0U; value >>= 1U)
@@ -3296,11 +3298,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  435:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  436:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
  437:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("ldrexb %0, %1" : "=r" (result) : "Q" (*addr) );
+ARM GAS  /tmp/ccYwoJb7.s 			page 56
+
+
  438:Drivers/CMSIS/Include/cmsis_gcc.h **** #else
  439:Drivers/CMSIS/Include/cmsis_gcc.h ****     /* Prior to GCC 4.8, "Q" will be expanded to [rx, #0] which is not
-ARM GAS  /tmp/cc41Moin.s 			page 56
-
-
  440:Drivers/CMSIS/Include/cmsis_gcc.h ****        accepted by assembler. So has to use following less efficient pattern.
  441:Drivers/CMSIS/Include/cmsis_gcc.h ****     */
  442:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
@@ -3356,11 +3358,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  492:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  493:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint32_t __STREXB(uint8_t value, volatile uint8_t *addr)
  494:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ARM GAS  /tmp/ccYwoJb7.s 			page 57
+
+
  495:Drivers/CMSIS/Include/cmsis_gcc.h ****    uint32_t result;
  496:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/cc41Moin.s 			page 57
-
-
  497:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("strexb %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
  498:Drivers/CMSIS/Include/cmsis_gcc.h ****    return(result);
  499:Drivers/CMSIS/Include/cmsis_gcc.h **** }
@@ -3416,11 +3418,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  549:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  550:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  551:Drivers/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+ARM GAS  /tmp/ccYwoJb7.s 			page 58
+
+
  552:Drivers/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
  553:Drivers/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
-ARM GAS  /tmp/cc41Moin.s 			page 58
-
-
  554:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  555:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Signed Saturate
  556:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Saturates a signed value.
@@ -3476,11 +3478,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  606:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return             value of type uint8_t at (*ptr)
  607:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  608:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint8_t __LDRBT(volatile uint8_t *ptr)
+ARM GAS  /tmp/ccYwoJb7.s 			page 59
+
+
  609:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  610:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t result;
-ARM GAS  /tmp/cc41Moin.s 			page 59
-
-
  611:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  612:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
  613:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("ldrbt %0, %1" : "=r" (result) : "Q" (*ptr) );
@@ -3536,11 +3538,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  663:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Executes a Unprivileged STRT instruction for 8 bit values.
  664:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]  value  Value to store
  665:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ptr  Pointer to location
+ARM GAS  /tmp/ccYwoJb7.s 			page 60
+
+
  666:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  667:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __STRBT(uint8_t value, volatile uint8_t *ptr)
-ARM GAS  /tmp/cc41Moin.s 			page 60
-
-
  668:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  669:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("strbt %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
  670:Drivers/CMSIS/Include/cmsis_gcc.h **** }
@@ -3596,11 +3598,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  720:Drivers/CMSIS/Include/cmsis_gcc.h ****     }
  721:Drivers/CMSIS/Include/cmsis_gcc.h ****   }
  722:Drivers/CMSIS/Include/cmsis_gcc.h ****   return val;
+ARM GAS  /tmp/ccYwoJb7.s 			page 61
+
+
  723:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  724:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/cc41Moin.s 			page 61
-
-
  725:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  726:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Unsigned Saturate
  727:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Saturates an unsigned value.
@@ -3656,11 +3658,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  777:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint16_t __LDAH(volatile uint16_t *ptr)
  778:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  779:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t result;
+ARM GAS  /tmp/ccYwoJb7.s 			page 62
+
+
  780:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  781:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("ldah %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-ARM GAS  /tmp/cc41Moin.s 			page 62
-
-
  782:Drivers/CMSIS/Include/cmsis_gcc.h ****    return ((uint16_t) result);
  783:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  784:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -3716,11 +3718,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  834:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  835:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  836:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /tmp/ccYwoJb7.s 			page 63
+
+
  837:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  838:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Load-Acquire Exclusive (8 bit)
-ARM GAS  /tmp/cc41Moin.s 			page 63
-
-
  839:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Executes a LDAB exclusive instruction for 8 bit value.
  840:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ptr  Pointer to data
  841:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return             value of type uint8_t at (*ptr)
@@ -3776,11 +3778,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  891:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  892:Drivers/CMSIS/Include/cmsis_gcc.h ****    uint32_t result;
  893:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /tmp/ccYwoJb7.s 			page 64
+
+
  894:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("stlexb %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "mem
  895:Drivers/CMSIS/Include/cmsis_gcc.h ****    return(result);
-ARM GAS  /tmp/cc41Moin.s 			page 64
-
-
  896:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  897:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  898:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -3836,11 +3838,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  948:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  949:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __enable_irq(void)
  950:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ARM GAS  /tmp/ccYwoJb7.s 			page 65
+
+
  951:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
  952:Drivers/CMSIS/Include/cmsis_gcc.h **** }
-ARM GAS  /tmp/cc41Moin.s 			page 65
-
-
  953:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  954:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  955:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
@@ -3896,11 +3898,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  367:Core/Src/main.c **** 
  1480              		.loc 1 367 26 is_stmt 0 view .LVU408
  1481 0004 0023     		movs	r3, #0
+ARM GAS  /tmp/ccYwoJb7.s 			page 66
+
+
  1482 0006 0093     		str	r3, [sp]
  1483 0008 0193     		str	r3, [sp, #4]
-ARM GAS  /tmp/cc41Moin.s 			page 66
-
-
  1484 000a 0293     		str	r3, [sp, #8]
  1485 000c 0393     		str	r3, [sp, #12]
  375:Core/Src/main.c ****   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
@@ -3956,11 +3958,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  384:Core/Src/main.c ****   hadc1.Init.NbrOfConversion = 4;
  1518              		.loc 1 384 3 is_stmt 1 view .LVU427
  384:Core/Src/main.c ****   hadc1.Init.NbrOfConversion = 4;
+ARM GAS  /tmp/ccYwoJb7.s 			page 67
+
+
  1519              		.loc 1 384 24 is_stmt 0 view .LVU428
  1520 002e C360     		str	r3, [r0, #12]
-ARM GAS  /tmp/cc41Moin.s 			page 67
-
-
  385:Core/Src/main.c ****   hadc1.Init.DMAContinuousRequests = DISABLE;
  1521              		.loc 1 385 3 is_stmt 1 view .LVU429
  385:Core/Src/main.c ****   hadc1.Init.DMAContinuousRequests = DISABLE;
@@ -4016,11 +4018,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1555 0052 F8B9     		cbnz	r0, .L87
  405:Core/Src/main.c ****   sConfig.Rank = 2;
  1556              		.loc 1 405 3 is_stmt 1 view .LVU447
+ARM GAS  /tmp/ccYwoJb7.s 			page 68
+
+
  405:Core/Src/main.c ****   sConfig.Rank = 2;
  1557              		.loc 1 405 19 is_stmt 0 view .LVU448
-ARM GAS  /tmp/cc41Moin.s 			page 68
-
-
  1558 0054 0123     		movs	r3, #1
  1559 0056 0093     		str	r3, [sp]
  406:Core/Src/main.c ****   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
@@ -4076,11 +4078,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1594 007c 0423     		movs	r3, #4
  1595 007e 0193     		str	r3, [sp, #4]
  425:Core/Src/main.c ****   {
+ARM GAS  /tmp/ccYwoJb7.s 			page 69
+
+
  1596              		.loc 1 425 3 is_stmt 1 view .LVU465
  425:Core/Src/main.c ****   {
-ARM GAS  /tmp/cc41Moin.s 			page 69
-
-
  1597              		.loc 1 425 7 is_stmt 0 view .LVU466
  1598 0080 6946     		mov	r1, sp
  1599 0082 0848     		ldr	r0, .L91
@@ -4136,11 +4138,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1643              		.thumb
  1644              		.thumb_func
  1645              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccYwoJb7.s 			page 70
+
+
  1647              	MX_I2C1_Init:
  1648              	.LFB247:
-ARM GAS  /tmp/cc41Moin.s 			page 70
-
-
  441:Core/Src/main.c **** 
  1649              		.loc 1 441 1 view -0
  1650              		.cfi_startproc
@@ -4196,11 +4198,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1684              		.loc 1 457 30 is_stmt 0 view .LVU490
  1685 001c C361     		str	r3, [r0, #28]
  458:Core/Src/main.c ****   if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+ARM GAS  /tmp/ccYwoJb7.s 			page 71
+
+
  1686              		.loc 1 458 3 is_stmt 1 view .LVU491
  458:Core/Src/main.c ****   if (HAL_I2C_Init(&hi2c1) != HAL_OK)
-ARM GAS  /tmp/cc41Moin.s 			page 71
-
-
  1687              		.loc 1 458 28 is_stmt 0 view .LVU492
  1688 001e 0362     		str	r3, [r0, #32]
  459:Core/Src/main.c ****   {
@@ -4256,11 +4258,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1732              		.loc 1 519 3 is_stmt 1 view .LVU501
  519:Core/Src/main.c ****   huart2.Init.WordLength = UART_WORDLENGTH_8B;
  1733              		.loc 1 519 24 is_stmt 0 view .LVU502
+ARM GAS  /tmp/ccYwoJb7.s 			page 72
+
+
  1734 0008 4FF4E133 		mov	r3, #115200
  1735 000c 4360     		str	r3, [r0, #4]
-ARM GAS  /tmp/cc41Moin.s 			page 72
-
-
  520:Core/Src/main.c ****   huart2.Init.StopBits = UART_STOPBITS_1;
  1736              		.loc 1 520 3 is_stmt 1 view .LVU503
  520:Core/Src/main.c ****   huart2.Init.StopBits = UART_STOPBITS_1;
@@ -4316,11 +4318,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1771 002c 00000000 		.word	.LANCHOR12
  1772 0030 00440040 		.word	1073759232
  1773              		.cfi_endproc
+ARM GAS  /tmp/ccYwoJb7.s 			page 73
+
+
  1774              	.LFE249:
  1776              		.section	.text.MX_I2C2_Init,"ax",%progbits
-ARM GAS  /tmp/cc41Moin.s 			page 73
-
-
  1777              		.align	1
  1778              		.syntax unified
  1779              		.thumb
@@ -4376,11 +4378,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1816              		.loc 1 490 3 is_stmt 1 view .LVU533
  490:Core/Src/main.c ****   hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
  1817              		.loc 1 490 26 is_stmt 0 view .LVU534
+ARM GAS  /tmp/ccYwoJb7.s 			page 74
+
+
  1818 001a 8361     		str	r3, [r0, #24]
  491:Core/Src/main.c ****   hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-ARM GAS  /tmp/cc41Moin.s 			page 74
-
-
  1819              		.loc 1 491 3 is_stmt 1 view .LVU535
  491:Core/Src/main.c ****   hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
  1820              		.loc 1 491 30 is_stmt 0 view .LVU536
@@ -4436,11 +4438,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1864              		.cfi_def_cfa_offset 88
  314:Core/Src/main.c ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
  1865              		.loc 1 314 3 view .LVU545
+ARM GAS  /tmp/ccYwoJb7.s 			page 75
+
+
  314:Core/Src/main.c ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
  1866              		.loc 1 314 22 is_stmt 0 view .LVU546
-ARM GAS  /tmp/cc41Moin.s 			page 75
-
-
  1867 0004 3422     		movs	r2, #52
  1868 0006 0021     		movs	r1, #0
  1869 0008 07A8     		add	r0, sp, #28
@@ -4496,11 +4498,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  1907              		.loc 1 320 3 view .LVU558
  1908 0040 0A68     		ldr	r2, [r1]
  1909 0042 02F44042 		and	r2, r2, #49152
+ARM GAS  /tmp/ccYwoJb7.s 			page 76
+
+
  1910 0046 0192     		str	r2, [sp, #4]
  320:Core/Src/main.c **** 
-ARM GAS  /tmp/cc41Moin.s 			page 76
-
-
  1911              		.loc 1 320 3 view .LVU559
  1912 0048 019A     		ldr	r2, [sp, #4]
  1913              	.LBE13:
@@ -4556,11 +4558,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  333:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLR = 2;
  1945              		.loc 1 333 30 is_stmt 0 view .LVU578
  1946 0066 1292     		str	r2, [sp, #72]
+ARM GAS  /tmp/ccYwoJb7.s 			page 77
+
+
  334:Core/Src/main.c ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
  1947              		.loc 1 334 3 is_stmt 1 view .LVU579
-ARM GAS  /tmp/cc41Moin.s 			page 77
-
-
  334:Core/Src/main.c ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
  1948              		.loc 1 334 30 is_stmt 0 view .LVU580
  1949 0068 1392     		str	r2, [sp, #76]
@@ -4616,11 +4618,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  353:Core/Src/main.c **** 
  1983              		.loc 1 353 1 view .LVU597
  1984 008e 15B0     		add	sp, sp, #84
+ARM GAS  /tmp/ccYwoJb7.s 			page 78
+
+
  1985              		.cfi_remember_state
  1986              		.cfi_def_cfa_offset 4
-ARM GAS  /tmp/cc41Moin.s 			page 78
-
-
  1987              		@ sp needed
  1988 0090 5DF804FB 		ldr	pc, [sp], #4
  1989              	.L115:
@@ -4676,11 +4678,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  217:Core/Src/main.c ****   MX_I2C1_Init();
  2035              		.loc 1 217 3 view .LVU604
  2036 0010 FFF7FEFF 		bl	MX_ADC1_Init
+ARM GAS  /tmp/ccYwoJb7.s 			page 79
+
+
  2037              	.LVL115:
  218:Core/Src/main.c ****   MX_USART2_UART_Init();
-ARM GAS  /tmp/cc41Moin.s 			page 79
-
-
  2038              		.loc 1 218 3 view .LVU605
  2039 0014 FFF7FEFF 		bl	MX_I2C1_Init
  2040              	.LVL116:
@@ -4736,11 +4738,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  249:Core/Src/main.c **** 
  2078              		.loc 1 249 29 is_stmt 0 view .LVU618
  2079 0056 2946     		mov	r1, r5
+ARM GAS  /tmp/ccYwoJb7.s 			page 80
+
+
  2080 0058 6046     		mov	r0, ip
  2081 005a FFF7FEFF 		bl	osMessageCreate
-ARM GAS  /tmp/cc41Moin.s 			page 80
-
-
  2082              	.LVL121:
  249:Core/Src/main.c **** 
  2083              		.loc 1 249 27 view .LVU619
@@ -4796,11 +4798,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2123              		.loc 1 266 3 view .LVU629
  266:Core/Src/main.c **** 
  2124              		.loc 1 266 24 is_stmt 0 view .LVU630
+ARM GAS  /tmp/ccYwoJb7.s 			page 81
+
+
  2125 00b8 2946     		mov	r1, r5
  2126 00ba 24A8     		add	r0, sp, #144
-ARM GAS  /tmp/cc41Moin.s 			page 81
-
-
  2127 00bc FFF7FEFF 		bl	osThreadCreate
  2128              	.LVL124:
  266:Core/Src/main.c **** 
@@ -4847,7 +4849,7 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2161              		.loc 1 274 24 view .LVU639
  2162 0108 244B     		ldr	r3, .L122+32
  2163 010a 1860     		str	r0, [r3]
- 277:Core/Src/main.c ****   EmergencyStopTaHandle = osThreadCreate(osThread(EmergencyStopTa), NULL);
+ 277:Core/Src/main.c ****   EmergencyStopTaskHandle = osThreadCreate(osThread(EmergencyStopTask), NULL);
  2164              		.loc 1 277 3 is_stmt 1 view .LVU640
  2165 010c 0DF13C0C 		add	ip, sp, #60
  2166 0110 04F1900E 		add	lr, r4, #144
@@ -4856,21 +4858,21 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2169 011c 9EE80700 		ldm	lr, {r0, r1, r2}
  2170 0120 8CE80700 		stm	ip, {r0, r1, r2}
  278:Core/Src/main.c **** 
+ARM GAS  /tmp/ccYwoJb7.s 			page 82
+
+
  2171              		.loc 1 278 3 view .LVU641
  278:Core/Src/main.c **** 
-ARM GAS  /tmp/cc41Moin.s 			page 82
-
-
- 2172              		.loc 1 278 27 is_stmt 0 view .LVU642
+ 2172              		.loc 1 278 29 is_stmt 0 view .LVU642
  2173 0124 2946     		mov	r1, r5
  2174 0126 0FA8     		add	r0, sp, #60
  2175 0128 FFF7FEFF 		bl	osThreadCreate
  2176              	.LVL127:
  278:Core/Src/main.c **** 
- 2177              		.loc 1 278 25 view .LVU643
+ 2177              		.loc 1 278 27 view .LVU643
  2178 012c 1C4B     		ldr	r3, .L122+36
  2179 012e 1860     		str	r0, [r3]
- 281:Core/Src/main.c ****   MotorControlTasHandle = osThreadCreate(osThread(MotorControlTas), NULL);
+ 281:Core/Src/main.c ****   MotorControlTaskHandle = osThreadCreate(osThread(MotorControlTask), NULL);
  2180              		.loc 1 281 3 is_stmt 1 view .LVU644
  2181 0130 0DF1200C 		add	ip, sp, #32
  2182 0134 04F1AC0E 		add	lr, r4, #172
@@ -4881,13 +4883,13 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  282:Core/Src/main.c **** 
  2187              		.loc 1 282 3 view .LVU645
  282:Core/Src/main.c **** 
- 2188              		.loc 1 282 27 is_stmt 0 view .LVU646
+ 2188              		.loc 1 282 28 is_stmt 0 view .LVU646
  2189 0148 2946     		mov	r1, r5
  2190 014a 08A8     		add	r0, sp, #32
  2191 014c FFF7FEFF 		bl	osThreadCreate
  2192              	.LVL128:
  282:Core/Src/main.c **** 
- 2193              		.loc 1 282 25 view .LVU647
+ 2193              		.loc 1 282 26 view .LVU647
  2194 0150 144B     		ldr	r3, .L122+40
  2195 0152 1860     		str	r0, [r3]
  285:Core/Src/main.c ****   LCDPrintTaskHandle = osThreadCreate(osThread(LCDPrintTask), NULL);
@@ -4916,11 +4918,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2214              	.LVL130:
  2215              	.L120:
  299:Core/Src/main.c ****   {
+ARM GAS  /tmp/ccYwoJb7.s 			page 83
+
+
  2216              		.loc 1 299 3 discriminator 1 view .LVU653
  304:Core/Src/main.c ****   /* USER CODE END 3 */
-ARM GAS  /tmp/cc41Moin.s 			page 83
-
-
  2217              		.loc 1 304 3 discriminator 1 view .LVU654
  299:Core/Src/main.c ****   {
  2218              		.loc 1 299 9 discriminator 1 view .LVU655
@@ -4947,8 +4949,8 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2240              		.global	MotorControlQueueHandle
  2241              		.global	MiniBotInputQueueHandle
  2242              		.global	LCDPrintTaskHandle
- 2243              		.global	MotorControlTasHandle
- 2244              		.global	EmergencyStopTaHandle
+ 2243              		.global	MotorControlTaskHandle
+ 2244              		.global	EmergencyStopTaskHandle
  2245              		.global	ApplicationFSMHandle
  2246              		.global	MiniBotInputsHandle
  2247              		.global	BlinkLEDTaskHandle
@@ -4976,11 +4978,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2269              	.LC1:
  2270 0010 10000000 		.word	16
  2271 0014 02000000 		.word	2
+ARM GAS  /tmp/ccYwoJb7.s 			page 84
+
+
  2272 0018 00000000 		.word	0
  2273 001c 00000000 		.word	0
-ARM GAS  /tmp/cc41Moin.s 			page 84
-
-
  2274              	.LC16:
  2275 0020 00000000 		.word	.LC2
  2276 0024 00000000 		.word	StartDefaultTask
@@ -5027,7 +5029,7 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2317 00a4 00000000 		.word	0
  2318 00a8 00000000 		.word	0
  2319              	.LC21:
- 2320 00ac 4C000000 		.word	.LC12
+ 2320 00ac 50000000 		.word	.LC12
  2321 00b0 00000000 		.word	MotorControlTaskEntry
  2322 00b4 0000     		.short	0
  2323 00b6 0000     		.space	2
@@ -5036,11 +5038,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2326 00c0 00000000 		.word	0
  2327 00c4 00000000 		.word	0
  2328              	.LC22:
- 2329 00c8 5C000000 		.word	.LC14
+ARM GAS  /tmp/ccYwoJb7.s 			page 85
+
+
+ 2329 00c8 64000000 		.word	.LC14
  2330 00cc 00000000 		.word	LCDPrintTaskEntry
-ARM GAS  /tmp/cc41Moin.s 			page 85
-
-
  2331 00d0 0000     		.short	0
  2332 00d2 0000     		.space	2
  2333 00d4 00000000 		.word	0
@@ -5057,10 +5059,10 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2346              		.set	.LANCHOR18,. + 0
  2349              	BlinkLEDTaskHandle:
  2350 0000 00000000 		.space	4
- 2351              		.section	.bss.EmergencyStopTaHandle,"aw",%nobits
+ 2351              		.section	.bss.EmergencyStopTaskHandle,"aw",%nobits
  2352              		.align	2
  2353              		.set	.LANCHOR21,. + 0
- 2356              	EmergencyStopTaHandle:
+ 2356              	EmergencyStopTaskHandle:
  2357 0000 00000000 		.space	4
  2358              		.section	.bss.LCDPrintQueueHandle,"aw",%nobits
  2359              		.align	2
@@ -5096,19 +5098,19 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2399      00000000 
  2399      00000000 
  2399      00000000 
+ARM GAS  /tmp/ccYwoJb7.s 			page 86
+
+
  2399      00000000 
  2400              		.section	.bss.MotorControlQueueHandle,"aw",%nobits
-ARM GAS  /tmp/cc41Moin.s 			page 86
-
-
  2401              		.align	2
  2402              		.set	.LANCHOR4,. + 0
  2405              	MotorControlQueueHandle:
  2406 0000 00000000 		.space	4
- 2407              		.section	.bss.MotorControlTasHandle,"aw",%nobits
+ 2407              		.section	.bss.MotorControlTaskHandle,"aw",%nobits
  2408              		.align	2
  2409              		.set	.LANCHOR22,. + 0
- 2412              	MotorControlTasHandle:
+ 2412              	MotorControlTaskHandle:
  2413 0000 00000000 		.space	4
  2414              		.section	.bss.MotorControl_Qdata_Buf,"aw",%nobits
  2415              		.align	2
@@ -5156,11 +5158,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2454              	defaultTaskHandle:
  2455 0000 00000000 		.space	4
  2456              		.section	.bss.hadc1,"aw",%nobits
+ARM GAS  /tmp/ccYwoJb7.s 			page 87
+
+
  2457              		.align	2
  2458              		.set	.LANCHOR7,. + 0
-ARM GAS  /tmp/cc41Moin.s 			page 87
-
-
  2461              	hadc1:
  2462 0000 00000000 		.space	72
  2462      00000000 
@@ -5216,11 +5218,11 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2507              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
  2508              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
  2509              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ARM GAS  /tmp/ccYwoJb7.s 			page 88
+
+
  2510              		.file 15 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
  2511              		.file 16 "Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h"
-ARM GAS  /tmp/cc41Moin.s 			page 88
-
-
  2512              		.file 17 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
  2513              		.file 18 "Middlewares/Third_Party/FreeRTOS/Source/include/queue.h"
  2514              		.file 19 "Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h"
@@ -5228,127 +5230,127 @@ ARM GAS  /tmp/cc41Moin.s 			page 1
  2516              		.file 21 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
  2517              		.file 22 "Core/Inc/pca9685.h"
  2518              		.file 23 "<built-in>"
-ARM GAS  /tmp/cc41Moin.s 			page 89
+ARM GAS  /tmp/ccYwoJb7.s 			page 89
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-     /tmp/cc41Moin.s:15     .rodata.str1.4:0000000000000000 $d
-     /tmp/cc41Moin.s:40     .text.MX_GPIO_Init:0000000000000000 $t
-     /tmp/cc41Moin.s:47     .text.MX_GPIO_Init:0000000000000000 MX_GPIO_Init
-     /tmp/cc41Moin.s:231    .text.MX_GPIO_Init:00000000000000d8 $d
-     /tmp/cc41Moin.s:239    .text.StartDefaultTask:0000000000000000 $t
-     /tmp/cc41Moin.s:246    .text.StartDefaultTask:0000000000000000 StartDefaultTask
-     /tmp/cc41Moin.s:277    .text.StartDefaultTask:0000000000000018 $d
-     /tmp/cc41Moin.s:282    .text.BlinkLEDTaskEntry:0000000000000000 $t
-     /tmp/cc41Moin.s:289    .text.BlinkLEDTaskEntry:0000000000000000 BlinkLEDTaskEntry
-     /tmp/cc41Moin.s:324    .text.BlinkLEDTaskEntry:0000000000000020 $d
-     /tmp/cc41Moin.s:329    .text.LCDPrintTaskEntry:0000000000000000 $t
-     /tmp/cc41Moin.s:336    .text.LCDPrintTaskEntry:0000000000000000 LCDPrintTaskEntry
-     /tmp/cc41Moin.s:362    .text.EmergencyStopTaskEntry:0000000000000000 $t
-     /tmp/cc41Moin.s:369    .text.EmergencyStopTaskEntry:0000000000000000 EmergencyStopTaskEntry
-     /tmp/cc41Moin.s:401    .text.EmergencyStopTaskEntry:0000000000000014 $d
-     /tmp/cc41Moin.s:406    .text.ApplicationFSMEntry:0000000000000000 $t
-     /tmp/cc41Moin.s:413    .text.ApplicationFSMEntry:0000000000000000 ApplicationFSMEntry
-     /tmp/cc41Moin.s:552    .text.ApplicationFSMEntry:00000000000000b8 $d
-     /tmp/cc41Moin.s:561    .text.MiniBotInit:0000000000000000 $t
-     /tmp/cc41Moin.s:568    .text.MiniBotInit:0000000000000000 MiniBotInit
-     /tmp/cc41Moin.s:648    .text.MiniBotInit:0000000000000058 $d
-     /tmp/cc41Moin.s:653    .text.ServoDriverInit:0000000000000000 $t
-     /tmp/cc41Moin.s:660    .text.ServoDriverInit:0000000000000000 ServoDriverInit
-     /tmp/cc41Moin.s:731    .text.ServoDriverInit:0000000000000060 $d
-     /tmp/cc41Moin.s:736    .text.MegaBotInit:0000000000000000 $t
-     /tmp/cc41Moin.s:743    .text.MegaBotInit:0000000000000000 MegaBotInit
-     /tmp/cc41Moin.s:833    .text.QPotDataUpdate:0000000000000000 $t
-     /tmp/cc41Moin.s:840    .text.QPotDataUpdate:0000000000000000 QPotDataUpdate
-     /tmp/cc41Moin.s:922    .text.MiniBotInputsEntry:0000000000000000 $t
-     /tmp/cc41Moin.s:929    .text.MiniBotInputsEntry:0000000000000000 MiniBotInputsEntry
-     /tmp/cc41Moin.s:1105   .text.MiniBotInputsEntry:00000000000000c0 $d
-     /tmp/cc41Moin.s:1116   .text.MAP:0000000000000000 $t
-     /tmp/cc41Moin.s:1123   .text.MAP:0000000000000000 MAP
-     /tmp/cc41Moin.s:1153   .text.MoveServo:0000000000000000 $t
-     /tmp/cc41Moin.s:1160   .text.MoveServo:0000000000000000 MoveServo
-     /tmp/cc41Moin.s:1305   .text.MoveServo:00000000000000c4 $d
-     /tmp/cc41Moin.s:1310   .text.MotorControlTaskEntry:0000000000000000 $t
-     /tmp/cc41Moin.s:1317   .text.MotorControlTaskEntry:0000000000000000 MotorControlTaskEntry
-     /tmp/cc41Moin.s:1372   .text.MotorControlTaskEntry:0000000000000034 $d
-     /tmp/cc41Moin.s:1378   .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
-     /tmp/cc41Moin.s:1385   .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
-     /tmp/cc41Moin.s:1418   .text.HAL_TIM_PeriodElapsedCallback:0000000000000014 $d
-     /tmp/cc41Moin.s:1423   .text.Error_Handler:0000000000000000 $t
-     /tmp/cc41Moin.s:1430   .text.Error_Handler:0000000000000000 Error_Handler
-     /tmp/cc41Moin.s:1462   .text.MX_ADC1_Init:0000000000000000 $t
-     /tmp/cc41Moin.s:1468   .text.MX_ADC1_Init:0000000000000000 MX_ADC1_Init
-     /tmp/cc41Moin.s:1634   .text.MX_ADC1_Init:00000000000000a4 $d
-     /tmp/cc41Moin.s:1641   .text.MX_I2C1_Init:0000000000000000 $t
-     /tmp/cc41Moin.s:1647   .text.MX_I2C1_Init:0000000000000000 MX_I2C1_Init
-     /tmp/cc41Moin.s:1704   .text.MX_I2C1_Init:000000000000002c $d
-     /tmp/cc41Moin.s:1711   .text.MX_USART2_UART_Init:0000000000000000 $t
-     /tmp/cc41Moin.s:1717   .text.MX_USART2_UART_Init:0000000000000000 MX_USART2_UART_Init
-     /tmp/cc41Moin.s:1771   .text.MX_USART2_UART_Init:000000000000002c $d
-     /tmp/cc41Moin.s:1777   .text.MX_I2C2_Init:0000000000000000 $t
-     /tmp/cc41Moin.s:1783   .text.MX_I2C2_Init:0000000000000000 MX_I2C2_Init
-ARM GAS  /tmp/cc41Moin.s 			page 90
+     /tmp/ccYwoJb7.s:15     .rodata.str1.4:0000000000000000 $d
+     /tmp/ccYwoJb7.s:40     .text.MX_GPIO_Init:0000000000000000 $t
+     /tmp/ccYwoJb7.s:47     .text.MX_GPIO_Init:0000000000000000 MX_GPIO_Init
+     /tmp/ccYwoJb7.s:231    .text.MX_GPIO_Init:00000000000000d8 $d
+     /tmp/ccYwoJb7.s:239    .text.StartDefaultTask:0000000000000000 $t
+     /tmp/ccYwoJb7.s:246    .text.StartDefaultTask:0000000000000000 StartDefaultTask
+     /tmp/ccYwoJb7.s:277    .text.StartDefaultTask:0000000000000018 $d
+     /tmp/ccYwoJb7.s:282    .text.BlinkLEDTaskEntry:0000000000000000 $t
+     /tmp/ccYwoJb7.s:289    .text.BlinkLEDTaskEntry:0000000000000000 BlinkLEDTaskEntry
+     /tmp/ccYwoJb7.s:324    .text.BlinkLEDTaskEntry:0000000000000020 $d
+     /tmp/ccYwoJb7.s:329    .text.LCDPrintTaskEntry:0000000000000000 $t
+     /tmp/ccYwoJb7.s:336    .text.LCDPrintTaskEntry:0000000000000000 LCDPrintTaskEntry
+     /tmp/ccYwoJb7.s:362    .text.EmergencyStopTaskEntry:0000000000000000 $t
+     /tmp/ccYwoJb7.s:369    .text.EmergencyStopTaskEntry:0000000000000000 EmergencyStopTaskEntry
+     /tmp/ccYwoJb7.s:401    .text.EmergencyStopTaskEntry:0000000000000014 $d
+     /tmp/ccYwoJb7.s:406    .text.ApplicationFSMEntry:0000000000000000 $t
+     /tmp/ccYwoJb7.s:413    .text.ApplicationFSMEntry:0000000000000000 ApplicationFSMEntry
+     /tmp/ccYwoJb7.s:552    .text.ApplicationFSMEntry:00000000000000b8 $d
+     /tmp/ccYwoJb7.s:561    .text.MiniBotInit:0000000000000000 $t
+     /tmp/ccYwoJb7.s:568    .text.MiniBotInit:0000000000000000 MiniBotInit
+     /tmp/ccYwoJb7.s:648    .text.MiniBotInit:0000000000000058 $d
+     /tmp/ccYwoJb7.s:653    .text.ServoDriverInit:0000000000000000 $t
+     /tmp/ccYwoJb7.s:660    .text.ServoDriverInit:0000000000000000 ServoDriverInit
+     /tmp/ccYwoJb7.s:731    .text.ServoDriverInit:0000000000000060 $d
+     /tmp/ccYwoJb7.s:736    .text.MegaBotInit:0000000000000000 $t
+     /tmp/ccYwoJb7.s:743    .text.MegaBotInit:0000000000000000 MegaBotInit
+     /tmp/ccYwoJb7.s:833    .text.QPotDataUpdate:0000000000000000 $t
+     /tmp/ccYwoJb7.s:840    .text.QPotDataUpdate:0000000000000000 QPotDataUpdate
+     /tmp/ccYwoJb7.s:922    .text.MiniBotInputsEntry:0000000000000000 $t
+     /tmp/ccYwoJb7.s:929    .text.MiniBotInputsEntry:0000000000000000 MiniBotInputsEntry
+     /tmp/ccYwoJb7.s:1105   .text.MiniBotInputsEntry:00000000000000c0 $d
+     /tmp/ccYwoJb7.s:1116   .text.MAP:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1123   .text.MAP:0000000000000000 MAP
+     /tmp/ccYwoJb7.s:1153   .text.MoveServo:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1160   .text.MoveServo:0000000000000000 MoveServo
+     /tmp/ccYwoJb7.s:1305   .text.MoveServo:00000000000000c4 $d
+     /tmp/ccYwoJb7.s:1310   .text.MotorControlTaskEntry:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1317   .text.MotorControlTaskEntry:0000000000000000 MotorControlTaskEntry
+     /tmp/ccYwoJb7.s:1372   .text.MotorControlTaskEntry:0000000000000034 $d
+     /tmp/ccYwoJb7.s:1378   .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1385   .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
+     /tmp/ccYwoJb7.s:1418   .text.HAL_TIM_PeriodElapsedCallback:0000000000000014 $d
+     /tmp/ccYwoJb7.s:1423   .text.Error_Handler:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1430   .text.Error_Handler:0000000000000000 Error_Handler
+     /tmp/ccYwoJb7.s:1462   .text.MX_ADC1_Init:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1468   .text.MX_ADC1_Init:0000000000000000 MX_ADC1_Init
+     /tmp/ccYwoJb7.s:1634   .text.MX_ADC1_Init:00000000000000a4 $d
+     /tmp/ccYwoJb7.s:1641   .text.MX_I2C1_Init:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1647   .text.MX_I2C1_Init:0000000000000000 MX_I2C1_Init
+     /tmp/ccYwoJb7.s:1704   .text.MX_I2C1_Init:000000000000002c $d
+     /tmp/ccYwoJb7.s:1711   .text.MX_USART2_UART_Init:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1717   .text.MX_USART2_UART_Init:0000000000000000 MX_USART2_UART_Init
+     /tmp/ccYwoJb7.s:1771   .text.MX_USART2_UART_Init:000000000000002c $d
+     /tmp/ccYwoJb7.s:1777   .text.MX_I2C2_Init:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1783   .text.MX_I2C2_Init:0000000000000000 MX_I2C2_Init
+ARM GAS  /tmp/ccYwoJb7.s 			page 90
 
 
-     /tmp/cc41Moin.s:1840   .text.MX_I2C2_Init:000000000000002c $d
-     /tmp/cc41Moin.s:1847   .text.SystemClock_Config:0000000000000000 $t
-     /tmp/cc41Moin.s:1854   .text.SystemClock_Config:0000000000000000 SystemClock_Config
-     /tmp/cc41Moin.s:2001   .text.SystemClock_Config:000000000000009c $d
-     /tmp/cc41Moin.s:2007   .text.main:0000000000000000 $t
-     /tmp/cc41Moin.s:2014   .text.main:0000000000000000 main
-     /tmp/cc41Moin.s:2223   .text.main:000000000000017c $d
-     /tmp/cc41Moin.s:2440   .bss.StateMutexHandle:0000000000000000 StateMutexHandle
-     /tmp/cc41Moin.s:2363   .bss.LCDPrintQueueHandle:0000000000000000 LCDPrintQueueHandle
-     /tmp/cc41Moin.s:2405   .bss.MotorControlQueueHandle:0000000000000000 MotorControlQueueHandle
-     /tmp/cc41Moin.s:2384   .bss.MiniBotInputQueueHandle:0000000000000000 MiniBotInputQueueHandle
-     /tmp/cc41Moin.s:2370   .bss.LCDPrintTaskHandle:0000000000000000 LCDPrintTaskHandle
-     /tmp/cc41Moin.s:2412   .bss.MotorControlTasHandle:0000000000000000 MotorControlTasHandle
-     /tmp/cc41Moin.s:2356   .bss.EmergencyStopTaHandle:0000000000000000 EmergencyStopTaHandle
-     /tmp/cc41Moin.s:2342   .bss.ApplicationFSMHandle:0000000000000000 ApplicationFSMHandle
-     /tmp/cc41Moin.s:2391   .bss.MiniBotInputsHandle:0000000000000000 MiniBotInputsHandle
-     /tmp/cc41Moin.s:2349   .bss.BlinkLEDTaskHandle:0000000000000000 BlinkLEDTaskHandle
-     /tmp/cc41Moin.s:2454   .bss.defaultTaskHandle:0000000000000000 defaultTaskHandle
-     /tmp/cc41Moin.s:2482   .bss.huart2:0000000000000000 huart2
-     /tmp/cc41Moin.s:2475   .bss.hi2c2:0000000000000000 hi2c2
-     /tmp/cc41Moin.s:2468   .bss.hi2c1:0000000000000000 hi2c1
-     /tmp/cc41Moin.s:2461   .bss.hadc1:0000000000000000 hadc1
-     /tmp/cc41Moin.s:2488   .bss.state:0000000000000000 state
-     /tmp/cc41Moin.s:2377   .bss.MappedServoAngle:0000000000000000 MappedServoAngle
-     /tmp/cc41Moin.s:2494   .bss.tempFailedToPostMessage:0000000000000000 tempFailedToPostMessage
-     /tmp/cc41Moin.s:2419   .bss.MotorControl_Qdata_Buf:0000000000000000 MotorControl_Qdata_Buf
-     /tmp/cc41Moin.s:2447   .bss.Temp_Qdata_Buf:0000000000000000 Temp_Qdata_Buf
-     /tmp/cc41Moin.s:2398   .bss.MiniBot_Qdata_Buf:0000000000000000 MiniBot_Qdata_Buf
-     /tmp/cc41Moin.s:2426   .bss.PotRawValue:0000000000000000 PotRawValue
-     /tmp/cc41Moin.s:2433   .bss.Qdata:0000000000000000 Qdata
-     /tmp/cc41Moin.s:2262   .rodata:0000000000000000 $d
-     /tmp/cc41Moin.s:2338   .bss.ApplicationFSMHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2345   .bss.BlinkLEDTaskHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2352   .bss.EmergencyStopTaHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2359   .bss.LCDPrintQueueHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2366   .bss.LCDPrintTaskHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2373   .bss.MappedServoAngle:0000000000000000 $d
-     /tmp/cc41Moin.s:2380   .bss.MiniBotInputQueueHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2387   .bss.MiniBotInputsHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2394   .bss.MiniBot_Qdata_Buf:0000000000000000 $d
-     /tmp/cc41Moin.s:2401   .bss.MotorControlQueueHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2408   .bss.MotorControlTasHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2415   .bss.MotorControl_Qdata_Buf:0000000000000000 $d
-     /tmp/cc41Moin.s:2422   .bss.PotRawValue:0000000000000000 $d
-     /tmp/cc41Moin.s:2429   .bss.Qdata:0000000000000000 $d
-     /tmp/cc41Moin.s:2436   .bss.StateMutexHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2443   .bss.Temp_Qdata_Buf:0000000000000000 $d
-     /tmp/cc41Moin.s:2450   .bss.defaultTaskHandle:0000000000000000 $d
-     /tmp/cc41Moin.s:2457   .bss.hadc1:0000000000000000 $d
-     /tmp/cc41Moin.s:2464   .bss.hi2c1:0000000000000000 $d
-     /tmp/cc41Moin.s:2471   .bss.hi2c2:0000000000000000 $d
-     /tmp/cc41Moin.s:2478   .bss.huart2:0000000000000000 $d
-     /tmp/cc41Moin.s:2489   .bss.state:0000000000000000 $d
-     /tmp/cc41Moin.s:2495   .bss.tempFailedToPostMessage:0000000000000000 $d
+     /tmp/ccYwoJb7.s:1840   .text.MX_I2C2_Init:000000000000002c $d
+     /tmp/ccYwoJb7.s:1847   .text.SystemClock_Config:0000000000000000 $t
+     /tmp/ccYwoJb7.s:1854   .text.SystemClock_Config:0000000000000000 SystemClock_Config
+     /tmp/ccYwoJb7.s:2001   .text.SystemClock_Config:000000000000009c $d
+     /tmp/ccYwoJb7.s:2007   .text.main:0000000000000000 $t
+     /tmp/ccYwoJb7.s:2014   .text.main:0000000000000000 main
+     /tmp/ccYwoJb7.s:2223   .text.main:000000000000017c $d
+     /tmp/ccYwoJb7.s:2440   .bss.StateMutexHandle:0000000000000000 StateMutexHandle
+     /tmp/ccYwoJb7.s:2363   .bss.LCDPrintQueueHandle:0000000000000000 LCDPrintQueueHandle
+     /tmp/ccYwoJb7.s:2405   .bss.MotorControlQueueHandle:0000000000000000 MotorControlQueueHandle
+     /tmp/ccYwoJb7.s:2384   .bss.MiniBotInputQueueHandle:0000000000000000 MiniBotInputQueueHandle
+     /tmp/ccYwoJb7.s:2370   .bss.LCDPrintTaskHandle:0000000000000000 LCDPrintTaskHandle
+     /tmp/ccYwoJb7.s:2412   .bss.MotorControlTaskHandle:0000000000000000 MotorControlTaskHandle
+     /tmp/ccYwoJb7.s:2356   .bss.EmergencyStopTaskHandle:0000000000000000 EmergencyStopTaskHandle
+     /tmp/ccYwoJb7.s:2342   .bss.ApplicationFSMHandle:0000000000000000 ApplicationFSMHandle
+     /tmp/ccYwoJb7.s:2391   .bss.MiniBotInputsHandle:0000000000000000 MiniBotInputsHandle
+     /tmp/ccYwoJb7.s:2349   .bss.BlinkLEDTaskHandle:0000000000000000 BlinkLEDTaskHandle
+     /tmp/ccYwoJb7.s:2454   .bss.defaultTaskHandle:0000000000000000 defaultTaskHandle
+     /tmp/ccYwoJb7.s:2482   .bss.huart2:0000000000000000 huart2
+     /tmp/ccYwoJb7.s:2475   .bss.hi2c2:0000000000000000 hi2c2
+     /tmp/ccYwoJb7.s:2468   .bss.hi2c1:0000000000000000 hi2c1
+     /tmp/ccYwoJb7.s:2461   .bss.hadc1:0000000000000000 hadc1
+     /tmp/ccYwoJb7.s:2488   .bss.state:0000000000000000 state
+     /tmp/ccYwoJb7.s:2377   .bss.MappedServoAngle:0000000000000000 MappedServoAngle
+     /tmp/ccYwoJb7.s:2494   .bss.tempFailedToPostMessage:0000000000000000 tempFailedToPostMessage
+     /tmp/ccYwoJb7.s:2419   .bss.MotorControl_Qdata_Buf:0000000000000000 MotorControl_Qdata_Buf
+     /tmp/ccYwoJb7.s:2447   .bss.Temp_Qdata_Buf:0000000000000000 Temp_Qdata_Buf
+     /tmp/ccYwoJb7.s:2398   .bss.MiniBot_Qdata_Buf:0000000000000000 MiniBot_Qdata_Buf
+     /tmp/ccYwoJb7.s:2426   .bss.PotRawValue:0000000000000000 PotRawValue
+     /tmp/ccYwoJb7.s:2433   .bss.Qdata:0000000000000000 Qdata
+     /tmp/ccYwoJb7.s:2262   .rodata:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2338   .bss.ApplicationFSMHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2345   .bss.BlinkLEDTaskHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2352   .bss.EmergencyStopTaskHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2359   .bss.LCDPrintQueueHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2366   .bss.LCDPrintTaskHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2373   .bss.MappedServoAngle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2380   .bss.MiniBotInputQueueHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2387   .bss.MiniBotInputsHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2394   .bss.MiniBot_Qdata_Buf:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2401   .bss.MotorControlQueueHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2408   .bss.MotorControlTaskHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2415   .bss.MotorControl_Qdata_Buf:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2422   .bss.PotRawValue:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2429   .bss.Qdata:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2436   .bss.StateMutexHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2443   .bss.Temp_Qdata_Buf:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2450   .bss.defaultTaskHandle:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2457   .bss.hadc1:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2464   .bss.hi2c1:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2471   .bss.hi2c2:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2478   .bss.huart2:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2489   .bss.state:0000000000000000 $d
+     /tmp/ccYwoJb7.s:2495   .bss.tempFailedToPostMessage:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin
-ARM GAS  /tmp/cc41Moin.s 			page 91
+ARM GAS  /tmp/ccYwoJb7.s 			page 91
 
 
 HAL_GPIO_Init

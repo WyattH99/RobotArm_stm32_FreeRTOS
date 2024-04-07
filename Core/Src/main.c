@@ -140,8 +140,8 @@ osThreadId defaultTaskHandle;
 osThreadId BlinkLEDTaskHandle;
 osThreadId MiniBotInputsHandle;
 osThreadId ApplicationFSMHandle;
-osThreadId EmergencyStopTaHandle;
-osThreadId MotorControlTasHandle;
+osThreadId EmergencyStopTaskHandle;
+osThreadId MotorControlTaskHandle;
 osThreadId LCDPrintTaskHandle;
 osMessageQId MiniBotInputQueueHandle;
 osMessageQId MotorControlQueueHandle;
@@ -273,13 +273,13 @@ int main(void)
   osThreadDef(ApplicationFSM, ApplicationFSMEntry, osPriorityHigh, 0, 512);
   ApplicationFSMHandle = osThreadCreate(osThread(ApplicationFSM), NULL);
 
-  /* definition and creation of EmergencyStopTa */
-  osThreadDef(EmergencyStopTa, EmergencyStopTaskEntry, osPriorityNormal, 0, 128);
-  EmergencyStopTaHandle = osThreadCreate(osThread(EmergencyStopTa), NULL);
+  /* definition and creation of EmergencyStopTask */
+  osThreadDef(EmergencyStopTask, EmergencyStopTaskEntry, osPriorityNormal, 0, 128);
+  EmergencyStopTaskHandle = osThreadCreate(osThread(EmergencyStopTask), NULL);
 
-  /* definition and creation of MotorControlTas */
-  osThreadDef(MotorControlTas, MotorControlTaskEntry, osPriorityNormal, 0, 512);
-  MotorControlTasHandle = osThreadCreate(osThread(MotorControlTas), NULL);
+  /* definition and creation of MotorControlTask */
+  osThreadDef(MotorControlTask, MotorControlTaskEntry, osPriorityNormal, 0, 512);
+  MotorControlTaskHandle = osThreadCreate(osThread(MotorControlTask), NULL);
 
   /* definition and creation of LCDPrintTask */
   osThreadDef(LCDPrintTask, LCDPrintTaskEntry, osPriorityNormal, 0, 128);

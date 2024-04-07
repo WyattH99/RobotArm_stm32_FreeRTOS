@@ -2516,58 +2516,58 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
 .iplt           0x0000000008005a6c        0x0
  .iplt          0x0000000008005a6c        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x0000000008005a6c      0x170
+.rodata         0x0000000008005a6c      0x178
                 0x0000000008005a6c                . = ALIGN (0x4)
  *(.rodata)
  .rodata        0x0000000008005a6c       0xe4 build/main.o
  *(.rodata*)
  .rodata.str1.4
-                0x0000000008005b50       0x69 build/main.o
- *fill*         0x0000000008005bb9        0x3 
+                0x0000000008005b50       0x71 build/main.o
+ *fill*         0x0000000008005bc1        0x3 
  .rodata.AHBPrescTable
-                0x0000000008005bbc       0x10 build/system_stm32f4xx.o
-                0x0000000008005bbc                AHBPrescTable
+                0x0000000008005bc4       0x10 build/system_stm32f4xx.o
+                0x0000000008005bc4                AHBPrescTable
  .rodata.APBPrescTable
-                0x0000000008005bcc        0x8 build/system_stm32f4xx.o
-                0x0000000008005bcc                APBPrescTable
+                0x0000000008005bd4        0x8 build/system_stm32f4xx.o
+                0x0000000008005bd4                APBPrescTable
  .rodata.vTaskStartScheduler.str1.4
-                0x0000000008005bd4        0x5 build/tasks.o
-                0x0000000008005bdc                . = ALIGN (0x4)
- *fill*         0x0000000008005bd9        0x3 
+                0x0000000008005bdc        0x5 build/tasks.o
+                0x0000000008005be4                . = ALIGN (0x4)
+ *fill*         0x0000000008005be1        0x3 
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x0000000008005bdc        0x8
-                0x0000000008005bdc                __exidx_start = .
+.ARM            0x0000000008005be4        0x8
+                0x0000000008005be4                __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x0000000008005bdc        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_udivmoddi4.o)
-                0x0000000008005be4                __exidx_end = .
+ .ARM.exidx     0x0000000008005be4        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_udivmoddi4.o)
+                0x0000000008005bec                __exidx_end = .
 
-.rel.dyn        0x0000000008005be4        0x0
- .rel.iplt      0x0000000008005be4        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x0000000008005bec        0x0
+ .rel.iplt      0x0000000008005bec        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.preinit_array  0x0000000008005be4        0x0
-                0x0000000008005be4                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x0000000008005bec        0x0
+                0x0000000008005bec                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x0000000008005be4                PROVIDE (__preinit_array_end = .)
+                0x0000000008005bec                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x0000000008005be4        0x4
-                0x0000000008005be4                PROVIDE (__init_array_start = .)
+.init_array     0x0000000008005bec        0x4
+                0x0000000008005bec                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x0000000008005be4        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x0000000008005be8                PROVIDE (__init_array_end = .)
+ .init_array    0x0000000008005bec        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x0000000008005bf0                PROVIDE (__init_array_end = .)
 
-.fini_array     0x0000000008005be8        0x4
-                0x0000000008005be8                PROVIDE (__fini_array_start = .)
+.fini_array     0x0000000008005bf0        0x4
+                0x0000000008005bf0                PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0000000008005be8        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x0000000008005bec                PROVIDE (__fini_array_end = .)
-                0x0000000008005bec                _sidata = LOADADDR (.data)
+ .fini_array    0x0000000008005bf0        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x0000000008005bf4                PROVIDE (__fini_array_end = .)
+                0x0000000008005bf4                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000       0x10 load address 0x0000000008005bec
+.data           0x0000000020000000       0x10 load address 0x0000000008005bf4
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -2588,17 +2588,17 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
                 0x0000000020000010                _edata = .
 
 .tm_clone_table
-                0x0000000020000010        0x0 load address 0x0000000008005bfc
+                0x0000000020000010        0x0 load address 0x0000000008005c04
  .tm_clone_table
                 0x0000000020000010        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  .tm_clone_table
                 0x0000000020000010        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
 
-.igot.plt       0x0000000020000010        0x0 load address 0x0000000008005bfc
+.igot.plt       0x0000000020000010        0x0 load address 0x0000000008005c04
  .igot.plt      0x0000000020000010        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 0x0000000020000010                . = ALIGN (0x4)
 
-.bss            0x0000000020000010     0x427c load address 0x0000000008005bfc
+.bss            0x0000000020000010     0x428c load address 0x0000000008005c04
                 0x0000000020000010                _sbss = .
                 0x0000000020000010                __bss_start__ = _sbss
  *(.bss)
@@ -2607,159 +2607,159 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
  .bss.xIdleStack
                 0x000000002000002c      0x200 build/freertos.o
  .bss.xIdleTaskTCBBuffer
-                0x000000002000022c       0x64 build/freertos.o
+                0x000000002000022c       0x74 build/freertos.o
  .bss.ApplicationFSMHandle
-                0x0000000020000290        0x4 build/main.o
-                0x0000000020000290                ApplicationFSMHandle
- .bss.BlinkLEDTaskHandle
-                0x0000000020000294        0x4 build/main.o
-                0x0000000020000294                BlinkLEDTaskHandle
- .bss.EmergencyStopTaHandle
-                0x0000000020000298        0x4 build/main.o
-                0x0000000020000298                EmergencyStopTaHandle
- .bss.LCDPrintQueueHandle
-                0x000000002000029c        0x4 build/main.o
-                0x000000002000029c                LCDPrintQueueHandle
- .bss.LCDPrintTaskHandle
                 0x00000000200002a0        0x4 build/main.o
-                0x00000000200002a0                LCDPrintTaskHandle
- .bss.MappedServoAngle
-                0x00000000200002a4        0x8 build/main.o
-                0x00000000200002a4                MappedServoAngle
- .bss.MiniBotInputQueueHandle
+                0x00000000200002a0                ApplicationFSMHandle
+ .bss.BlinkLEDTaskHandle
+                0x00000000200002a4        0x4 build/main.o
+                0x00000000200002a4                BlinkLEDTaskHandle
+ .bss.EmergencyStopTaskHandle
+                0x00000000200002a8        0x4 build/main.o
+                0x00000000200002a8                EmergencyStopTaskHandle
+ .bss.LCDPrintQueueHandle
                 0x00000000200002ac        0x4 build/main.o
-                0x00000000200002ac                MiniBotInputQueueHandle
- .bss.MiniBotInputsHandle
+                0x00000000200002ac                LCDPrintQueueHandle
+ .bss.LCDPrintTaskHandle
                 0x00000000200002b0        0x4 build/main.o
-                0x00000000200002b0                MiniBotInputsHandle
+                0x00000000200002b0                LCDPrintTaskHandle
+ .bss.MappedServoAngle
+                0x00000000200002b4        0x8 build/main.o
+                0x00000000200002b4                MappedServoAngle
+ .bss.MiniBotInputQueueHandle
+                0x00000000200002bc        0x4 build/main.o
+                0x00000000200002bc                MiniBotInputQueueHandle
+ .bss.MiniBotInputsHandle
+                0x00000000200002c0        0x4 build/main.o
+                0x00000000200002c0                MiniBotInputsHandle
  .bss.MiniBot_Qdata_Buf
-                0x00000000200002b4       0x34 build/main.o
-                0x00000000200002b4                MiniBot_Qdata_Buf
+                0x00000000200002c4       0x34 build/main.o
+                0x00000000200002c4                MiniBot_Qdata_Buf
  .bss.MotorControlQueueHandle
-                0x00000000200002e8        0x4 build/main.o
-                0x00000000200002e8                MotorControlQueueHandle
- .bss.MotorControlTasHandle
-                0x00000000200002ec        0x4 build/main.o
-                0x00000000200002ec                MotorControlTasHandle
+                0x00000000200002f8        0x4 build/main.o
+                0x00000000200002f8                MotorControlQueueHandle
+ .bss.MotorControlTaskHandle
+                0x00000000200002fc        0x4 build/main.o
+                0x00000000200002fc                MotorControlTaskHandle
  .bss.MotorControl_Qdata_Buf
-                0x00000000200002f0       0x34 build/main.o
-                0x00000000200002f0                MotorControl_Qdata_Buf
+                0x0000000020000300       0x34 build/main.o
+                0x0000000020000300                MotorControl_Qdata_Buf
  .bss.PotRawValue
-                0x0000000020000324       0x10 build/main.o
-                0x0000000020000324                PotRawValue
- .bss.Qdata     0x0000000020000334       0x34 build/main.o
-                0x0000000020000334                Qdata
+                0x0000000020000334       0x10 build/main.o
+                0x0000000020000334                PotRawValue
+ .bss.Qdata     0x0000000020000344       0x34 build/main.o
+                0x0000000020000344                Qdata
  .bss.StateMutexHandle
-                0x0000000020000368        0x4 build/main.o
-                0x0000000020000368                StateMutexHandle
+                0x0000000020000378        0x4 build/main.o
+                0x0000000020000378                StateMutexHandle
  .bss.Temp_Qdata_Buf
-                0x000000002000036c       0x34 build/main.o
-                0x000000002000036c                Temp_Qdata_Buf
+                0x000000002000037c       0x34 build/main.o
+                0x000000002000037c                Temp_Qdata_Buf
  .bss.defaultTaskHandle
-                0x00000000200003a0        0x4 build/main.o
-                0x00000000200003a0                defaultTaskHandle
- .bss.hadc1     0x00000000200003a4       0x48 build/main.o
-                0x00000000200003a4                hadc1
- .bss.hi2c1     0x00000000200003ec       0x54 build/main.o
-                0x00000000200003ec                hi2c1
- .bss.hi2c2     0x0000000020000440       0x54 build/main.o
-                0x0000000020000440                hi2c2
- .bss.huart2    0x0000000020000494       0x48 build/main.o
-                0x0000000020000494                huart2
- .bss.state     0x00000000200004dc        0x1 build/main.o
-                0x00000000200004dc                state
+                0x00000000200003b0        0x4 build/main.o
+                0x00000000200003b0                defaultTaskHandle
+ .bss.hadc1     0x00000000200003b4       0x48 build/main.o
+                0x00000000200003b4                hadc1
+ .bss.hi2c1     0x00000000200003fc       0x54 build/main.o
+                0x00000000200003fc                hi2c1
+ .bss.hi2c2     0x0000000020000450       0x54 build/main.o
+                0x0000000020000450                hi2c2
+ .bss.huart2    0x00000000200004a4       0x48 build/main.o
+                0x00000000200004a4                huart2
+ .bss.state     0x00000000200004ec        0x1 build/main.o
+                0x00000000200004ec                state
  .bss.tempFailedToPostMessage
-                0x00000000200004dd        0x1 build/main.o
-                0x00000000200004dd                tempFailedToPostMessage
- *fill*         0x00000000200004de        0x2 
+                0x00000000200004ed        0x1 build/main.o
+                0x00000000200004ed                tempFailedToPostMessage
+ *fill*         0x00000000200004ee        0x2 
  .bss.pca9685_i2c
-                0x00000000200004e0        0x4 build/pca9685.o
-                0x00000000200004e0                pca9685_i2c
- .bss.htim6     0x00000000200004e4       0x48 build/stm32f4xx_hal_timebase_tim.o
-                0x00000000200004e4                htim6
- .bss.uwTick    0x000000002000052c        0x4 build/stm32f4xx_hal.o
-                0x000000002000052c                uwTick
+                0x00000000200004f0        0x4 build/pca9685.o
+                0x00000000200004f0                pca9685_i2c
+ .bss.htim6     0x00000000200004f4       0x48 build/stm32f4xx_hal_timebase_tim.o
+                0x00000000200004f4                htim6
+ .bss.uwTick    0x000000002000053c        0x4 build/stm32f4xx_hal.o
+                0x000000002000053c                uwTick
  .bss.ucMaxSysCallPriority
-                0x0000000020000530        0x1 build/port.o
- *fill*         0x0000000020000531        0x3 
+                0x0000000020000540        0x1 build/port.o
+ *fill*         0x0000000020000541        0x3 
  .bss.ulMaxPRIGROUPValue
-                0x0000000020000534        0x4 build/port.o
- .bss.pxEnd     0x0000000020000538        0x4 build/heap_4.o
- .bss.ucHeap    0x000000002000053c     0x3c00 build/heap_4.o
+                0x0000000020000544        0x4 build/port.o
+ .bss.pxEnd     0x0000000020000548        0x4 build/heap_4.o
+ .bss.ucHeap    0x000000002000054c     0x3c00 build/heap_4.o
  .bss.xBlockAllocatedBit
-                0x000000002000413c        0x4 build/heap_4.o
- .bss.xFreeBytesRemaining
-                0x0000000020004140        0x4 build/heap_4.o
- .bss.xMinimumEverFreeBytesRemaining
-                0x0000000020004144        0x4 build/heap_4.o
- .bss.xNumberOfSuccessfulAllocations
-                0x0000000020004148        0x4 build/heap_4.o
- .bss.xNumberOfSuccessfulFrees
                 0x000000002000414c        0x4 build/heap_4.o
- .bss.xStart    0x0000000020004150        0x8 build/heap_4.o
+ .bss.xFreeBytesRemaining
+                0x0000000020004150        0x4 build/heap_4.o
+ .bss.xMinimumEverFreeBytesRemaining
+                0x0000000020004154        0x4 build/heap_4.o
+ .bss.xNumberOfSuccessfulAllocations
+                0x0000000020004158        0x4 build/heap_4.o
+ .bss.xNumberOfSuccessfulFrees
+                0x000000002000415c        0x4 build/heap_4.o
+ .bss.xStart    0x0000000020004160        0x8 build/heap_4.o
  .bss.pxCurrentTCB
-                0x0000000020004158        0x4 build/tasks.o
-                0x0000000020004158                pxCurrentTCB
+                0x0000000020004168        0x4 build/tasks.o
+                0x0000000020004168                pxCurrentTCB
  .bss.pxDelayedTaskList
-                0x000000002000415c        0x4 build/tasks.o
+                0x000000002000416c        0x4 build/tasks.o
  .bss.pxOverflowDelayedTaskList
-                0x0000000020004160        0x4 build/tasks.o
+                0x0000000020004170        0x4 build/tasks.o
  .bss.pxReadyTasksLists
-                0x0000000020004164       0x8c build/tasks.o
+                0x0000000020004174       0x8c build/tasks.o
  .bss.ulTaskSwitchedInTime
-                0x00000000200041f0        0x4 build/tasks.o
- .bss.ulTotalRunTime
-                0x00000000200041f4        0x4 build/tasks.o
- .bss.uxCurrentNumberOfTasks
-                0x00000000200041f8        0x4 build/tasks.o
- .bss.uxDeletedTasksWaitingCleanUp
-                0x00000000200041fc        0x4 build/tasks.o
- .bss.uxSchedulerSuspended
                 0x0000000020004200        0x4 build/tasks.o
- .bss.uxTaskNumber
+ .bss.ulTotalRunTime
                 0x0000000020004204        0x4 build/tasks.o
- .bss.uxTopReadyPriority
+ .bss.uxCurrentNumberOfTasks
                 0x0000000020004208        0x4 build/tasks.o
+ .bss.uxDeletedTasksWaitingCleanUp
+                0x000000002000420c        0x4 build/tasks.o
+ .bss.uxSchedulerSuspended
+                0x0000000020004210        0x4 build/tasks.o
+ .bss.uxTaskNumber
+                0x0000000020004214        0x4 build/tasks.o
+ .bss.uxTopReadyPriority
+                0x0000000020004218        0x4 build/tasks.o
  .bss.xDelayedTaskList1
-                0x000000002000420c       0x14 build/tasks.o
+                0x000000002000421c       0x14 build/tasks.o
  .bss.xDelayedTaskList2
-                0x0000000020004220       0x14 build/tasks.o
+                0x0000000020004230       0x14 build/tasks.o
  .bss.xIdleTaskHandle
-                0x0000000020004234        0x4 build/tasks.o
+                0x0000000020004244        0x4 build/tasks.o
  .bss.xNextTaskUnblockTime
-                0x0000000020004238        0x4 build/tasks.o
+                0x0000000020004248        0x4 build/tasks.o
  .bss.xNumOfOverflows
-                0x000000002000423c        0x4 build/tasks.o
+                0x000000002000424c        0x4 build/tasks.o
  .bss.xPendedTicks
-                0x0000000020004240        0x4 build/tasks.o
+                0x0000000020004250        0x4 build/tasks.o
  .bss.xPendingReadyList
-                0x0000000020004244       0x14 build/tasks.o
+                0x0000000020004254       0x14 build/tasks.o
  .bss.xSchedulerRunning
-                0x0000000020004258        0x4 build/tasks.o
+                0x0000000020004268        0x4 build/tasks.o
  .bss.xSuspendedTaskList
-                0x000000002000425c       0x14 build/tasks.o
+                0x000000002000426c       0x14 build/tasks.o
  .bss.xTasksWaitingTermination
-                0x0000000020004270       0x14 build/tasks.o
+                0x0000000020004280       0x14 build/tasks.o
  .bss.xTickCount
-                0x0000000020004284        0x4 build/tasks.o
+                0x0000000020004294        0x4 build/tasks.o
  .bss.xYieldPending
-                0x0000000020004288        0x4 build/tasks.o
+                0x0000000020004298        0x4 build/tasks.o
  *(COMMON)
-                0x000000002000428c                . = ALIGN (0x4)
-                0x000000002000428c                _ebss = .
-                0x000000002000428c                __bss_end__ = _ebss
+                0x000000002000429c                . = ALIGN (0x4)
+                0x000000002000429c                _ebss = .
+                0x000000002000429c                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x000000002000428c      0x604 load address 0x0000000008005bfc
-                0x0000000020004290                . = ALIGN (0x8)
- *fill*         0x000000002000428c        0x4 
+                0x000000002000429c      0x604 load address 0x0000000008005c04
+                0x00000000200042a0                . = ALIGN (0x8)
+ *fill*         0x000000002000429c        0x4 
                 [!provide]                        PROVIDE (end = .)
-                0x0000000020004290                PROVIDE (_end = .)
-                0x0000000020004490                . = (. + _Min_Heap_Size)
- *fill*         0x0000000020004290      0x200 
-                0x0000000020004890                . = (. + _Min_Stack_Size)
- *fill*         0x0000000020004490      0x400 
-                0x0000000020004890                . = ALIGN (0x8)
+                0x00000000200042a0                PROVIDE (_end = .)
+                0x00000000200044a0                . = (. + _Min_Heap_Size)
+ *fill*         0x00000000200042a0      0x200 
+                0x00000000200048a0                . = (. + _Min_Stack_Size)
+ *fill*         0x00000000200044a0      0x400 
+                0x00000000200048a0                . = ALIGN (0x8)
 
 /DISCARD/
  libc.a(*)
@@ -3103,73 +3103,73 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a
  .debug_line    0x000000000001cad8      0x5ae /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_udivmoddi4.o)
  .debug_line    0x000000000001d086       0x60 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_dvmd_tls.o)
 
-.debug_str      0x0000000000000000     0x8154
+.debug_str      0x0000000000000000     0x815a
  .debug_str     0x0000000000000000      0x2e1 build/freertos.o
                                         0x33e (size before relaxing)
- .debug_str     0x00000000000002e1     0x17dc build/main.o
-                                       0x1b6a (size before relaxing)
- .debug_str     0x0000000000001abd      0x249 build/pca9685.o
+ .debug_str     0x00000000000002e1     0x17e2 build/main.o
+                                       0x1b70 (size before relaxing)
+ .debug_str     0x0000000000001ac3      0x249 build/pca9685.o
                                         0x934 (size before relaxing)
- .debug_str     0x0000000000001d06      0x5d6 build/stm32f4xx_hal_msp.o
+ .debug_str     0x0000000000001d0c      0x5d6 build/stm32f4xx_hal_msp.o
                                        0x116a (size before relaxing)
- .debug_str     0x00000000000022dc      0x129 build/stm32f4xx_hal_timebase_tim.o
+ .debug_str     0x00000000000022e2      0x129 build/stm32f4xx_hal_timebase_tim.o
                                         0xeba (size before relaxing)
- .debug_str     0x0000000000002405       0xa4 build/stm32f4xx_it.o
+ .debug_str     0x000000000000240b       0xa4 build/stm32f4xx_it.o
                                         0x74c (size before relaxing)
- .debug_str     0x00000000000024a9       0xd8 build/system_stm32f4xx.o
+ .debug_str     0x00000000000024af       0xd8 build/system_stm32f4xx.o
                                         0x382 (size before relaxing)
- .debug_str     0x0000000000002581      0x2f9 build/stm32f4xx_hal.o
+ .debug_str     0x0000000000002587      0x2f9 build/stm32f4xx_hal.o
                                         0xbb2 (size before relaxing)
- .debug_str     0x000000000000287a      0x278 build/stm32f4xx_hal_adc.o
+ .debug_str     0x0000000000002880      0x278 build/stm32f4xx_hal_adc.o
                                         0x93f (size before relaxing)
- .debug_str     0x0000000000002af2      0x43b build/stm32f4xx_hal_cortex.o
+ .debug_str     0x0000000000002af8      0x43b build/stm32f4xx_hal_cortex.o
                                         0xc62 (size before relaxing)
- .debug_str     0x0000000000002f2d      0x105 build/stm32f4xx_hal_gpio.o
+ .debug_str     0x0000000000002f33      0x105 build/stm32f4xx_hal_gpio.o
                                         0x4e2 (size before relaxing)
- .debug_str     0x0000000000003032      0x880 build/stm32f4xx_hal_i2c.o
+ .debug_str     0x0000000000003038      0x880 build/stm32f4xx_hal_i2c.o
                                        0x101f (size before relaxing)
- .debug_str     0x00000000000038b2      0x15e build/stm32f4xx_hal_rcc.o
+ .debug_str     0x00000000000038b8      0x15e build/stm32f4xx_hal_rcc.o
                                         0x702 (size before relaxing)
- .debug_str     0x0000000000003a10      0x344 build/stm32f4xx_hal_rcc_ex.o
+ .debug_str     0x0000000000003a16      0x344 build/stm32f4xx_hal_rcc_ex.o
                                         0x7f4 (size before relaxing)
- .debug_str     0x0000000000003d54      0xea2 build/stm32f4xx_hal_tim.o
+ .debug_str     0x0000000000003d5a      0xea2 build/stm32f4xx_hal_tim.o
                                        0x16b0 (size before relaxing)
- .debug_str     0x0000000000004bf6      0x591 build/stm32f4xx_hal_tim_ex.o
+ .debug_str     0x0000000000004bfc      0x591 build/stm32f4xx_hal_tim_ex.o
                                         0xea1 (size before relaxing)
- .debug_str     0x0000000000005187      0x600 build/stm32f4xx_hal_uart.o
+ .debug_str     0x000000000000518d      0x600 build/stm32f4xx_hal_uart.o
                                         0xd6d (size before relaxing)
- .debug_str     0x0000000000005787      0xa15 build/cmsis_os.o
+ .debug_str     0x000000000000578d      0xa15 build/cmsis_os.o
                                        0x105f (size before relaxing)
- .debug_str     0x000000000000619c      0x136 build/list.o
+ .debug_str     0x00000000000061a2      0x136 build/list.o
                                         0x2f4 (size before relaxing)
- .debug_str     0x00000000000062d2      0x22a build/port.o
+ .debug_str     0x00000000000062d8      0x22a build/port.o
                                         0x466 (size before relaxing)
- .debug_str     0x00000000000064fc      0x2cf build/heap_4.o
+ .debug_str     0x0000000000006502      0x2cf build/heap_4.o
                                         0x4f8 (size before relaxing)
- .debug_str     0x00000000000067cb      0x5c0 build/queue.o
+ .debug_str     0x00000000000067d1      0x5c0 build/queue.o
                                         0xba9 (size before relaxing)
- .debug_str     0x0000000000006d8b      0x9b7 build/tasks.o
+ .debug_str     0x0000000000006d91      0x9b7 build/tasks.o
                                        0x12b6 (size before relaxing)
- .debug_str     0x0000000000007742       0x22 build/startup_stm32f446xx.o
+ .debug_str     0x0000000000007748       0x22 build/startup_stm32f446xx.o
                                          0x61 (size before relaxing)
- .debug_str     0x0000000000007764      0x169 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+ .debug_str     0x000000000000776a      0x169 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
                                         0x20b (size before relaxing)
- .debug_str     0x00000000000078cd       0xb6 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memcpy.o)
- .debug_str     0x0000000000007983       0xa3 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+ .debug_str     0x00000000000078d3       0xb6 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memcpy.o)
+ .debug_str     0x0000000000007989       0xa3 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
                                         0x1c0 (size before relaxing)
- .debug_str     0x0000000000007a26       0xef /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libm.a(lib_a-s_floor.o)
+ .debug_str     0x0000000000007a2c       0xef /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libm.a(lib_a-s_floor.o)
                                         0x21d (size before relaxing)
- .debug_str     0x0000000000007b15       0x9f /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+ .debug_str     0x0000000000007b1b       0x9f /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
                                          0xab (size before relaxing)
- .debug_str     0x0000000000007bb4       0xab /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
- .debug_str     0x0000000000007bb4       0xab /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_cmpdf2.o)
- .debug_str     0x0000000000007bb4       0xab /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixunsdfsi.o)
- .debug_str     0x0000000000007bb4       0xab /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_truncdfsf2.o)
- .debug_str     0x0000000000007bb4       0x2c /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_aeabi_uldivmod.o)
+ .debug_str     0x0000000000007bba       0xab /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+ .debug_str     0x0000000000007bba       0xab /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_cmpdf2.o)
+ .debug_str     0x0000000000007bba       0xab /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixunsdfsi.o)
+ .debug_str     0x0000000000007bba       0xab /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_truncdfsf2.o)
+ .debug_str     0x0000000000007bba       0x2c /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_aeabi_uldivmod.o)
                                          0xa6 (size before relaxing)
- .debug_str     0x0000000000007be0      0x544 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_udivmoddi4.o)
+ .debug_str     0x0000000000007be6      0x544 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_udivmoddi4.o)
                                         0x647 (size before relaxing)
- .debug_str     0x0000000000008124       0x30 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_dvmd_tls.o)
+ .debug_str     0x000000000000812a       0x30 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_dvmd_tls.o)
                                          0xaa (size before relaxing)
 
 .debug_frame    0x0000000000000000     0x4220
@@ -3282,8 +3282,8 @@ EXTI2_IRQHandler                                  build/startup_stm32f446xx.o
 EXTI3_IRQHandler                                  build/startup_stm32f446xx.o
 EXTI4_IRQHandler                                  build/startup_stm32f446xx.o
 EXTI9_5_IRQHandler                                build/startup_stm32f446xx.o
-EmergencyStopTaHandle                             build/main.o
 EmergencyStopTaskEntry                            build/main.o
+EmergencyStopTaskHandle                           build/main.o
 Error_Handler                                     build/main.o
 FLASH_Erase_Sector                                build/stm32f4xx_hal_flash_ex.o
                                                   build/stm32f4xx_hal_flash.o
@@ -3799,8 +3799,8 @@ MiniBotInputsEntry                                build/main.o
 MiniBotInputsHandle                               build/main.o
 MiniBot_Qdata_Buf                                 build/main.o
 MotorControlQueueHandle                           build/main.o
-MotorControlTasHandle                             build/main.o
 MotorControlTaskEntry                             build/main.o
+MotorControlTaskHandle                            build/main.o
 MotorControl_Qdata_Buf                            build/main.o
 MoveServo                                         build/main.o
 NMI_Handler                                       build/stm32f4xx_it.o
