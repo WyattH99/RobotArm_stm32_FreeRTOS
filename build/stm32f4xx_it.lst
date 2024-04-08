@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccOuuup3.s 			page 1
+ARM GAS  /tmp/cc90Jfu6.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccOuuup3.s 			page 1
   28:Core/Src/stm32f4xx_it.c **** /* USER CODE BEGIN TD */
   29:Core/Src/stm32f4xx_it.c **** 
   30:Core/Src/stm32f4xx_it.c **** /* USER CODE END TD */
-ARM GAS  /tmp/ccOuuup3.s 			page 2
+ARM GAS  /tmp/cc90Jfu6.s 			page 2
 
 
   31:Core/Src/stm32f4xx_it.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccOuuup3.s 			page 1
   77:Core/Src/stm32f4xx_it.c ****   {
   78:Core/Src/stm32f4xx_it.c ****   }
   37              		.loc 1 78 3 discriminator 1 view .LVU2
-ARM GAS  /tmp/ccOuuup3.s 			page 3
+ARM GAS  /tmp/cc90Jfu6.s 			page 3
 
 
   76:Core/Src/stm32f4xx_it.c ****   {
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccOuuup3.s 			page 1
   96:Core/Src/stm32f4xx_it.c **** 
   97:Core/Src/stm32f4xx_it.c **** /**
   98:Core/Src/stm32f4xx_it.c ****   * @brief This function handles Memory management fault.
-ARM GAS  /tmp/ccOuuup3.s 			page 4
+ARM GAS  /tmp/cc90Jfu6.s 			page 4
 
 
   99:Core/Src/stm32f4xx_it.c ****   */
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccOuuup3.s 			page 1
  122:Core/Src/stm32f4xx_it.c ****     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
  123:Core/Src/stm32f4xx_it.c ****     /* USER CODE END W1_BusFault_IRQn 0 */
  124:Core/Src/stm32f4xx_it.c ****   }
-ARM GAS  /tmp/ccOuuup3.s 			page 5
+ARM GAS  /tmp/cc90Jfu6.s 			page 5
 
 
  109              		.loc 1 124 3 discriminator 1 view .LVU14
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccOuuup3.s 			page 1
  141:Core/Src/stm32f4xx_it.c **** 
  142:Core/Src/stm32f4xx_it.c **** /**
  143:Core/Src/stm32f4xx_it.c ****   * @brief This function handles Debug monitor.
-ARM GAS  /tmp/ccOuuup3.s 			page 6
+ARM GAS  /tmp/cc90Jfu6.s 			page 6
 
 
  144:Core/Src/stm32f4xx_it.c ****   */
@@ -320,14 +320,14 @@ ARM GAS  /tmp/ccOuuup3.s 			page 1
  155 0000 7047     		bx	lr
  156              		.cfi_endproc
  157              	.LFE244:
- 159              		.section	.text.TIM6_DAC_IRQHandler,"ax",%progbits
+ 159              		.section	.text.EXTI9_5_IRQHandler,"ax",%progbits
  160              		.align	1
- 161              		.global	TIM6_DAC_IRQHandler
+ 161              		.global	EXTI9_5_IRQHandler
  162              		.syntax unified
  163              		.thumb
  164              		.thumb_func
  165              		.fpu fpv4-sp-d16
- 167              	TIM6_DAC_IRQHandler:
+ 167              	EXTI9_5_IRQHandler:
  168              	.LFB245:
  154:Core/Src/stm32f4xx_it.c **** 
  155:Core/Src/stm32f4xx_it.c **** /******************************************************************************/
@@ -338,9 +338,9 @@ ARM GAS  /tmp/ccOuuup3.s 			page 1
  160:Core/Src/stm32f4xx_it.c **** /******************************************************************************/
  161:Core/Src/stm32f4xx_it.c **** 
  162:Core/Src/stm32f4xx_it.c **** /**
- 163:Core/Src/stm32f4xx_it.c ****   * @brief This function handles TIM6 global interrupt and DAC1, DAC2 underrun error interrupts.
+ 163:Core/Src/stm32f4xx_it.c ****   * @brief This function handles EXTI line[9:5] interrupts.
  164:Core/Src/stm32f4xx_it.c ****   */
- 165:Core/Src/stm32f4xx_it.c **** void TIM6_DAC_IRQHandler(void)
+ 165:Core/Src/stm32f4xx_it.c **** void EXTI9_5_IRQHandler(void)
  166:Core/Src/stm32f4xx_it.c **** {
  169              		.loc 1 166 1 view -0
  170              		.cfi_startproc
@@ -350,57 +350,103 @@ ARM GAS  /tmp/ccOuuup3.s 			page 1
  174              		.cfi_def_cfa_offset 8
  175              		.cfi_offset 3, -8
  176              		.cfi_offset 14, -4
- 167:Core/Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+ 167:Core/Src/stm32f4xx_it.c ****   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
  168:Core/Src/stm32f4xx_it.c **** 
- 169:Core/Src/stm32f4xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 0 */
- 170:Core/Src/stm32f4xx_it.c ****   HAL_TIM_IRQHandler(&htim6);
+ 169:Core/Src/stm32f4xx_it.c ****   /* USER CODE END EXTI9_5_IRQn 0 */
+ 170:Core/Src/stm32f4xx_it.c ****   HAL_GPIO_EXTI_IRQHandler(EmergencyStopBtn_Pin);
  177              		.loc 1 170 3 view .LVU23
- 178 0002 0248     		ldr	r0, .L14
- 179 0004 FFF7FEFF 		bl	HAL_TIM_IRQHandler
+ 178 0002 4FF48070 		mov	r0, #256
+ 179 0006 FFF7FEFF 		bl	HAL_GPIO_EXTI_IRQHandler
  180              	.LVL0:
-ARM GAS  /tmp/ccOuuup3.s 			page 7
+ARM GAS  /tmp/cc90Jfu6.s 			page 7
 
 
- 171:Core/Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
+ 171:Core/Src/stm32f4xx_it.c ****   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
  172:Core/Src/stm32f4xx_it.c **** 
- 173:Core/Src/stm32f4xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 1 */
+ 173:Core/Src/stm32f4xx_it.c ****   /* USER CODE END EXTI9_5_IRQn 1 */
  174:Core/Src/stm32f4xx_it.c **** }
  181              		.loc 1 174 1 is_stmt 0 view .LVU24
- 182 0008 08BD     		pop	{r3, pc}
- 183              	.L15:
- 184 000a 00BF     		.align	2
- 185              	.L14:
- 186 000c 00000000 		.word	htim6
- 187              		.cfi_endproc
- 188              	.LFE245:
- 190              		.text
- 191              	.Letext0:
- 192              		.file 2 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
- 193              		.file 3 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
- 194              		.file 4 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 195              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 196              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
-ARM GAS  /tmp/ccOuuup3.s 			page 8
+ 182 000a 08BD     		pop	{r3, pc}
+ 183              		.cfi_endproc
+ 184              	.LFE245:
+ 186              		.section	.text.TIM6_DAC_IRQHandler,"ax",%progbits
+ 187              		.align	1
+ 188              		.global	TIM6_DAC_IRQHandler
+ 189              		.syntax unified
+ 190              		.thumb
+ 191              		.thumb_func
+ 192              		.fpu fpv4-sp-d16
+ 194              	TIM6_DAC_IRQHandler:
+ 195              	.LFB246:
+ 175:Core/Src/stm32f4xx_it.c **** 
+ 176:Core/Src/stm32f4xx_it.c **** /**
+ 177:Core/Src/stm32f4xx_it.c ****   * @brief This function handles TIM6 global interrupt and DAC1, DAC2 underrun error interrupts.
+ 178:Core/Src/stm32f4xx_it.c ****   */
+ 179:Core/Src/stm32f4xx_it.c **** void TIM6_DAC_IRQHandler(void)
+ 180:Core/Src/stm32f4xx_it.c **** {
+ 196              		.loc 1 180 1 is_stmt 1 view -0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 0
+ 199              		@ frame_needed = 0, uses_anonymous_args = 0
+ 200 0000 08B5     		push	{r3, lr}
+ 201              		.cfi_def_cfa_offset 8
+ 202              		.cfi_offset 3, -8
+ 203              		.cfi_offset 14, -4
+ 181:Core/Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+ 182:Core/Src/stm32f4xx_it.c **** 
+ 183:Core/Src/stm32f4xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 0 */
+ 184:Core/Src/stm32f4xx_it.c ****   HAL_TIM_IRQHandler(&htim6);
+ 204              		.loc 1 184 3 view .LVU26
+ 205 0002 0248     		ldr	r0, .L16
+ 206 0004 FFF7FEFF 		bl	HAL_TIM_IRQHandler
+ 207              	.LVL1:
+ 185:Core/Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
+ 186:Core/Src/stm32f4xx_it.c **** 
+ 187:Core/Src/stm32f4xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 1 */
+ 188:Core/Src/stm32f4xx_it.c **** }
+ 208              		.loc 1 188 1 is_stmt 0 view .LVU27
+ 209 0008 08BD     		pop	{r3, pc}
+ 210              	.L17:
+ 211 000a 00BF     		.align	2
+ 212              	.L16:
+ 213 000c 00000000 		.word	htim6
+ 214              		.cfi_endproc
+ 215              	.LFE246:
+ 217              		.text
+ 218              	.Letext0:
+ 219              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 220              		.file 3 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
+ 221              		.file 4 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 222              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ARM GAS  /tmp/cc90Jfu6.s 			page 8
+
+
+ 223              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 224              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ARM GAS  /tmp/cc90Jfu6.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f4xx_it.c
-     /tmp/ccOuuup3.s:18     .text.NMI_Handler:0000000000000000 $t
-     /tmp/ccOuuup3.s:26     .text.NMI_Handler:0000000000000000 NMI_Handler
-     /tmp/ccOuuup3.s:44     .text.HardFault_Handler:0000000000000000 $t
-     /tmp/ccOuuup3.s:51     .text.HardFault_Handler:0000000000000000 HardFault_Handler
-     /tmp/ccOuuup3.s:68     .text.MemManage_Handler:0000000000000000 $t
-     /tmp/ccOuuup3.s:75     .text.MemManage_Handler:0000000000000000 MemManage_Handler
-     /tmp/ccOuuup3.s:92     .text.BusFault_Handler:0000000000000000 $t
-     /tmp/ccOuuup3.s:99     .text.BusFault_Handler:0000000000000000 BusFault_Handler
-     /tmp/ccOuuup3.s:116    .text.UsageFault_Handler:0000000000000000 $t
-     /tmp/ccOuuup3.s:123    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
-     /tmp/ccOuuup3.s:140    .text.DebugMon_Handler:0000000000000000 $t
-     /tmp/ccOuuup3.s:147    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
-     /tmp/ccOuuup3.s:160    .text.TIM6_DAC_IRQHandler:0000000000000000 $t
-     /tmp/ccOuuup3.s:167    .text.TIM6_DAC_IRQHandler:0000000000000000 TIM6_DAC_IRQHandler
-     /tmp/ccOuuup3.s:186    .text.TIM6_DAC_IRQHandler:000000000000000c $d
+     /tmp/cc90Jfu6.s:18     .text.NMI_Handler:0000000000000000 $t
+     /tmp/cc90Jfu6.s:26     .text.NMI_Handler:0000000000000000 NMI_Handler
+     /tmp/cc90Jfu6.s:44     .text.HardFault_Handler:0000000000000000 $t
+     /tmp/cc90Jfu6.s:51     .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/cc90Jfu6.s:68     .text.MemManage_Handler:0000000000000000 $t
+     /tmp/cc90Jfu6.s:75     .text.MemManage_Handler:0000000000000000 MemManage_Handler
+     /tmp/cc90Jfu6.s:92     .text.BusFault_Handler:0000000000000000 $t
+     /tmp/cc90Jfu6.s:99     .text.BusFault_Handler:0000000000000000 BusFault_Handler
+     /tmp/cc90Jfu6.s:116    .text.UsageFault_Handler:0000000000000000 $t
+     /tmp/cc90Jfu6.s:123    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
+     /tmp/cc90Jfu6.s:140    .text.DebugMon_Handler:0000000000000000 $t
+     /tmp/cc90Jfu6.s:147    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
+     /tmp/cc90Jfu6.s:160    .text.EXTI9_5_IRQHandler:0000000000000000 $t
+     /tmp/cc90Jfu6.s:167    .text.EXTI9_5_IRQHandler:0000000000000000 EXTI9_5_IRQHandler
+     /tmp/cc90Jfu6.s:187    .text.TIM6_DAC_IRQHandler:0000000000000000 $t
+     /tmp/cc90Jfu6.s:194    .text.TIM6_DAC_IRQHandler:0000000000000000 TIM6_DAC_IRQHandler
+     /tmp/cc90Jfu6.s:213    .text.TIM6_DAC_IRQHandler:000000000000000c $d
 
 UNDEFINED SYMBOLS
+HAL_GPIO_EXTI_IRQHandler
 HAL_TIM_IRQHandler
 htim6

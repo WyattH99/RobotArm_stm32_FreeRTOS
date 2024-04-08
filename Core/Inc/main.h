@@ -67,6 +67,7 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOA
 #define EmergencyStopBtn_Pin GPIO_PIN_8
 #define EmergencyStopBtn_GPIO_Port GPIOA
+#define EmergencyStopBtn_EXTI_IRQn EXTI9_5_IRQn
 #define GripperButton_Pin GPIO_PIN_9
 #define GripperButton_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13

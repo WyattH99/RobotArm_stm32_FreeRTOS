@@ -143,7 +143,6 @@ osThreadId defaultTaskHandle;
 osThreadId BlinkLEDTaskHandle;
 osThreadId MiniBotInputsHandle;
 osThreadId ApplicationFSMHandle;
-osThreadId EmergencyStopTaskHandle;
 osThreadId MotorControlTaskHandle;
 osThreadId LCDPrintTaskHandle;
 osMessageQId MiniBotInputQueueHandle;
@@ -165,7 +164,6 @@ void StartDefaultTask(void const * argument);
 void BlinkLEDTaskEntry(void const * argument);
 void MiniBotInputsEntry(void const * argument);
 void ApplicationFSMEntry(void const * argument);
-void EmergencyStopTaskEntry(void const * argument);
 void MotorControlTaskEntry(void const * argument);
 void LCDPrintTaskEntry(void const * argument);
 
@@ -184,6 +182,11 @@ uint32_t MAP(uint32_t au32_IN, uint32_t au32_INmin, uint32_t au32_INmax, uint32_
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  state = EmergencyStop;
+}
 
 
 /* USER CODE END 0 */
@@ -275,10 +278,6 @@ int main(void)
   /* definition and creation of ApplicationFSM */
   osThreadDef(ApplicationFSM, ApplicationFSMEntry, osPriorityHigh, 0, 512);
   ApplicationFSMHandle = osThreadCreate(osThread(ApplicationFSM), NULL);
-
-  /* definition and creation of EmergencyStopTask */
-  osThreadDef(EmergencyStopTask, EmergencyStopTaskEntry, osPriorityNormal, 0, 128);
-  EmergencyStopTaskHandle = osThreadCreate(osThread(EmergencyStopTask), NULL);
 
   /* definition and creation of MotorControlTask */
   osThreadDef(MotorControlTask, MotorControlTaskEntry, osPriorityNormal, 0, 512);
@@ -587,6 +586,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(ResetBtn_GPIO_Port, &GPIO_InitStruct);
 
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
@@ -849,6 +852,10 @@ void ApplicationFSMEntry(void const * argument)
     
     if(state == EmergencyStop){
       // If reset btn is pressed change state to Ready1
+      if(!HAL_GPIO_ReadPin(ResetBtn_GPIO_Port, ResetBtn_Pin)){
+        osDelay(200);
+        state = Ready;
+      }
     }
 
 
@@ -856,29 +863,6 @@ void ApplicationFSMEntry(void const * argument)
     osDelay(1);
   }
   /* USER CODE END ApplicationFSMEntry */
-}
-
-/* USER CODE BEGIN Header_EmergencyStopTaskEntry */
-/**
-* @brief Function implementing the EmergencyStopTa thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_EmergencyStopTaskEntry */
-void EmergencyStopTaskEntry(void const * argument)
-{
-  /* USER CODE BEGIN EmergencyStopTaskEntry */
-  /* Infinite loop */
-  for(;;)
-  {
-    if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8)){
-      
-    }
-
-
-    osDelay(1);
-  }
-  /* USER CODE END EmergencyStopTaskEntry */
 }
 
 /* USER CODE BEGIN Header_MotorControlTaskEntry */
@@ -930,7 +914,7 @@ void LCDPrintTaskEntry(void const * argument)
   I2C_LCD_WriteString(I2C_LCD_1, "I2C LCD");
 
   enum State CurrentState;
-  enum State LastState;
+  enum State LastState = Init;
 
   /* Infinite loop */
   for(;;)
