@@ -831,14 +831,9 @@ void ApplicationFSMEntry(void const * argument)
       state = Ready;
       
     }else if(state == Ready){
-      if(xQueueReceive(MiniBotInputQueueHandle, (void*)&MiniBot_Qdata_Buf, portMAX_DELAY) == pdPASS){
-        if(MiniBot_Qdata_Buf.GripperValue == 0){
-          if(xQueueReceive(MiniBotInputQueueHandle, (void*)&MiniBot_Qdata_Buf, portMAX_DELAY) == pdPASS){
-            if(MiniBot_Qdata_Buf.GripperValue == 1){
-              state++;
-            }
-          }
-        }
+      if(!HAL_GPIO_ReadPin(GripperButton_GPIO_Port, GripperButton_Pin)){
+        osDelay(200);
+        state = Running;
       }
 
     }else if(state == Running){
